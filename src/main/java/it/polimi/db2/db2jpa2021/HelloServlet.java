@@ -1,6 +1,6 @@
 package it.polimi.db2.db2jpa2021;
 
-import it.polimi.db2.db2jpa2021.entity.User;
+import it.polimi.db2.db2jpa2021.entities.User;
 
 import java.io.*;
 import javax.persistence.EntityManager;

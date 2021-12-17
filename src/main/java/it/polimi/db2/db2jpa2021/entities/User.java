@@ -1,11 +1,9 @@
-package it.polimi.db2.db2jpa2021.entity;
+package it.polimi.db2.db2jpa2021.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@NamedQuery(name = "User.checkCredentials", query = "SELECT r FROM User r  WHERE r.username = ?1 and r.password = ?2")
 public class User {
     public User() {
     }
@@ -13,13 +11,13 @@ public class User {
     @Id
     @GeneratedValue
     private Long id;
-    @Column(name = "username")
+    @Column
     private String username;
-    @Column(name="password")
+    @Column
     private String password;
-    @Column(name = "email")
+    @Column
     private String email;
-    @Column(name = "is_flagged")
+    @Column
     private boolean is_flagged;
 
     public Long getId() {
