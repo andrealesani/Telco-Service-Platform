@@ -1,6 +1,11 @@
 package it.polimi.db2.db2jpa2021;
 
+import it.polimi.db2.db2jpa2021.entity.User;
+
 import java.io.*;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
@@ -14,6 +19,20 @@ public class HelloServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
+
+        User user = new User();
+        user.setUsername("Gee");
+        user.setPassword("Gee");
+        user.setEmail("Gee");
+        user.setIs_flagged(false);
+
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+
+        entityManager.persist(user);
+        entityManager.getTransaction().commit();
+        entityManagerFactory.close();
 
         // Hello
         PrintWriter out = response.getWriter();
