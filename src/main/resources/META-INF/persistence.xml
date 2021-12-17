@@ -4,7 +4,9 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
     <persistence-unit name="default">
-
+        <class>it.polimi.db2.telcoservice.entities.Auditing</class>
+        <class>it.polimi.db2.telcoservice.entities.OptionalProduct</class>
+        <class>it.polimi.db2.telcoservice.entities.Order</class>
         <class>it.polimi.db2.telcoservice.entities.User</class>
         <properties>
             <property name="eclipselink.jdbc.driver" value="com.mysql.jdbc.Driver"/>
