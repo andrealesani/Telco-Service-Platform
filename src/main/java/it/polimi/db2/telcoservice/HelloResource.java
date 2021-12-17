@@ -1,4 +1,4 @@
-package it.polimi.db2.db2jpa2021;
+package it.polimi.db2.telcoservice;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

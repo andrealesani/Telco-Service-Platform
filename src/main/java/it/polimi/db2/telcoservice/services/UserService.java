@@ -1,7 +1,7 @@
-package it.polimi.db2.db2jpa2021.services;
+package it.polimi.db2.telcoservice.services;
 
-import it.polimi.db2.db2jpa2021.entities.User;
-import it.polimi.db2.db2jpa2021.exceptions.CredentialsException;
+import it.polimi.db2.telcoservice.entities.User;
+import it.polimi.db2.telcoservice.exceptions.CredentialsException;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

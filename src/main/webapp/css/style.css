@@ -1,0 +1,47 @@
+body {
+    max-width: 650px;
+    margin: 40px auto;
+    padding: 0 10px;
+    font: 18px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    color: #444
+}
+
+h1,
+h2,
+h3 {
+    line-height: 1.2
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        color: white;
+        background: #444
+    }
+    a:link {
+        color: #5bf
+    }
+    a:visited {
+        color: #ccf
+    }
+}
+
+form [type=submit] {
+    background-color: #226b28; /* Green */
+    border: none;
+    border-radius: 8px;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+}
+
+table {
+    text-align: left;
+    border-spacing: 20px;
+}
+
+td {
+    padding: 10px 0;
+}

@@ -1,4 +1,4 @@
-package it.polimi.db2.db2jpa2021.entities;
+package it.polimi.db2.telcoservice.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
