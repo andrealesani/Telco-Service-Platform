@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `db2_jpa`;
+USE `db2_jpa`;
 -- MySQL dump 10.13  Distrib 8.0.23, for Win64 (x86_64)
 --
 -- Host: localhost    Database: db2_jpa
