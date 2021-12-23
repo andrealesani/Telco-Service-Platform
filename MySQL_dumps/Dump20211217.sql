@@ -293,3 +293,7 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2021-12-17 15:42:33
+
+ALTER TABLE `db2_jpa`.`user`
+    ADD UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE;
+;
