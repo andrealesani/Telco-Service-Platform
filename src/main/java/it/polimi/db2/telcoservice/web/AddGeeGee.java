@@ -1,4 +1,4 @@
-package it.polimi.db2.telcoservice;
+package it.polimi.db2.telcoservice.web;
 
 import it.polimi.db2.telcoservice.entities.User;
 

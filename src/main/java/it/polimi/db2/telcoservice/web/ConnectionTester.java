@@ -1,4 +1,4 @@
-package it.polimi.db2.telcoservice;
+package it.polimi.db2.telcoservice.web;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

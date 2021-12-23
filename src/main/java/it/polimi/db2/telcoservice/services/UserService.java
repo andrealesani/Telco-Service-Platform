@@ -4,22 +4,21 @@ import it.polimi.db2.telcoservice.entities.User;
 import it.polimi.db2.telcoservice.exceptions.CredentialsException;
 
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.NonUniqueResultException;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceException;
+import javax.persistence.*;
 import java.util.List;
 
 @Stateless
 public class UserService {
 	// @PersistenceContext(unitName = "db2_jpa")
-	@PersistenceContext
-	private EntityManager em;
+	@PersistenceUnit
+	private EntityManagerFactory emf;
 
 	public User checkCredentials(String username, String password) throws CredentialsException, NonUniqueResultException {
+		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		List<User> uList;
 		try {
-			uList = em.createNamedQuery("User.checkCredentials", User.class).setParameter(1, username).setParameter(2, password)
+			uList = entityManager.createNamedQuery("User.checkCredentials", User.class).setParameter(1, username).setParameter(2, password)
 					.getResultList();
 		} catch (PersistenceException e) {
 			throw new CredentialsException("Could not verify credentials");
