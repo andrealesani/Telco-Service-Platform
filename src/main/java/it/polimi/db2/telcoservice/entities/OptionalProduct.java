@@ -14,8 +14,8 @@ public class OptionalProduct {
     private Long id;
     @Column
     private String name;
-    @Column
-    private BigDecimal monthly_fee;
+    @Column(name = "monthly_fee")
+    private BigDecimal monthlyFee;
 
     public Long getId() {
         return id;
@@ -25,8 +25,8 @@ public class OptionalProduct {
         return name;
     }
 
-    public BigDecimal getMonthly_fee() {
-        return monthly_fee;
+    public BigDecimal getMonthlyFee() {
+        return monthlyFee;
     }
 
     public void setId(Long id) {
@@ -37,7 +37,7 @@ public class OptionalProduct {
         this.name = name;
     }
 
-    public void setMonthly_fee(BigDecimal monthly_fee) {
-        this.monthly_fee = monthly_fee;
+    public void setMonthlyFee(BigDecimal monthlyFee) {
+        this.monthlyFee = monthlyFee;
     }
 }

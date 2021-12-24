@@ -1,12 +1,10 @@
 package it.polimi.db2.telcoservice.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
+@Table
 public class Order {
     public Order() {
     }
