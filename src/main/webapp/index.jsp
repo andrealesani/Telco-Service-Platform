@@ -26,7 +26,7 @@ Sign in
 </form>
 <br><br>
 New user? Sign up
-<form action=""
+<form action="register-new-user"
       method="POST">
     <label> username:
         <input type="text" name="username">
