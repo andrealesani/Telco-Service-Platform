@@ -9,12 +9,12 @@
 <body>
 Welcome to your home user!
 <br><br><br>
-Here is a list of your favourite users
+List of all service packages
 <br>
-<ul th:unless="${#lists.isEmpty(users)}">
-    <li th:each="u : ${users}">
+<ul th:unless="${#lists.isEmpty(servicePackages)}">
+    <li th:each="servpckg : ${servicePackages}">
     <span
-            th:text="${u.username +  '  '  + u.password +  '  '  + u.email }"></span>
+            th:text="${servpckg.id +  '  '  + servpckg.name +  '  '  + servpckg.subsID }"></span>
     </li>
 </ul>
 </body>

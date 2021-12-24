@@ -50,12 +50,16 @@ public class GoToHomePage extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
-        List<User> users = new ArrayList<>();
-        users.add(new User("Gee", "Gee", "gee@gee.gee"));
+        List<ServicePackage> servicePackages = new ArrayList<>();
+        ServicePackage servicePackage = new ServicePackage();
+        servicePackage.setId(1L);
+        servicePackage.setName("gigiPackage");
+        servicePackage.setSubsID(69);
+        servicePackages.add(servicePackage);
         String path = "/WEB-INF/home.html";
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-        ctx.setVariable("users", users);
+        ctx.setVariable("servicePackages", servicePackages);
         templateEngine.process(path, ctx, response.getWriter());
     }
 
