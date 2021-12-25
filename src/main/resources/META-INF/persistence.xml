@@ -7,7 +7,12 @@
         <class>it.polimi.db2.telcoservice.entities.Auditing</class>
         <class>it.polimi.db2.telcoservice.entities.OptionalProduct</class>
         <class>it.polimi.db2.telcoservice.entities.Order</class>
+        <class>it.polimi.db2.telcoservice.entities.Service</class>
+        <class>it.polimi.db2.telcoservice.entities.ServiceActivationSchedule</class>
+        <class>it.polimi.db2.telcoservice.entities.ServicePackage</class>
+        <class>it.polimi.db2.telcoservice.entities.Subscription</class>
         <class>it.polimi.db2.telcoservice.entities.User</class>
+        <class>it.polimi.db2.telcoservice.entities.ValidityPeriod</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/db2_jpa?serverTimezone=UTC"/>

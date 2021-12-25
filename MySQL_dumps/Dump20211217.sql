@@ -297,3 +297,9 @@ UNLOCK TABLES;
 ALTER TABLE `db2_jpa`.`user`
     ADD UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE;
 ;
+
+ALTER TABLE `db2_jpa`.`service_package`
+    CHANGE COLUMN `id` `id` INT NOT NULL AUTO_INCREMENT ;
+
+ALTER TABLE `db2_jpa`.`service`
+    CHANGE COLUMN `id` `id` INT NOT NULL AUTO_INCREMENT ;
