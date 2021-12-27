@@ -1,33 +1,25 @@
 package it.polimi.db2.telcoservice.web;
 
-import java.io.IOException;
+import it.polimi.db2.telcoservice.entities.ServicePackage;
+import it.polimi.db2.telcoservice.services.ServicePackageService;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.WebContext;
+import org.thymeleaf.templatemode.TemplateMode;
+import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
-import javax.ejb.EJB;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.thymeleaf.TemplateEngine;
-
-import it.polimi.db2.telcoservice.services.*;
-import it.polimi.db2.telcoservice.entities.*;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.WebContext;
-import org.thymeleaf.templatemode.TemplateMode;
-import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
+import java.io.IOException;
 
 /**
- * Servlet implementation class GoToHomePage
+ * Servlet implementation class GoToBuyServicePage
  */
-@WebServlet("/GoToHomePage")
-public class GoToHomePage extends HttpServlet {
+@WebServlet("/GoToConfirmationPage")
+public class GoToConfirmationPage extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private TemplateEngine templateEngine;
 
@@ -41,13 +33,19 @@ public class GoToHomePage extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        List<ServicePackage> servicePackages;
+        String servPckgId = request.getParameter("service-package");
+        int id = 0;
+        try {
+            id = Integer.parseInt(servPckgId);
+        } catch (NumberFormatException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "The specified service package ID is not valid");
+        }
         ServicePackageService servicePackageService = new ServicePackageService();
-        servicePackages = servicePackageService.findAllServicePackages();
-        String path = "/WEB-INF/home.html";
+        ServicePackage servicePackage = servicePackageService.findServicePackageById(id);
+        String path = "/WEB-INF/buy-service.html";
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-        ctx.setVariable("servicePackages", servicePackages);
+        //ctx.setVariable("servicePackage", servicePackage);
         //response.getWriter().println("validityPeriods is empty: " + servicePackages.get(0).getValidityPeriods().isEmpty());
         templateEngine.process(path, ctx, response.getWriter());
     }

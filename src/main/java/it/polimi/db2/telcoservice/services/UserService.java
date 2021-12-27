@@ -49,6 +49,6 @@ public class UserService {
 			entityManagerFactory.close();
 		}
 		else
-		throw new UserAlreadyExistsException("The specified username has already been  used");
+		throw new UserAlreadyExistsException("The specified username has already been used");
 	}
 }

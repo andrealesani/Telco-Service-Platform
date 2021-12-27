@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<link href="css/style.css" rel="stylesheet">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+Buy a service package
+<br><br><br>
+<label for="cars">Choose a service package:</label>
+<select id="cars" name="service-package" form="buy-form">
+    <option value="volvo">Volvo</option>
+    <option value="saab">Saab</option>
+    <option value="opel">Opel</option>
+    <option value="audi">Audi</option>
+</select>
+<br>
+<label for="validity-period">Choose a validity period:</label>
+<select id="validity-period" name="service-package" form="buy-form">
+    <option value="1">1 month</option>
+    <option value="2">2 months</option>
+    <option value="3">3 months</option>
+    <option value="4">4 months</option>
+</select>
+<br>
+<form action="GoToConfirmationPage" id="buy-form"
+      method="GET">
+    <label> I want a super special optional product:
+        <input type="checkbox" name="optional-product">
+    </label>
+    <br>
+    <input type="submit" value="BUY">
+</form>
+</body>
+</html>

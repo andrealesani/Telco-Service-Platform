@@ -8,7 +8,9 @@ import java.util.Set;
 @Entity
 @Table(name = "service_package")
 @NamedQueries({
-        @NamedQuery(name = "ServicePackage.findAllServicePackages", query = "SELECT sp FROM ServicePackage sp")
+        @NamedQuery(name = "ServicePackage.findAllServicePackages", query = "SELECT sp FROM ServicePackage sp"),
+        @NamedQuery(name = "ServicePackage.findServicePackageById", query = "SELECT sp FROM ServicePackage sp where sp.id=?1")
+
 })
 public class ServicePackage {
 

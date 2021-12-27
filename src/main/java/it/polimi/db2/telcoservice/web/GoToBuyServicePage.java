@@ -1,6 +1,12 @@
 package it.polimi.db2.telcoservice.web;
 
-import java.io.IOException;
+import it.polimi.db2.telcoservice.entities.ServicePackage;
+import it.polimi.db2.telcoservice.services.ServicePackageService;
+import it.polimi.db2.telcoservice.services.UserService;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.WebContext;
+import org.thymeleaf.templatemode.TemplateMode;
+import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletContext;
@@ -9,25 +15,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.thymeleaf.TemplateEngine;
-
-import it.polimi.db2.telcoservice.services.*;
-import it.polimi.db2.telcoservice.entities.*;
-
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.WebContext;
-import org.thymeleaf.templatemode.TemplateMode;
-import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
-
 /**
- * Servlet implementation class GoToHomePage
+ * Servlet implementation class GoToBuyServicePage
  */
-@WebServlet("/GoToHomePage")
-public class GoToHomePage extends HttpServlet {
+@WebServlet("/GoToBuyServicePage")
+public class GoToBuyServicePage extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private TemplateEngine templateEngine;
 
@@ -44,7 +39,7 @@ public class GoToHomePage extends HttpServlet {
         List<ServicePackage> servicePackages;
         ServicePackageService servicePackageService = new ServicePackageService();
         servicePackages = servicePackageService.findAllServicePackages();
-        String path = "/WEB-INF/home.html";
+        String path = "/WEB-INF/buy-service.html";
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
         ctx.setVariable("servicePackages", servicePackages);
