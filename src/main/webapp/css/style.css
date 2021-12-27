@@ -45,3 +45,20 @@ table {
 td {
     padding: 10px 0;
 }
+
+button {
+    background-color: #226b28; /* Green */
+    border: none;
+    border-radius: 8px;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+}
+
+button:hover {
+    background-color: #15451b; /* Green */
+    cursor: pointer;
+}

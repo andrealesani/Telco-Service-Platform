@@ -2,6 +2,7 @@ package it.polimi.db2.telcoservice.entities;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Set;
 
 @Entity
 @Table(name = "validity_period")
@@ -12,11 +13,11 @@ public class ValidityPeriod {
     @GeneratedValue
     private Long id;
     @Column
-    private int userId;
-    @Column
     private int months;
     @Column(name = "monthly_fee")
     private BigDecimal monthlyFee;
+    @ManyToMany(mappedBy = "validityPeriods")
+    private Set<ServicePackage> servicePackages;
 
     public Long getId() {
         return id;
@@ -24,14 +25,6 @@ public class ValidityPeriod {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     public int getMonths() {
@@ -48,5 +41,13 @@ public class ValidityPeriod {
 
     public void setMonthlyFee(BigDecimal monthlyFee) {
         this.monthlyFee = monthlyFee;
+    }
+
+    public Set<ServicePackage> getServicePackages() {
+        return servicePackages;
+    }
+
+    public void setServicePackages(Set<ServicePackage> servicePackages) {
+        this.servicePackages = servicePackages;
     }
 }

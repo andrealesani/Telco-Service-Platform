@@ -1,6 +1,8 @@
 package it.polimi.db2.telcoservice.entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -19,10 +21,19 @@ public class ServicePackage {
     private int subsID;
     @ManyToMany
     @JoinTable(
-            name = "package_contains",
-            joinColumns = @JoinColumn(name = "id"),
-            inverseJoinColumns = @JoinColumn(name = "id"))
+            name = "pckg_contains",
+            joinColumns = @JoinColumn(name = "serv_pckgID"),
+            inverseJoinColumns = @JoinColumn(name = "servID"))
     private Set<Service> services;
+    @ManyToMany
+    @JoinTable(
+            name = "pckg_lasts",
+            joinColumns = @JoinColumn(name = "serv_pckgID"),
+            inverseJoinColumns = @JoinColumn(name = "valid_perID")
+    )
+    private Set<ValidityPeriod> validityPeriods;
+    @ManyToMany(mappedBy = "servicePackages")
+    private Set<OptionalProduct> optionalProducts;
 
     public Long getId() {
         return id;
@@ -54,5 +65,25 @@ public class ServicePackage {
 
     public void setServices(Set<Service> services) {
         this.services = services;
+    }
+
+    public Set<ValidityPeriod> getValidityPeriods() {
+        return validityPeriods;
+    }
+
+    public void setValidityPeriods(Set<ValidityPeriod> validityPeriods) {
+        this.validityPeriods = validityPeriods;
+    }
+
+    public List<Service> servicesList() {
+        return new ArrayList<>(services);
+    }
+
+    public Set<OptionalProduct> getOptionalProducts() {
+        return optionalProducts;
+    }
+
+    public void setOptionalProducts(Set<OptionalProduct> optionalProducts) {
+        this.optionalProducts = optionalProducts;
     }
 }

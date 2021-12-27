@@ -50,18 +50,14 @@ public class GoToHomePage extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
-        List<ServicePackage> servicePackages = new ArrayList<>();
-        /*ServicePackage servicePackage = new ServicePackage();
-        servicePackage.setId(1L);
-        servicePackage.setName("gigiPackage");
-        servicePackage.setSubsID(69);
-        servicePackages.add(servicePackage);*/
+        List<ServicePackage> servicePackages;
         ServicePackageService servicePackageService = new ServicePackageService();
         servicePackages = servicePackageService.findAllServicePackages();
         String path = "/WEB-INF/home.html";
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
         ctx.setVariable("servicePackages", servicePackages);
+        //response.getWriter().println("validityPeriods is empty: " + servicePackages.get(0).getValidityPeriods().isEmpty());
         templateEngine.process(path, ctx, response.getWriter());
     }
 

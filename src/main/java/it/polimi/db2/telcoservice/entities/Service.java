@@ -2,7 +2,6 @@ package it.polimi.db2.telcoservice.entities;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.util.Set;
 
 @Entity
@@ -30,7 +29,7 @@ public class Service {
     private BigDecimal extraSmsFee;
 
     @ManyToMany(mappedBy = "services")
-    private Set<ServicePackage> servicePackageSet;
+    private Set<ServicePackage> servicePackages;
 
     public Long getId() {
         return id;
@@ -96,11 +95,23 @@ public class Service {
         this.extraSmsFee = extraSmsFee;
     }
 
-    public Set<ServicePackage> getServicePackageSet() {
-        return servicePackageSet;
+    public Set<ServicePackage> getServicePackages() {
+        return servicePackages;
     }
 
-    public void setServicePackageSet(Set<ServicePackage> servicePackageSet) {
-        this.servicePackageSet = servicePackageSet;
+    public void setServicePackages(Set<ServicePackage> servicePackageSet) {
+        this.servicePackages = servicePackageSet;
+    }
+
+    public String getFeesString() {
+        String fees = "";
+        if (gb != 0)
+            fees += gb + " GBs. Extra fee per GB: " + extraGbFee + " euros ";
+        if (minutes != 0)
+            fees += minutes + " minutes. Extra fee per minute: " + extraMinFee + " euros ";
+        if (sms != 0)
+            fees += sms + " SMSs. Extra fee for SMS " + extraSmsFee + " euros";
+
+        return fees;
     }
 }

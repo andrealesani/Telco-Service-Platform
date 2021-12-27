@@ -13,8 +13,29 @@ List of all service packages
 <br>
 <ul th:unless="${#lists.isEmpty(servicePackages)}">
     <li th:each="servpckg : ${servicePackages}">
-    <span
-            th:text="${servpckg.id +  '  '  + servpckg.name +  '  '  + servpckg.subsID }"></span>
+        <span th:text="${servpckg.id +  '  '  + servpckg.name +  '  '  + servpckg.subsID }"></span>
+        <span th:if="${#sets.isEmpty(servpckg.services)}"><ul><li>This package has no services</li></ul></span>
+        <ul th:unless="${#sets.isEmpty(servpckg.services)}">
+            <li th:each="service : ${servpckg.services}">
+                <span th:text="${service.type}"></span>
+                <br>
+                <span th:text="${service.getFeesString()}"></span>
+            </li>
+        </ul>
+        <span th:if="${#sets.isEmpty(servpckg.optionalProducts)}">This package has no optional products<br></span>
+        <ul th:unless="${#sets.isEmpty(servpckg.optionalProducts)}">
+            <li th:each="optionalProduct : ${servpckg.optionalProducts}">
+                <span>Optional Product</span><br>
+                <span th:text="${optionalProduct.name}"></span>
+            </li>
+        </ul>
+        <span th:if="${#sets.isEmpty(servpckg.validityPeriods)}">This package has no validity periods<br></span>
+        <ul th:unless="${#sets.isEmpty(servpckg.validityPeriods)}">
+            <li th:each="validityPeriod : ${servpckg.validityPeriods}">
+                <span th:text="'Valid for ' + ${validityPeriod.months} + ' months at a cost of ' + ${validityPeriod.monthlyFee} + ' euros per month'"></span>
+            </li>
+        </ul>
+    <button>BUY</button>
     </li>
 </ul>
 </body>
