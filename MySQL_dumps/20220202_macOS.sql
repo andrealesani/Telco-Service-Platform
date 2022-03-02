@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `db2_jpa`;
 USE `db2_jpa`;
--- MySQL dump 10.13  Distrib 8.0.23, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.27, for macos11 (x86_64)
 --
 -- Host: localhost    Database: db2_jpa
 -- ------------------------------------------------------
--- Server version	8.0.23
+-- Server version	8.0.27
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -44,6 +44,30 @@ LOCK TABLES `auditing` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `openjpa_sequence_table`
+--
+
+DROP TABLE IF EXISTS `openjpa_sequence_table`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `openjpa_sequence_table` (
+  `ID` tinyint NOT NULL,
+  `SEQUENCE_VALUE` bigint DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `openjpa_sequence_table`
+--
+
+LOCK TABLES `openjpa_sequence_table` WRITE;
+/*!40000 ALTER TABLE `openjpa_sequence_table` DISABLE KEYS */;
+INSERT INTO `openjpa_sequence_table` VALUES (0,151);
+/*!40000 ALTER TABLE `openjpa_sequence_table` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `optional_product`
 --
 
@@ -51,11 +75,11 @@ DROP TABLE IF EXISTS `optional_product`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `optional_product` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   `monthly_fee` decimal(5,2) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -64,6 +88,7 @@ CREATE TABLE `optional_product` (
 
 LOCK TABLES `optional_product` WRITE;
 /*!40000 ALTER TABLE `optional_product` DISABLE KEYS */;
+INSERT INTO `optional_product` VALUES (1,'Sms news feed',12.00);
 /*!40000 ALTER TABLE `optional_product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -89,6 +114,113 @@ CREATE TABLE `order` (
 LOCK TABLES `order` WRITE;
 /*!40000 ALTER TABLE `order` DISABLE KEYS */;
 /*!40000 ALTER TABLE `order` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `pckg_contains`
+--
+
+DROP TABLE IF EXISTS `pckg_contains`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `pckg_contains` (
+  `serv_pckgID` int NOT NULL,
+  `servID` int NOT NULL,
+  PRIMARY KEY (`serv_pckgID`,`servID`),
+  KEY `pckgc_servID_idx` (`servID`),
+  CONSTRAINT `pckgc_serv_pckgID` FOREIGN KEY (`serv_pckgID`) REFERENCES `service_package` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `pckgc_servID` FOREIGN KEY (`servID`) REFERENCES `service` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pckg_contains`
+--
+
+LOCK TABLES `pckg_contains` WRITE;
+/*!40000 ALTER TABLE `pckg_contains` DISABLE KEYS */;
+INSERT INTO `pckg_contains` VALUES (1,1);
+/*!40000 ALTER TABLE `pckg_contains` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `pckg_lasts`
+--
+
+DROP TABLE IF EXISTS `pckg_lasts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `pckg_lasts` (
+  `serv_pckgID` int NOT NULL,
+  `valid_perID` int NOT NULL,
+  PRIMARY KEY (`serv_pckgID`,`valid_perID`),
+  KEY `pl_val_perID_idx` (`valid_perID`),
+  CONSTRAINT `pl_serv_pckgID` FOREIGN KEY (`serv_pckgID`) REFERENCES `service_package` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `pl_val_perID` FOREIGN KEY (`valid_perID`) REFERENCES `validity_period` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pckg_lasts`
+--
+
+LOCK TABLES `pckg_lasts` WRITE;
+/*!40000 ALTER TABLE `pckg_lasts` DISABLE KEYS */;
+INSERT INTO `pckg_lasts` VALUES (1,1);
+/*!40000 ALTER TABLE `pckg_lasts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `prod_associated_with`
+--
+
+DROP TABLE IF EXISTS `prod_associated_with`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `prod_associated_with` (
+  `op_prodID` int NOT NULL,
+  `serv_pckgID` int NOT NULL,
+  PRIMARY KEY (`op_prodID`,`serv_pckgID`),
+  KEY `paw_serv_pckgID_idx` (`serv_pckgID`),
+  CONSTRAINT `paw_op_prodID` FOREIGN KEY (`op_prodID`) REFERENCES `optional_product` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `paw_serv_pckgID` FOREIGN KEY (`serv_pckgID`) REFERENCES `service_package` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `prod_associated_with`
+--
+
+LOCK TABLES `prod_associated_with` WRITE;
+/*!40000 ALTER TABLE `prod_associated_with` DISABLE KEYS */;
+INSERT INTO `prod_associated_with` VALUES (1,1);
+/*!40000 ALTER TABLE `prod_associated_with` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sas_contains`
+--
+
+DROP TABLE IF EXISTS `sas_contains`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sas_contains` (
+  `userID` int NOT NULL,
+  `op_prodID` int NOT NULL,
+  PRIMARY KEY (`userID`,`op_prodID`),
+  KEY `sas_op_prodID_idx` (`op_prodID`),
+  CONSTRAINT `sas_op_prodID` FOREIGN KEY (`op_prodID`) REFERENCES `optional_product` (`id`),
+  CONSTRAINT `sas_userID` FOREIGN KEY (`userID`) REFERENCES `user` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sas_contains`
+--
+
+LOCK TABLES `sas_contains` WRITE;
+/*!40000 ALTER TABLE `sas_contains` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sas_contains` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -123,7 +255,7 @@ DROP TABLE IF EXISTS `service`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `service` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `type` varchar(45) NOT NULL,
   `gb` int DEFAULT NULL,
   `extra_gb_fee` decimal(5,2) DEFAULT NULL,
@@ -132,7 +264,7 @@ CREATE TABLE `service` (
   `sms` int DEFAULT NULL,
   `extra_sms_fee` decimal(5,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -141,6 +273,7 @@ CREATE TABLE `service` (
 
 LOCK TABLES `service` WRITE;
 /*!40000 ALTER TABLE `service` DISABLE KEYS */;
+INSERT INTO `service` VALUES (1,'Fixed internet',50,1.00,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `service` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -176,11 +309,11 @@ DROP TABLE IF EXISTS `service_package`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `service_package` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   `subsID` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -189,7 +322,34 @@ CREATE TABLE `service_package` (
 
 LOCK TABLES `service_package` WRITE;
 /*!40000 ALTER TABLE `service_package` DISABLE KEYS */;
+INSERT INTO `service_package` VALUES (1,'Mega GeeGee Offer',1);
 /*!40000 ALTER TABLE `service_package` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sub_includes`
+--
+
+DROP TABLE IF EXISTS `sub_includes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sub_includes` (
+  `subsID` int NOT NULL,
+  `op_prodID` int NOT NULL,
+  PRIMARY KEY (`subsID`,`op_prodID`),
+  KEY `si_op_prodID_idx` (`op_prodID`),
+  CONSTRAINT `si_op_prodID` FOREIGN KEY (`op_prodID`) REFERENCES `optional_product` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `si_subsID` FOREIGN KEY (`subsID`) REFERENCES `subscription` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sub_includes`
+--
+
+LOCK TABLES `sub_includes` WRITE;
+/*!40000 ALTER TABLE `sub_includes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sub_includes` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -206,11 +366,11 @@ CREATE TABLE `subscription` (
   `orderID` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `sub_userID_idx` (`userID`),
-  KEY `sub_valid_perID_idx` (`valid_perID`),
   KEY `sub_orderID_idx` (`orderID`),
+  KEY `sub_val_perID_idx` (`valid_perID`),
   CONSTRAINT `sub_orderID` FOREIGN KEY (`orderID`) REFERENCES `order` (`id`),
   CONSTRAINT `sub_userID` FOREIGN KEY (`userID`) REFERENCES `user` (`id`),
-  CONSTRAINT `sub_valid_perID` FOREIGN KEY (`valid_perID`) REFERENCES `validity_period` (`id`)
+  CONSTRAINT `sub_val_perID` FOREIGN KEY (`valid_perID`) REFERENCES `validity_period` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -237,8 +397,9 @@ CREATE TABLE `user` (
   `email` varchar(45) NOT NULL,
   `is_flagged` tinyint NOT NULL,
   `serv_act_schedID` int DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username_UNIQUE` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -247,7 +408,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'giggi98','giggi98','giggi98',0,NULL),(51,'Gee','Gee','Gee',0,NULL);
+INSERT INTO `user` VALUES (1,'Gee','Gee','Gee',0,NULL),(101,'gigi','gigi','gigino',0,NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -259,11 +420,11 @@ DROP TABLE IF EXISTS `validity_period`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `validity_period` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `months` int NOT NULL,
   `monthly_fee` decimal(5,2) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -272,6 +433,7 @@ CREATE TABLE `validity_period` (
 
 LOCK TABLES `validity_period` WRITE;
 /*!40000 ALTER TABLE `validity_period` DISABLE KEYS */;
+INSERT INTO `validity_period` VALUES (1,12,20.00);
 /*!40000 ALTER TABLE `validity_period` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -292,14 +454,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-17 15:42:33
-
-ALTER TABLE `db2_jpa`.`user`
-    ADD UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE;
-;
-
-ALTER TABLE `db2_jpa`.`service_package`
-    CHANGE COLUMN `id` `id` INT NOT NULL AUTO_INCREMENT ;
-
-ALTER TABLE `db2_jpa`.`service`
-    CHANGE COLUMN `id` `id` INT NOT NULL AUTO_INCREMENT ;
+-- Dump completed on 2022-02-02 17:47:04
