@@ -6,26 +6,33 @@
     <persistence-unit name="default">
         <class>it.polimi.db2.telcoservice.entities.Auditing</class>
         <class>it.polimi.db2.telcoservice.entities.OptionalProduct</class>
-        <class>it.polimi.db2.telcoservice.entities.Order</class>
+        <class>it.polimi.db2.telcoservice.entities.SubscriptionOrder</class>
         <class>it.polimi.db2.telcoservice.entities.Service</class>
         <class>it.polimi.db2.telcoservice.entities.ServiceActivationSchedule</class>
         <class>it.polimi.db2.telcoservice.entities.ServicePackage</class>
         <class>it.polimi.db2.telcoservice.entities.Subscription</class>
         <class>it.polimi.db2.telcoservice.entities.User</class>
         <class>it.polimi.db2.telcoservice.entities.ValidityPeriod</class>
+        <class>it.polimi.db2.telcoservice.entities.Test</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/db2_jpa?serverTimezone=UTC"/>
             <property name="javax.persistence.jdbc.user" value="db2_jpa"/>
             <property name="javax.persistence.jdbc.password" value="db2_jpa"/>
             <property name="javax.persistence.logging.level" value="FINE"/>
+            <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+
             <property name="eclipselink.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="eclipselink.jdbc.url" value="jdbc:mysql://localhost:3306/db2_jpa?serverTimezone=UTC"/>
             <property name="eclipselink.jdbc.user" value="db2_jpa"/>
             <property name="eclipselink.jdbc.password" value="db2_jpa"/>
             <property name="eclipselink.logging.level" value="FINE"/>
+
             <property name="eclipselink.target-database" value="MySQL"/>
-            <property name="eclipselink.ddl-generation" value="create-tables"/>
+            <!-- <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
+            <property name="eclipselink.ddl-generation.output-mode" value="both"/>
+            <property name="eclipselink.application-location" value="/sql" />
+            <property name="eclipselink.create-ddl-jdbc-file-name" value="create.sql" /> -->
         </properties>
     </persistence-unit>
 </persistence>
