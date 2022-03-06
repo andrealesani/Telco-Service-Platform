@@ -41,7 +41,7 @@ public class ServicePackage {
     private Set<OptionalProduct> optionalProducts;
     @OneToMany(
             fetch = FetchType.LAZY,
-            mappedBy = "serv_pckg_id"
+            mappedBy = "servicePackage"
     )
     private Set<SubscriptionOrder> subscriptionOrders;
 

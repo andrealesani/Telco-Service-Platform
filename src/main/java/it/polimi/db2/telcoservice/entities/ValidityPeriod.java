@@ -23,12 +23,12 @@ public class ValidityPeriod {
 
     @ManyToMany(
             fetch = FetchType.LAZY,
-            mappedBy = "val_period_id"
+            mappedBy = "validityPeriods"
     )
     private Set<ServicePackage> servicePackages;
     @OneToMany(
             fetch = FetchType.LAZY,
-            mappedBy = "opt_prod_id"
+            mappedBy = "validityPeriod"
     )
     private Set<SubscriptionOrder> subscriptionOrder;
 

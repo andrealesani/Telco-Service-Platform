@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name = "user")
 @NamedQueries({
         @NamedQuery(name = "User.checkCredentials", query = "SELECT r FROM User r  WHERE r.username = ?1 and r.password = ?2"),
         @NamedQuery(name = "User.existsUsername", query = "SELECT r FROM User r  WHERE r.username = ?1")
@@ -36,12 +37,12 @@ public class User {
 
     @OneToMany(
             fetch = FetchType.EAGER,
-            mappedBy = "user_id"
+            mappedBy = "user"
     )
     private List<Auditing> auditing;
     @OneToMany(
             fetch = FetchType.EAGER,
-            mappedBy = "user_id"
+            mappedBy = "user"
     )
     private List<SubscriptionOrder> orders;
 

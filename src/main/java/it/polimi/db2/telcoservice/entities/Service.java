@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
+@Table(name = "service")
 public class Service {
     public Service() {
     }
@@ -33,7 +34,7 @@ public class Service {
 
     @ManyToMany(
             fetch = FetchType.LAZY,
-            mappedBy = "service_id"
+            mappedBy = "services"
     )
     private Set<ServicePackage> servicePackages;
 

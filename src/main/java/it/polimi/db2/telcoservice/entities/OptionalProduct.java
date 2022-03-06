@@ -23,12 +23,12 @@ public class OptionalProduct {
 
     @ManyToMany(
             fetch = FetchType.LAZY,
-            mappedBy = "opt_prod_id"
+            mappedBy = "optionalProducts"
     )
     private Set<ServicePackage> servicePackages;
     @ManyToMany(
             fetch = FetchType.LAZY,
-            mappedBy = "opt_prod_id"
+            mappedBy = "optionalProducts"
     )
     private Set<SubscriptionOrder> subscriptionOrder;
 
