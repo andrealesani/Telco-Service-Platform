@@ -1,6 +1,7 @@
 package it.polimi.db2.telcoservice.entities;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Entity
@@ -8,35 +9,61 @@ public class Auditing {
     public Auditing() {
     }
 
-    @Id
-    @GeneratedValue
-    private Long id;
-    @Column
-    private Timestamp ts_rejection;
-    @Column
-    private String userID;
+    public Auditing(Timestamp rejectionTs, BigDecimal rejectedAmount) {
+        this.rejectionTs = rejectionTs;
+        this.rejectedAmount = rejectedAmount;
+    }
 
-    public Long getId() {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @Column(
+            nullable = false,
+            name = "rejection_ts"
+    )
+    private Timestamp rejectionTs;
+    @Column(
+            nullable = false,
+            name = "rejected_amount"
+    )
+    private BigDecimal rejectedAmount;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(
+            nullable = false,
+            name = "user_id"
+    )
+    private User user;
+
+    public int getId() {
         return id;
     }
 
-    public Timestamp getTs_rejection() {
-        return ts_rejection;
+    public Timestamp getRejectionTs() {
+        return rejectionTs;
     }
 
-    public String getUserID() {
-        return userID;
+    public BigDecimal getRejectedAmount() {
+        return rejectedAmount;
     }
 
-    public void setId(Long id) {
+    public User getUser() {
+        return user;
+    }
+
+    public void setId(int id) {
         this.id = id;
     }
 
-    public void setTs_rejection(Timestamp ts_rejection) {
-        this.ts_rejection = ts_rejection;
+    public void setRejectionTs(Timestamp rejectionTs) {
+        this.rejectionTs = rejectionTs;
     }
 
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public void setRejectedAmount(BigDecimal rejectedAmount) {
+        this.rejectedAmount = rejectedAmount;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

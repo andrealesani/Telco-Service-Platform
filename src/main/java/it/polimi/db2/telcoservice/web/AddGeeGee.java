@@ -24,7 +24,7 @@ public class AddGeeGee extends HttpServlet {
         user.setUsername("Gee");
         user.setPassword("Gee");
         user.setEmail("Gee");
-        user.setIs_flagged(false);
+        user.setInsolvent(false);
 
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
         EntityManager entityManager = entityManagerFactory.createEntityManager();

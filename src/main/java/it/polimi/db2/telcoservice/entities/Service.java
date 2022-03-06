@@ -1,20 +1,23 @@
 package it.polimi.db2.telcoservice.entities;
 
+import it.polimi.db2.telcoservice.enumerations.ServiceType;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table
 public class Service {
     public Service() {
     }
 
     @Id
-    @GeneratedValue
-    private Long id;
-    @Column
-    private String type;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private ServiceType type;
     @Column
     private int gb;
     @Column(name = "extra_gb_fee")
@@ -28,79 +31,48 @@ public class Service {
     @Column(name = "extra_sms_fee")
     private BigDecimal extraSmsFee;
 
-    @ManyToMany(mappedBy = "services")
+    @ManyToMany(
+            fetch = FetchType.LAZY,
+            mappedBy = "service_id"
+    )
     private Set<ServicePackage> servicePackages;
 
-    public Long getId() {
+    // GETTERS
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getType() {
+    public ServiceType getType() {
         return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public int getGb() {
         return gb;
     }
 
-    public void setGb(int gb) {
-        this.gb = gb;
-    }
-
     public BigDecimal getExtraGbFee() {
         return extraGbFee;
-    }
-
-    public void setExtraGbFee(BigDecimal extraGbFee) {
-        this.extraGbFee = extraGbFee;
     }
 
     public int getMinutes() {
         return minutes;
     }
 
-    public void setMinutes(int minutes) {
-        this.minutes = minutes;
-    }
-
     public BigDecimal getExtraMinFee() {
         return extraMinFee;
-    }
-
-    public void setExtraMinFee(BigDecimal extraMinFee) {
-        this.extraMinFee = extraMinFee;
     }
 
     public int getSms() {
         return sms;
     }
 
-    public void setSms(int sms) {
-        this.sms = sms;
-    }
-
     public BigDecimal getExtraSmsFee() {
         return extraSmsFee;
     }
 
-    public void setExtraSmsFee(BigDecimal extraSmsFee) {
-        this.extraSmsFee = extraSmsFee;
-    }
-
     public Set<ServicePackage> getServicePackages() {
         return servicePackages;
-    }
-
-    public void setServicePackages(Set<ServicePackage> servicePackageSet) {
-        this.servicePackages = servicePackageSet;
     }
 
     public String getFeesString() {
@@ -113,5 +85,43 @@ public class Service {
             fees += sms + " SMSs. Extra fee for SMS " + extraSmsFee + " euros";
 
         return fees;
+    }
+
+    // SETTERS
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setType(ServiceType type) {
+        this.type = type;
+    }
+
+    public void setGb(int gb) {
+        this.gb = gb;
+    }
+
+    public void setExtraGbFee(BigDecimal extraGbFee) {
+        this.extraGbFee = extraGbFee;
+    }
+
+    public void setExtraMinFee(BigDecimal extraMinFee) {
+        this.extraMinFee = extraMinFee;
+    }
+
+    public void setMinutes(int minutes) {
+        this.minutes = minutes;
+    }
+
+    public void setSms(int sms) {
+        this.sms = sms;
+    }
+
+    public void setExtraSmsFee(BigDecimal extraSmsFee) {
+        this.extraSmsFee = extraSmsFee;
+    }
+
+    public void setServicePackages(Set<ServicePackage> servicePackages) {
+        this.servicePackages = servicePackages;
     }
 }

@@ -42,7 +42,7 @@ public class UserService {
 			throw new CredentialsException("Could not verify credentials");
 		}
 		if (uList.isEmpty()) {
-			User user = new User(username, password, email);
+			User user = new User(username, password, email, false, 0);
 			entityManager.getTransaction().begin();
 			entityManager.persist(user);
 			entityManager.getTransaction().commit();

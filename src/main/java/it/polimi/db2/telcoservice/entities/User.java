@@ -1,9 +1,9 @@
 package it.polimi.db2.telcoservice.entities;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
-@Table
 @NamedQueries({
         @NamedQuery(name = "User.checkCredentials", query = "SELECT r FROM User r  WHERE r.username = ?1 and r.password = ?2"),
         @NamedQuery(name = "User.existsUsername", query = "SELECT r FROM User r  WHERE r.username = ?1")
@@ -11,25 +11,43 @@ import javax.persistence.*;
 public class User {
     public User() {
     }
-    public User(String username, String password, String email) {
+
+    public User(String username, String password, String email, boolean insolvent, int rejectedPayments) {
         this.username = username;
         this. password = password;
         this.email = email;
+        this.insolvent = insolvent;
+        this.rejectedPayments = rejectedPayments;
     }
 
     @Id
-    @GeneratedValue
-    private Long id;
-    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @Column(nullable = false)
     private String username;
-    @Column
+    @Column(nullable = false)
     private String password;
-    @Column
+    @Column(nullable = false)
     private String email;
     @Column
-    private boolean is_flagged;
+    private boolean insolvent;
+    @Column(name = "rejected_payments")
+    private int rejectedPayments;
 
-    public Long getId() {
+    @OneToMany(
+            fetch = FetchType.EAGER,
+            mappedBy = "user_id"
+    )
+    private List<Auditing> auditing;
+    @OneToMany(
+            fetch = FetchType.EAGER,
+            mappedBy = "user_id"
+    )
+    private List<SubscriptionOrder> orders;
+
+    // GETTERS
+
+    public int getId() {
         return id;
     }
 
@@ -45,11 +63,21 @@ public class User {
         return email;
     }
 
-    public boolean isIs_flagged() {
-        return is_flagged;
+    public boolean isInsolvent() {
+        return insolvent;
     }
 
-    public void setId(Long id) {
+    public int getRejectedPayments() {
+        return rejectedPayments;
+    }
+
+    public List<Auditing> getAuditing() {
+        return auditing;
+    }
+
+    // SETTERS
+
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -65,7 +93,15 @@ public class User {
         this.email = email;
     }
 
-    public void setIs_flagged(boolean is_flagged) {
-        this.is_flagged = is_flagged;
+    public void setInsolvent(boolean insolvent) {
+        this.insolvent = insolvent;
+    }
+
+    public void setRejectedPayments(int rejectedPayments) {
+        this.rejectedPayments = rejectedPayments;
+    }
+
+    public void setAuditing(List<Auditing> auditing) {
+        this.auditing = auditing;
     }
 }

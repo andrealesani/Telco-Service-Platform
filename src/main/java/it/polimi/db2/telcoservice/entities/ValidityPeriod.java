@@ -6,48 +6,73 @@ import java.util.Set;
 
 @Entity
 @Table(name = "validity_period")
-@NamedQueries({})
 public class ValidityPeriod {
-
-    @Id
-    @GeneratedValue
-    private Long id;
-    @Column
-    private int months;
-    @Column(name = "monthly_fee")
-    private BigDecimal monthlyFee;
-    @ManyToMany(mappedBy = "validityPeriods")
-    private Set<ServicePackage> servicePackages;
-
-    public Long getId() {
-        return id;
+    public ValidityPeriod() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @Column(nullable = false)
+    private int months;
+    @Column(
+            nullable = false,
+            name = "monthly_fee"
+    )
+    private BigDecimal monthlyFee;
+
+    @ManyToMany(
+            fetch = FetchType.LAZY,
+            mappedBy = "val_period_id"
+    )
+    private Set<ServicePackage> servicePackages;
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            mappedBy = "opt_prod_id"
+    )
+    private Set<SubscriptionOrder> subscriptionOrder;
+
+    // GETTERS
+
+    public int getId() {
+        return id;
     }
 
     public int getMonths() {
         return months;
     }
 
-    public void setMonths(int months) {
-        this.months = months;
-    }
-
     public BigDecimal getMonthlyFee() {
         return monthlyFee;
-    }
-
-    public void setMonthlyFee(BigDecimal monthlyFee) {
-        this.monthlyFee = monthlyFee;
     }
 
     public Set<ServicePackage> getServicePackages() {
         return servicePackages;
     }
 
+    public Set<SubscriptionOrder> getSubscriptionOrder() {
+        return subscriptionOrder;
+    }
+
+    // SETTERS
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setMonths(int months) {
+        this.months = months;
+    }
+
+    public void setMonthlyFee(BigDecimal monthlyFee) {
+        this.monthlyFee = monthlyFee;
+    }
+
     public void setServicePackages(Set<ServicePackage> servicePackages) {
         this.servicePackages = servicePackages;
+    }
+
+    public void setSubscriptionOrder(Set<SubscriptionOrder> subscriptionOrder) {
+        this.subscriptionOrder = subscriptionOrder;
     }
 }

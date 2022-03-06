@@ -13,79 +13,87 @@ import java.util.Set;
 
 })
 public class ServicePackage {
-
-    @Id
-    @GeneratedValue
-    private Long id;
-    @Column
-    private String name;
-    @Column
-    private int subsID;
-    @ManyToMany
-    @JoinTable(
-            name = "pckg_contains",
-            joinColumns = @JoinColumn(name = "serv_pckgID"),
-            inverseJoinColumns = @JoinColumn(name = "servID"))
-    private Set<Service> services;
-    @ManyToMany
-    @JoinTable(
-            name = "pckg_lasts",
-            joinColumns = @JoinColumn(name = "serv_pckgID"),
-            inverseJoinColumns = @JoinColumn(name = "valid_perID")
-    )
-    private Set<ValidityPeriod> validityPeriods;
-    @ManyToMany(mappedBy = "servicePackages")
-    private Set<OptionalProduct> optionalProducts;
-
-    public Long getId() {
-        return id;
+    public ServicePackage() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @Column(nullable = false)
+    private String name;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            joinColumns = @JoinColumn(name = "serv_pckg_id"),
+            inverseJoinColumns = @JoinColumn(name = "service_id"))
+    private Set<Service> services;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            joinColumns = @JoinColumn(name = "serv_pckg_id"),
+            inverseJoinColumns = @JoinColumn(name = "val_period_id")
+    )
+    private Set<ValidityPeriod> validityPeriods;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            joinColumns = @JoinColumn(name = "serv_pckg_id"),
+            inverseJoinColumns = @JoinColumn(name = "opt_prod_id")
+    )
+    private Set<OptionalProduct> optionalProducts;
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            mappedBy = "serv_pckg_id"
+    )
+    private Set<SubscriptionOrder> subscriptionOrders;
+
+    // GETTERS
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getSubsID() {
-        return subsID;
-    }
-
-    public void setSubsID(int subsID) {
-        this.subsID = subsID;
-    }
-
     public Set<Service> getServices() {
         return services;
-    }
-
-    public void setServices(Set<Service> services) {
-        this.services = services;
     }
 
     public Set<ValidityPeriod> getValidityPeriods() {
         return validityPeriods;
     }
 
-    public void setValidityPeriods(Set<ValidityPeriod> validityPeriods) {
-        this.validityPeriods = validityPeriods;
-    }
-
-    public List<Service> servicesList() {
-        return new ArrayList<>(services);
-    }
-
     public Set<OptionalProduct> getOptionalProducts() {
         return optionalProducts;
     }
 
+    public Set<SubscriptionOrder> getSubscriptionOrders() {
+        return subscriptionOrders;
+    }
+
+    // SETTERS
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setServices(Set<Service> services) {
+        this.services = services;
+    }
+
+    public void setValidityPeriods(Set<ValidityPeriod> validityPeriods) {
+        this.validityPeriods = validityPeriods;
+    }
+
     public void setOptionalProducts(Set<OptionalProduct> optionalProducts) {
         this.optionalProducts = optionalProducts;
+    }
+
+    public void setSubscriptionOrders(Set<SubscriptionOrder> subscriptionOrders) {
+        this.subscriptionOrders = subscriptionOrders;
     }
 }

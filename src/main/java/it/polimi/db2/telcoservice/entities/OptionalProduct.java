@@ -11,21 +11,30 @@ public class OptionalProduct {
     }
 
     @Id
-    @GeneratedValue
-    private Long id;
-    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @Column(nullable = false)
     private String name;
-    @Column(name = "monthly_fee")
+    @Column(
+            nullable = false,
+            name = "monthly_fee"
+    )
     private BigDecimal monthlyFee;
-    @ManyToMany
-    @JoinTable(
-            name = "prod_associated_with",
-            joinColumns = @JoinColumn(name = "op_prodID"),
-            inverseJoinColumns = @JoinColumn(name = "serv_pckgID")
+
+    @ManyToMany(
+            fetch = FetchType.LAZY,
+            mappedBy = "opt_prod_id"
     )
     private Set<ServicePackage> servicePackages;
+    @ManyToMany(
+            fetch = FetchType.LAZY,
+            mappedBy = "opt_prod_id"
+    )
+    private Set<SubscriptionOrder> subscriptionOrder;
 
-    public Long getId() {
+    // GETTERS
+
+    public int getId() {
         return id;
     }
 
@@ -37,7 +46,17 @@ public class OptionalProduct {
         return monthlyFee;
     }
 
-    public void setId(Long id) {
+    public Set<ServicePackage> getServicePackages() {
+        return servicePackages;
+    }
+
+    public Set<SubscriptionOrder> getSubscriptionOrder() {
+        return subscriptionOrder;
+    }
+
+    // SETTERS
+
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -49,11 +68,11 @@ public class OptionalProduct {
         this.monthlyFee = monthlyFee;
     }
 
-    public Set<ServicePackage> getServicePackages() {
-        return servicePackages;
-    }
-
     public void setServicePackages(Set<ServicePackage> servicePackages) {
         this.servicePackages = servicePackages;
+    }
+
+    public void setSubscriptionOrder(Set<SubscriptionOrder> subscriptionOrder) {
+        this.subscriptionOrder = subscriptionOrder;
     }
 }
