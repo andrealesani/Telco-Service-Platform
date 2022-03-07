@@ -1,17 +1,13 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <link href="css/style.css" rel="stylesheet">
 <head>
-    <title>JSP - Hello World</title>
+    <title>Telco Service Company</title>
 </head>
 <body>
-<h1><%= "Welcome to GeeGee Simulator!" %>
-</h1>
-<br/>
+<h1>Welcome to GeeGee Simulator!</h1>
+<h2 th:text="${registered}"></h2>
 <a href="add-gee-gee">Add GeeGee to the database</a>
-<br><br>
-<a href="GoToHomePage">Go to your homepage</a>
 <br><br>
 Sign in
 <form action="login"
@@ -39,6 +35,10 @@ New user? Sign up
     </label><br>
     <input
         type="submit" value="Sign up">
+</form>
+<br>
+<form action="add-default-service-package">
+    <input type="submit" value="Add default service package for testing">
 </form>
 </body>
 </html>

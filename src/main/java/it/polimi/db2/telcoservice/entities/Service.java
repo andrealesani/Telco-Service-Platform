@@ -12,9 +12,18 @@ import java.util.Set;
 public class Service {
     public Service() {
     }
+    public Service(ServiceType type, int gb, int minutes, int sms, BigDecimal extraGbFee, BigDecimal extraMinFee, BigDecimal extraSmsFee) {
+        this.type = type;
+        this.gb = gb;
+        this.minutes = minutes;
+        this.sms = sms;
+        this.extraGbFee = extraGbFee;
+        this.extraMinFee = extraMinFee;
+        this.extraSmsFee = extraSmsFee;
+    }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
