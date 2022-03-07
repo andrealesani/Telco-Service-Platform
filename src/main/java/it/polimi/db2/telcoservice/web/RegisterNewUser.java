@@ -41,7 +41,7 @@ public class RegisterNewUser extends HttpServlet {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "User already exists");
         }
 
-        response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
+        response.sendRedirect(getServletContext().getContextPath() + "/GoToLoginPage?registered=true");
     }
 }
 

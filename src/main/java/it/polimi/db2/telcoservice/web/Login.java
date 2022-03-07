@@ -38,7 +38,7 @@ public class Login extends HttpServlet {
 
         String path = getServletContext().getContextPath();
         if (u == null) {
-            path = getServletContext().getContextPath() + "/index.jsp";
+            path = getServletContext().getContextPath() + "/index.html";
         } else {
             request.getSession().setAttribute("user", u);
             //String target = (u.getRole().equals("admin")) ? "/home-admin" : "/home-user";
