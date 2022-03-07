@@ -45,7 +45,7 @@ public class GoToConfirmationPage extends HttpServlet {
         String path = "/WEB-INF/buy-service.html";
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-        //ctx.setVariable("servicePackage", servicePackage);
+        ctx.setVariable("user", request.getSession().getAttribute("user"));
         //response.getWriter().println("validityPeriods is empty: " + servicePackages.get(0).getValidityPeriods().isEmpty());
         templateEngine.process(path, ctx, response.getWriter());
     }

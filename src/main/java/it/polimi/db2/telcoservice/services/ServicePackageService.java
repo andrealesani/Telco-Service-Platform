@@ -32,17 +32,6 @@ public class ServicePackageService {
 	public ServicePackage findServicePackageById(int id) {
 		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
-		List<ServicePackage> spList = new ArrayList<>();
-		try {
-			spList = entityManager.createNamedQuery("ServicePackage.findServicePackageById", ServicePackage.class).setParameter(1, id)
-					.getResultList();
-		} catch (PersistenceException e) {
-			e.printStackTrace();
-		}
-		if (spList.isEmpty())
-			return null;
-		else if (spList.size() == 1)
-			return spList.get(0);
-		throw new NonUniqueResultException("There are more than 1 service package with this ID");
+		return entityManager.find(ServicePackage.class, id);
 	}
 }

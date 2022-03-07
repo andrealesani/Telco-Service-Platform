@@ -4,16 +4,16 @@
 <link href="css/style.css" rel="stylesheet">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <title>Telco Service - Home</title>
 </head>
 <body>
-Welcome to your home user!
-<br><br><br>
-List of all service packages
-<br>
+<p class="login-status" th:text="'Welcome, ' + (*{user != null}? *{user.username} : 'user')"></p>
+<br><br>
+<h2>List of all service packages</h2>
+<ul th:if="${#lists.isEmpty(servicePackages)}"><li>There are currently no service packages available <br></li></ul>
 <ul th:unless="${#lists.isEmpty(servicePackages)}">
     <li th:each="servpckg : ${servicePackages}">
-        <span th:text="${servpckg.id +  '  '  + servpckg.name +  '  '  + servpckg.subsID }"></span>
+        <span th:text="${servpckg.id +  '  '  + servpckg.name}"></span>
         <span th:if="${#sets.isEmpty(servpckg.services)}"><ul><li>This package has no services</li></ul></span>
         <ul th:unless="${#sets.isEmpty(servpckg.services)}">
             <li th:each="service : ${servpckg.services}">

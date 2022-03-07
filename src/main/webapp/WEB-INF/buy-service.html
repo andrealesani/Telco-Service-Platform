@@ -7,6 +7,7 @@
     <title>Home</title>
 </head>
 <body>
+<p class="login-status" th:text="'Welcome, ' + (*{user != null}? *{user.username} : 'user')"></p>
 Buy a service package
 <br><br><br>
 <label for="cars">Choose a service package:</label>

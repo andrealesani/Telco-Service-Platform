@@ -25,6 +25,11 @@ h3 {
     }
 }
 
+.login-status {
+    width: 100vh !important;
+    text-align: right !important;
+}
+
 form [type=submit] {
     background-color: #226b28; /* Green */
     border: none;

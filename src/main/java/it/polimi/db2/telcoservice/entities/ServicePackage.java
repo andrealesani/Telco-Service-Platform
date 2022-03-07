@@ -9,7 +9,6 @@ import java.util.Set;
 @Table(name = "service_package")
 @NamedQueries({
         @NamedQuery(name = "ServicePackage.findAllServicePackages", query = "SELECT sp FROM ServicePackage sp"),
-        @NamedQuery(name = "ServicePackage.findServicePackageById", query = "SELECT sp FROM ServicePackage sp where sp.id=?1")
 
 })
 public class ServicePackage {
@@ -17,7 +16,7 @@ public class ServicePackage {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @Column(nullable = false)
     private String name;

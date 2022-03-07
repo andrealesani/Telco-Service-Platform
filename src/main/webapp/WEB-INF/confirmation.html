@@ -7,6 +7,7 @@
     <title>Home</title>
 </head>
 <body>
+<p class="login-status" th:text="'Welcome, ' + (*{user != null}? *{user.username} : 'user')"></p>
 Confirm your choices
 <br><br><br>
 <form action=""

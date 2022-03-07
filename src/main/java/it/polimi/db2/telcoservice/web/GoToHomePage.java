@@ -48,6 +48,8 @@ public class GoToHomePage extends HttpServlet {
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
         ctx.setVariable("servicePackages", servicePackages);
+        ctx.setVariable("user", request.getSession().getAttribute("user"));
+
         //response.getWriter().println("validityPeriods is empty: " + servicePackages.get(0).getValidityPeriods().isEmpty());
         templateEngine.process(path, ctx, response.getWriter());
     }
