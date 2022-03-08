@@ -44,7 +44,7 @@ form [type=submit] {
 }
 
 input[type=submit]:hover {
-    background-color: #15451b; /* Green */
+    background-color: #185020; /* Green */
     cursor: pointer;
 }
 
@@ -70,7 +70,7 @@ button {
 }
 
 button:hover {
-    background-color: #15451b; /* Green */
+    background-color: #185020; /* Green */
     cursor: pointer;
 }
 

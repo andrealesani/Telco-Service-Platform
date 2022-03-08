@@ -34,7 +34,7 @@ public class GoToLoginPage extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String registered = request.getParameter("registered");
-        if (registered.equals("true")) {
+        if (registered != null && registered.equals("true")) {
             registered = "You have correctly registered, now you can log in";
         }
         String path = "/index.html";

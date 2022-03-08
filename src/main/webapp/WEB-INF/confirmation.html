@@ -4,22 +4,23 @@
 <link href="css/style.css" rel="stylesheet">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <title>Telco Service - Confirm</title>
 </head>
 <body>
 <p class="login-status" th:text="'Welcome, ' + (*{user != null}? *{user.username} : 'user')"></p>
-Confirm your choices
-<br><br><br>
-<form action=""
+<h1>Confirm your choices</h1>
+<br>
+<span th:unless="${order != null}">The order is empty</span>
+<span th:if="${order != null}" th:text="'order id '+ ${order.id}"></span>
+<br><br>
+<form th:unless="${user != null}" action="GoToLoginPage"
       method="GET">
-    <label> Yes:
-        <input type="checkbox" name="">
-    </label>
-    <label> Or Yes:
-        <input type="checkbox" name="">
-    </label>
-    <br>
-    <input type="submit" value="CONFIRM">
+    <label>To proceed with the payment, please log in</label>
+    <input type="submit" value="LOGIN">
+</form>
+<form th:if="${user != null}" action=""
+      method="GET">
+    <input type="submit" value="BUY">
 </form>
 </body>
 </html>

@@ -42,11 +42,11 @@ public class GoToConfirmationPage extends HttpServlet {
         }
         ServicePackageService servicePackageService = new ServicePackageService();
         ServicePackage servicePackage = servicePackageService.findServicePackageById(id);
-        String path = "/WEB-INF/buy-service.html";
+        String path = "/WEB-INF/confirmation.html";
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
         ctx.setVariable("user", request.getSession().getAttribute("user"));
-        //response.getWriter().println("validityPeriods is empty: " + servicePackages.get(0).getValidityPeriods().isEmpty());
+        ctx.setVariable("order", request.getSession().getAttribute("order"));
         templateEngine.process(path, ctx, response.getWriter());
     }
 
