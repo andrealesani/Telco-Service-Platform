@@ -10,6 +10,11 @@ public class OptionalProduct {
     public OptionalProduct() {
     }
 
+    public OptionalProduct(String name, BigDecimal monthlyFee) {
+        this.name = name;
+        this.monthlyFee = monthlyFee;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

@@ -4,35 +4,42 @@
 <link href="css/style.css" rel="stylesheet">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <title>Telco Service - Buy</title>
 </head>
 <body>
 <p class="login-status" th:text="'Welcome, ' + (*{user != null}? *{user.username} : 'user')"></p>
-Buy a service package
-<br><br><br>
-<label for="cars">Choose a service package:</label>
-<select id="cars" name="service-package" form="buy-form">
-    <option value="volvo">Volvo</option>
-    <option value="saab">Saab</option>
-    <option value="opel">Opel</option>
-    <option value="audi">Audi</option>
-</select>
-<br>
-<label for="validity-period">Choose a validity period:</label>
-<select id="validity-period" name="service-package" form="buy-form">
-    <option value="1">1 month</option>
-    <option value="2">2 months</option>
-    <option value="3">3 months</option>
-    <option value="4">4 months</option>
-</select>
-<br>
+<h1>Buy a service package</h1>
+<h3>Choose a service package and the related period:</h3>
+<form id="serv-packg" name="service-package">
+    <span th:if="${#lists.isEmpty(servicePackages)}">No service packages available</span>
+    <div th:each="servpckg : ${servicePackages}">
+        <br>
+        <input type="radio" th:value="${servpckg.id}" th:text="${' ' + servpckg.id + ' ' + servpckg.name}"
+               form="buy-form" name="service-package">
+        <br>
+        <label for="validity-period">Validity period:</label>
+        <select id="validity-period" name="service-package" form="buy-form">
+            <option value="-1" th:if="${#sets.isEmpty(servpckg.validityPeriods)}">No periods available</option>
+            <option th:each="valPer : ${servpckg.validityPeriods}" th:value="${valPer.id}"
+                    th:text="${valPer.months} + ' months'"></option>
+        </select>
+        <br>
+        <span th:if="${#sets.isEmpty(servpckg.optionalProducts)}">No optional products available</span>
+        <div th:each="optProd : ${servpckg.optionalProducts}">
+            <label th:text="${optProd.name}"></label>
+            <input type="checkbox" name="optional-product" form="buy-form">
+        </div>
+    </div>
+</form>
 <form action="GoToConfirmationPage" id="buy-form"
       method="GET">
-    <label> I want a super special optional product:
-        <input type="checkbox" name="optional-product">
-    </label>
     <br>
     <input type="submit" value="BUY">
+</form>
+<form action="GoToHomePage" id="go-back"
+      method="GET">
+    <br>
+    <input type="submit" value="Homepage">
 </form>
 </body>
 </html>

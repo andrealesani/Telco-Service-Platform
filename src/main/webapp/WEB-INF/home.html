@@ -14,7 +14,7 @@
 <ul th:unless="${#lists.isEmpty(servicePackages)}">
     <li th:each="servpckg : ${servicePackages}">
         <span th:text="${servpckg.id +  '  '  + servpckg.name}"></span>
-        <span th:if="${#sets.isEmpty(servpckg.services)}"><ul><li>This package has no services</li></ul></span>
+        <div th:if="${#sets.isEmpty(servpckg.services)}"><ul><li>This package has no services</li></ul></div>
         <ul th:unless="${#sets.isEmpty(servpckg.services)}">
             <li th:each="service : ${servpckg.services}">
                 <span th:text="${service.type}"></span>
@@ -37,6 +37,8 @@
         </ul>
     </li>
 </ul>
-<a href="GoToBuyServicePage">Buy a service</a>
+<form action="GoToBuyServicePage">
+    <input type="submit" value="Buy a service">
+</form>
 </body>
 </html>

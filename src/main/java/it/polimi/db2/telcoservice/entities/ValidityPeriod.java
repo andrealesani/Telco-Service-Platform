@@ -10,6 +10,11 @@ public class ValidityPeriod {
     public ValidityPeriod() {
     }
 
+    public ValidityPeriod(int months, BigDecimal monthlyFee) {
+        this.months = months;
+        this.monthlyFee = monthlyFee;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

@@ -40,6 +40,12 @@ form [type=submit] {
     text-decoration: none;
     display: inline-block;
     font-size: 14px;
+    margin: 4px;
+}
+
+input[type=submit]:hover {
+    background-color: #15451b; /* Green */
+    cursor: pointer;
 }
 
 table {
@@ -66,4 +72,8 @@ button {
 button:hover {
     background-color: #15451b; /* Green */
     cursor: pointer;
+}
+
+li:not(:last-child) {
+    margin-bottom: 20px;
 }
