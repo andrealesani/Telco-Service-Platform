@@ -6,6 +6,10 @@ import java.util.Set;
 
 @Entity
 @Table(name = "validity_period")
+@NamedQueries({
+        @NamedQuery(name = "ValidityPeriod.findAllValidityPeriods", query = "SELECT vp FROM ValidityPeriod vp"),
+
+})
 public class ValidityPeriod {
     public ValidityPeriod() {
     }

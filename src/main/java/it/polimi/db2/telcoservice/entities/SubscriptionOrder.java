@@ -11,6 +11,13 @@ public class SubscriptionOrder {
     public SubscriptionOrder() {
     }
 
+    public SubscriptionOrder(ServicePackage servicePackage, ValidityPeriod validityPeriod, Set<OptionalProduct> optionalProducts, User user) {
+        this.servicePackage = servicePackage;
+        this.validityPeriod = validityPeriod;
+        this.optionalProducts = optionalProducts;
+        this.user = user;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

@@ -33,15 +33,6 @@ public class GoToConfirmationPage extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String servPckgId = request.getParameter("service-package");
-        int id = 0;
-        try {
-            id = Integer.parseInt(servPckgId);
-        } catch (NumberFormatException e) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "The specified service package ID is not valid");
-        }
-        ServicePackageService servicePackageService = new ServicePackageService();
-        ServicePackage servicePackage = servicePackageService.findServicePackageById(id);
         String path = "/WEB-INF/confirmation.html";
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
