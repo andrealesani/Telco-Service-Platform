@@ -41,6 +41,7 @@ public class GoToLoginPage extends HttpServlet {
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
         ctx.setVariable("registered", registered);
+        ctx.setVariable("order", request.getSession().getAttribute("order"));
         //response.getWriter().println("validityPeriods is empty: " + servicePackages.get(0).getValidityPeriods().isEmpty());
         templateEngine.process(path, ctx, response.getWriter());
     }

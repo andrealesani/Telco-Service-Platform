@@ -19,8 +19,8 @@ public class Login extends HttpServlet {
         response.getWriter().append("This servlet only supports POST requests");
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String username = request.getParameter("username");  // the username is the email the user registered with
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String username = request.getParameter("username");
         String password = request.getParameter("password");
 
         if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
@@ -28,27 +28,29 @@ public class Login extends HttpServlet {
             return;
         }
 
-        UserService us = new UserService();
-        User u = null;
+        UserService userService = new UserService();
+        User user = null;
         try {
-            u = us.checkCredentials(username, password);
+            user = userService.checkCredentials(username, password);
         } catch (CredentialsException e) {
             e.printStackTrace();
         }
 
-        String path = getServletContext().getContextPath();
-        if (u == null) {
-            path = getServletContext().getContextPath() + "/index.html";
+        String path;
+        if (user == null) {
+            path = getServletContext().getContextPath() + "/GoToLoginPage";
         } else {
-            request.getSession().setAttribute("user", u);
-            //String target = (u.getRole().equals("admin")) ? "/home-admin" : "/home-user";
-            String target = "/GoToHomePage";
-            path = path + target;
+            request.getSession().setAttribute("user", user);
+            if (request.getSession().getAttribute("order") == null) {
+                path = getServletContext().getContextPath() + "/GoToHomePage";
+                System.out.println("no order was present");
+            } else {
+                path = getServletContext().getContextPath() + "/GoToConfirmationPage";
+                System.out.println("the user had already created an order");
+            }
         }
         response.sendRedirect(path);
     }
-
-    public void destroy() {}
 }
 
 

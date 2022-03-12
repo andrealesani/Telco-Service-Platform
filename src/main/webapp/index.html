@@ -5,9 +5,9 @@
     <title>Telco Service Company</title>
 </head>
 <body>
-<h1>Welcome to GeeGee Simulator!</h1>
+<h1 th:if="${order == null}">Welcome to GeeGee Simulator!</h1>
 <h2 th:text="${registered}"></h2>
-<form action="GoToHomePage">
+<form th:if="${order == null}" action="GoToHomePage">
     <input type="submit" value="View products without logging in">
 </form>
 <br><br>
@@ -39,10 +39,10 @@ New user? Sign up
         type="submit" value="Sign up">
 </form>
 <br>
-<form action="add-gee-gee">
+<form th:if="${order == null}" action="add-gee-gee">
     <input type="submit" value="Add GeeGee to the database">
 </form>
-<form action="add-default-service-package">
+<form th:if="${order == null}" action="add-default-service-package">
     <input type="submit" value="Add default service package for testing">
 </form>
 </body>
