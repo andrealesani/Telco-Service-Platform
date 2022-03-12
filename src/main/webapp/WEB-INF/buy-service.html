@@ -28,9 +28,9 @@
         <span>No optional products available</span>
         <br>
     </div>
-    <div th:each="optProd : ${servpckg.optionalProducts}">
+    <div th:each="optProd,iter : ${servpckg.optionalProducts}">
         <label th:text="${optProd.name}"></label>
-        <input type="checkbox" name="opt_prod_id" th:value="${optProd.id}" th:form="buy-form+${servpckg.id}">
+        <input type="checkbox" th:name="opt_prod_id+${iter.index}" th:value="${optProd.id}" th:form="buy-form+${servpckg.id}">
     </div>
     <input type="submit" th:form="buy-form+${servpckg.id}" value="BUY">
 </form>

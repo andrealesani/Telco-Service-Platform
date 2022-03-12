@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -23,10 +25,15 @@ public class PrepareOrder extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int serv_pckg_id = Integer.parseInt(request.getParameter("serv_pckg_id"));
         int val_per_id = Integer.parseInt(request.getParameter("val_per_id"));
-        int opt_prod_id = -1;
-        try {
-            opt_prod_id = Integer.parseInt(request.getParameter("opt_prod_id"));
-        } catch (NumberFormatException ignored) {
+        List<Integer> opt_prod_ids = new ArrayList<>();
+        int i = 0;
+        while (true) {
+            try {
+                opt_prod_ids.add(Integer.parseInt(request.getParameter("opt_prod_id" + i)));
+                i++;
+            } catch (NumberFormatException e) {
+                break;
+            }
         }
 
         ServicePackageService servicePackageService = new ServicePackageService();
@@ -36,9 +43,10 @@ public class PrepareOrder extends HttpServlet {
         ServicePackage servicePackage = servicePackageService.findServicePackageById(serv_pckg_id);
         ValidityPeriod validityPeriod = validityPeriodService.findValidityPeriodById(val_per_id);
         Set<OptionalProduct> optionalProducts = new HashSet<>();
-        if (opt_prod_id != -1) {
-            optionalProducts.add(optionalProductService.findOptionalProductById(opt_prod_id));
+        for (int id : opt_prod_ids) {
+            optionalProducts.add(optionalProductService.findOptionalProductById(id));
         }
+
         SubscriptionOrder order = new SubscriptionOrder(servicePackage, validityPeriod, optionalProducts, (User) request.getSession().getAttribute("user"));
         request.getSession().setAttribute("order", order);
         //try {
