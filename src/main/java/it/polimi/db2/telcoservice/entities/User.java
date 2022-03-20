@@ -31,7 +31,7 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
     @Column
-    private boolean insolvent;
+    private Boolean insolvent;
     @Column(name = "rejected_payments")
     private int rejectedPayments;
 

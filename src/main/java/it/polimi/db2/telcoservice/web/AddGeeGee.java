@@ -9,7 +9,7 @@ import javax.persistence.Persistence;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
-@WebServlet(name = "AddGeeGee", value = "/add-gee-gee")
+@WebServlet(name = "/add-gee-gee", value = "/add-gee-gee")
 public class AddGeeGee extends HttpServlet {
     private String message;
 

@@ -3,6 +3,8 @@ package it.polimi.db2.telcoservice.entities;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -36,13 +38,8 @@ public class SubscriptionOrder {
             name = "start_date_ts"
     )
     private Timestamp startDateTs;
-    @Column(
-            nullable = false,
-            name = "deactivation_date_ts"
-    )
-    private Timestamp deactivationDateTs;
-    @Column(nullable = false)
-    private boolean valid;
+    @Column()
+    private Boolean valid;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(
@@ -88,7 +85,12 @@ public class SubscriptionOrder {
     }
 
     public Timestamp getDeactivationDateTs() {
-        return deactivationDateTs;
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(startDateTs.getTime());
+        cal.add(Calendar.MONTH, validityPeriod.getMonths());
+
+        return new Timestamp(cal.getTime().getTime());
     }
 
     public boolean isValid() {
@@ -127,10 +129,6 @@ public class SubscriptionOrder {
 
     public void setStartDateTs(Timestamp startDateTs) {
         this.startDateTs = startDateTs;
-    }
-
-    public void setDeactivationDateTs(Timestamp deactivationDateTs) {
-        this.deactivationDateTs = deactivationDateTs;
     }
 
     public void setValid(boolean valid) {
