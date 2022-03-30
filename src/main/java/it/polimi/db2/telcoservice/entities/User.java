@@ -30,9 +30,9 @@ public class User {
     private String password;
     @Column(nullable = false, unique = true)
     private String email;
-    @Column
+    @Column(nullable = false)
     private Boolean insolvent;
-    @Column(name = "rejected_payments")
+    @Column(name = "rejected_payments", nullable = false)
     private int rejectedPayments;
 
     @OneToMany(
