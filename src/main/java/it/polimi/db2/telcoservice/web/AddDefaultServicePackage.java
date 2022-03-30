@@ -29,7 +29,7 @@ import java.util.Set;
 *
 * */
 
-@WebServlet(name = "AddGeeGee", value = "/add-default-service-package")
+@WebServlet(name = "AddDefaultServicePackage", value = "/add-default-service-package")
 public class AddDefaultServicePackage extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
