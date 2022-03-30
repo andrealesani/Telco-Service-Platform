@@ -28,9 +28,15 @@
     <label>To proceed with the payment, please log in</label>
     <input type="submit" value="LOGIN">
 </form>
-<form th:if="${user != null}" action=""
+<form th:if="${user != null}" action="ValidPayment"
       method="GET">
-    <input type="submit" value="BUY">
+    <input type="hidden" name="order-id" th:value="${order.id}">
+    <input type="submit" value="BUY (OK)">
+</form>
+<form th:if="${user != null}" action="InvalidPayment"
+      method="GET">
+    <input type="hidden" name="order-id" th:value="${order.id}">
+    <input type="submit" value="BUY (DENIED)">
 </form>
 </body>
 </html>
