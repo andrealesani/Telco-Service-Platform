@@ -15,6 +15,13 @@ public class ServicePackage {
     public ServicePackage() {
     }
 
+    public ServicePackage(String name, Set<Service> services, Set<ValidityPeriod> validityPeriods, Set<OptionalProduct> optionalProducts) {
+        this.name = name;
+        this.services = services;
+        this.validityPeriods = validityPeriods;
+        this.optionalProducts = optionalProducts;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;

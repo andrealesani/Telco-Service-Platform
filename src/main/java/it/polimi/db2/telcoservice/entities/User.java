@@ -76,6 +76,10 @@ public class User {
         return auditing;
     }
 
+    public List<SubscriptionOrder> getOrders() {
+        return orders;
+    }
+
     // SETTERS
 
     public void setId(int id) {
@@ -104,5 +108,9 @@ public class User {
 
     public void setAuditing(List<Auditing> auditing) {
         this.auditing = auditing;
+    }
+
+    public void setOrders(List<SubscriptionOrder> orders) {
+        this.orders = orders;
     }
 }

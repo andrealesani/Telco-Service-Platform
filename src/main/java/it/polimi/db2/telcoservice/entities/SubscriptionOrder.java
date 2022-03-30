@@ -13,18 +13,18 @@ public class SubscriptionOrder {
     public SubscriptionOrder() {
     }
 
-    public SubscriptionOrder(ServicePackage servicePackage, ValidityPeriod validityPeriod, Set<OptionalProduct> optionalProducts, User user) {
+    public SubscriptionOrder(ServicePackage servicePackage, ValidityPeriod validityPeriod, Set<OptionalProduct> optionalProducts, User user, Timestamp creationTs) {
         this.servicePackage = servicePackage;
         this.validityPeriod = validityPeriod;
         this.optionalProducts = optionalProducts;
         this.user = user;
+        this.creationTs = creationTs;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(
-            nullable = false,
             name = "total_value"
     )
     private BigDecimal totalValue;
@@ -34,32 +34,31 @@ public class SubscriptionOrder {
     )
     private Timestamp creationTs;
     @Column(
-            nullable = false,
             name = "start_date_ts"
     )
     private Timestamp startDateTs;
     @Column()
     private Boolean valid;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(
             nullable = false,
             name = "serv_pckg_id"
     )
     private ServicePackage servicePackage;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(
             nullable = false,
             name = "val_period_id"
     )
     private ValidityPeriod validityPeriod;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(
             joinColumns = @JoinColumn(name = "sub_order_id"),
             inverseJoinColumns = @JoinColumn(name = "opt_prod_id")
     )
     private Set<OptionalProduct> optionalProducts;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(
             nullable = false,
             name = "user_id"
