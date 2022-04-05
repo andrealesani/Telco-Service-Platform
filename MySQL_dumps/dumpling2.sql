@@ -64,7 +64,7 @@ CREATE TABLE `OPENJPA_SEQUENCE_TABLE` (
 
 LOCK TABLES `OPENJPA_SEQUENCE_TABLE` WRITE;
 /*!40000 ALTER TABLE `OPENJPA_SEQUENCE_TABLE` DISABLE KEYS */;
-INSERT INTO `OPENJPA_SEQUENCE_TABLE` VALUES (0,501);
+INSERT INTO `OPENJPA_SEQUENCE_TABLE` VALUES (0,551);
 /*!40000 ALTER TABLE `OPENJPA_SEQUENCE_TABLE` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -92,6 +92,25 @@ LOCK TABLES `optional_product` WRITE;
 INSERT INTO `optional_product` VALUES (1,4.00,'\"aha\"'),(3,5.00,'ehe'),(4,20.00,'optionalGee');
 /*!40000 ALTER TABLE `optional_product` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `optional_product_AFTER_INSERT` AFTER INSERT ON `optional_product` FOR EACH ROW BEGIN
+	# SALES_REPORT_PRODUCT_SALES
+	INSERT INTO sales_report_product_sales (opt_prod_id, total_sales)
+	VALUES (new.id, 0);
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `sales_report_insolvent_users`
@@ -250,6 +269,41 @@ LOCK TABLES `service` WRITE;
 INSERT INTO `service` VALUES (1,0.00,1.00,1.00,0,1,1,'MOBILE_PHONE'),(2,0.00,0.00,0.00,0,0,0,'FIXED_PHONE'),(3,1.00,0.00,0.00,1,0,0,'MOBILE_INTERNET'),(4,1.00,0.00,0.00,1,0,0,'FIXED_INTERNET'),(351,5.00,0.00,0.00,5,0,0,'FIXED_INTERNET');
 /*!40000 ALTER TABLE `service` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `service_BEFORE_INSERT` BEFORE INSERT ON `service` FOR EACH ROW BEGIN
+	# SERVICE_TYPE_CONSTRAINTS
+	IF 
+		new.`type` = "MOBILE_PHONE" OR new.`type`="FIXED_PHONE"
+	THEN
+		SET new.gb = 0;
+        SET new.extra_gb_fee = 0.0;
+    END IF;
+    IF 
+		new.`type` = "FIXED_PHONE" OR new.`type` = "FIXED_INTERNET" OR new.`type` = "MOBILE_INTERNET"
+	THEN
+		SET new.minutes = 0;
+        SET new.extra_min_fee = 0.0;
+	END IF;
+    IF 
+		new.`type` = "FIXED_PHONE" OR new.`type` = "FIXED_INTERNET" OR new.`type` = "MOBILE_INTERNET"
+	THEN
+		SET new.sms = 0;
+        SET new.extra_sms_fee = 0.0;
+    END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `service_package`
@@ -274,6 +328,25 @@ LOCK TABLES `service_package` WRITE;
 INSERT INTO `service_package` VALUES (151,'Test'),(301,'AHa'),(401,'Gee'),(451,'GEronimo'),(601,'REEEEEE');
 /*!40000 ALTER TABLE `service_package` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `service_package_AFTER_INSERT` AFTER INSERT ON `service_package` FOR EACH ROW BEGIN
+	# SALES_REPORT_PACKAGES
+	INSERT INTO sales_report_packages (serv_pckg_id, purchases, sales_value_no_products, sales_value_with_products, avg_num_products)
+	VALUES (new.id, 0, 0.0, 0.0, 0);
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `service_package_optional_product`
@@ -349,6 +422,25 @@ LOCK TABLES `service_package_validity_period` WRITE;
 INSERT INTO `service_package_validity_period` VALUES (151,4),(301,5),(151,5),(601,4),(451,4),(451,5),(401,7),(401,6);
 /*!40000 ALTER TABLE `service_package_validity_period` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `service_package_validity_period_AFTER_INSERT` AFTER INSERT ON `service_package_validity_period` FOR EACH ROW BEGIN
+	# SALES_REPORT_VALIDITY_PACKAGES
+	INSERT INTO sales_report_validity_packages (serv_pckg_id, val_period_id, purchases)
+	VALUES (new.serv_pckg_id, new.val_period_id, 0);
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `subscription_order`
@@ -382,6 +474,145 @@ LOCK TABLES `subscription_order` WRITE;
 INSERT INTO `subscription_order` VALUES (1,'1970-01-01 00:00:00','1970-01-01 00:00:00',1.00,_binary '',1,151,4),(2,'2022-03-19 09:47:18','2030-01-01 00:00:00',6.00,_binary '',1,151,4),(16,'2022-03-19 09:56:58','2022-03-19 09:56:58',14.00,_binary '',1,151,4),(17,'2022-03-19 09:59:54','2022-03-19 09:59:55',14.00,_binary '',1,151,4),(18,'2022-03-19 10:03:46','2022-03-19 10:03:46',14.00,_binary '',1,151,4),(19,'2022-03-19 11:09:47','2022-03-19 11:09:48',14.00,_binary '',1,451,4),(20,'2022-03-25 11:50:59','2022-03-25 11:51:00',24.00,_binary '',1,451,4),(21,'2022-03-25 13:31:23','2022-03-25 13:31:23',6.00,_binary '\0',1,601,4),(22,'2022-03-25 13:31:24','2022-03-25 13:31:24',6.00,_binary '',1,601,4),(23,'2022-03-30 12:27:17',NULL,645.60,_binary '\0',451,401,6),(24,'2022-03-30 14:09:00',NULL,118.80,_binary '\0',451,401,7),(25,'2022-03-30 14:09:34',NULL,6.00,_binary '\0',451,151,4),(26,'2022-03-30 14:26:24','2022-03-30 12:26:26',118.80,_binary '',451,401,7),(27,'2022-03-30 14:26:47',NULL,645.60,_binary '\0',451,401,6);
 /*!40000 ALTER TABLE `subscription_order` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `subscription_order_BEFORE_INSERT` BEFORE INSERT ON `subscription_order` FOR EACH ROW BEGIN
+    # WRONG_VALIDITY_PERIOD
+    IF
+		new.val_period_id NOT IN	(	SELECT val_period_id 
+										FROM service_package_validity_period 
+										WHERE serv_pckg_id = new.serv_pckg_id	)
+    THEN
+		SIGNAL sqlstate '45001' set message_text = 
+        "Validity period not allowed for the selected service package!";
+	END IF;
+    
+    # PAST_START_DATE
+	IF
+		new.start_date_ts < now() 
+	THEN
+		SIGNAL sqlstate '45001' set message_text = 
+        "Start date cannot be set in the past!";
+	END IF;
+    
+	# SET_CREATION_DATE
+    SET new.creation_ts = now();
+    
+    # SET_SERVICE_TOTAL_VALUE
+	SET new.total_value = 	(	(	SELECT monthly_fee 
+									FROM validity_period 
+									WHERE id = new.val_period_id	) 
+								*
+								(	SELECT months 
+									FROM validity_period 
+									WHERE id = new.val_period_id	)	);
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `subscription_order_AFTER_UPDATE` AFTER UPDATE ON `subscription_order` FOR EACH ROW BEGIN
+    IF
+		new.valid = 0
+	THEN 
+		# SET_USER_INSOLVENT
+		UPDATE `user`
+		SET insolvent = 1
+		WHERE id = new.user_id;
+		
+        # INCREASE_REJECTED_PAYMENTS
+		IF	(	SELECT rejected_payments
+				FROM `user`
+				WHERE id = new.user_id	) < 2
+		THEN
+			UPDATE `user`
+			SET rejected_payments = rejected_payments + 1
+			WHERE id = new.user_id;
+            
+		# GENERATE_AUDITING
+		ELSE
+			UPDATE `user`
+			SET rejected_payments = 0
+			WHERE id = new.user_id;
+            
+            INSERT INTO auditing (rejected_amount, rejection_ts, user_id) 
+            VALUES(new.total_value, now(), new.user_id);
+		END IF;
+        
+        # SALES_REPORT_SUSPENDED_ORDERS
+        IF
+			new.valid != old.valid
+		THEN
+			INSERT INTO sales_report_suspended_orders (sub_order_id)
+			VALUES (new.id);
+        END IF;
+	ELSEIF 
+			new.valid = 1
+            AND
+            new.valid != old.valid
+    THEN
+		# SET_USER_SOLVENT
+		IF
+			NOT EXISTS (	SELECT *
+							FROM subscription_order
+							WHERE valid = 0 AND user_id = new.user_id	)
+		THEN
+			UPDATE `user`
+			SET insolvent = 0
+			WHERE id = new.user_id;
+		END IF;
+        
+        # SALES_REPORT_SUSPENDED_ORDERS
+		DELETE FROM sales_report_suspended_orders
+		WHERE sub_order_id = new.id;
+        
+        # SALES_REPORT_PACKAGES
+		UPDATE sales_report_packages AS srp
+		SET srp.purchases = srp.purchases + 1,
+			srp.sales_value_no_products = srp.sales_value_no_products + (	SELECT months*monthly_fee
+																			FROM validity_period AS vp
+																			WHERE vp.id = new.val_period_id	),
+			srp.sales_value_with_products = srp.sales_value_with_products + new.total_value,
+			srp.avg_num_products =	(	SELECT coalesce(avg(package.prod_count), 0)
+										FROM (
+											SELECT count(*) AS prod_count
+											FROM subscription_order_optional_product AS soop
+											JOIN subscription_order AS so
+											ON so.id = soop.sub_order_id
+											WHERE so.serv_pckg_id = new.serv_pckg_id
+											AND so.valid = 1
+											GROUP BY so.id	)	package	) 
+		WHERE srp.serv_pckg_id = new.serv_pckg_id;
+			
+		# SALES_REPORT_VALIDITY_PACKAGES
+		UPDATE sales_report_validity_packages
+		SET purchases = purchases + 1
+		WHERE serv_pckg_id = new.serv_pckg_id
+		AND val_period_id = new.val_period_id;
+	END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `subscription_order_optional_product`
@@ -407,6 +638,51 @@ LOCK TABLES `subscription_order_optional_product` WRITE;
 INSERT INTO `subscription_order_optional_product` VALUES (1,1),(9,1),(13,1),(15,1),(16,1),(17,1),(18,1),(19,1),(20,1),(20,3),(23,4),(27,4);
 /*!40000 ALTER TABLE `subscription_order_optional_product` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `subscription_order_optional_product_AFTER_INSERT` AFTER INSERT ON `subscription_order_optional_product` FOR EACH ROW BEGIN
+	# SET_PRODUCTS_TOTAL_VALUE
+    SET @vp_id =	(	SELECT val_period_id
+                        FROM subscription_order
+                        WHERE id = new.sub_order_id	);
+                        
+    UPDATE subscription_order 
+    SET total_value = 	total_value 
+						+	
+						(	(	SELECT monthly_fee
+                                FROM optional_product
+                                WHERE id = new.opt_prod_id	)
+							*
+                            (	SELECT months
+                                FROM validity_period 
+                                WHERE id = @vp_id	)	)
+	WHERE id = new.sub_order_id ;
+    
+    # SALES_REPORT_PRODUCT_SALES
+    UPDATE sales_report_product_sales 
+	SET total_sales = total_sales + (	SELECT vp.months
+										FROM validity_period AS vp
+										JOIN subscription_order AS so
+										ON vp.id = so.val_period_id
+										WHERE so.id = new.sub_order_id	)
+									 * 
+									(	SELECT monthly_fee
+										FROM optional_product
+										WHERE id = new.opt_prod_id	)
+	WHERE opt_prod_id = new.opt_prod_id;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `user`
@@ -423,7 +699,7 @@ CREATE TABLE `user` (
   `rejected_payments` int DEFAULT NULL,
   `username` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=452 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=502 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -432,9 +708,41 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Gee',_binary '','Gee',0,'Gee'),(451,'Boo',_binary '','Boo',1,'Boo');
+INSERT INTO `user` VALUES (1,'Gee',_binary '','Gee',0,'Gee'),(451,'Boo',_binary '','Boo',1,'Boo'),(501,'Coo',_binary '\0','Coo',0,'Coo');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `user_AFTER_UPDATE` AFTER UPDATE ON `user` FOR EACH ROW BEGIN
+	# SALES_REPORT_INSOLVENT_USERS
+	IF 
+		new.insolvent != old.insolvent
+	THEN
+		IF 
+			new.insolvent = 1
+		THEN
+			INSERT INTO sales_report_insolvent_users (user_id)
+			VALUES (new.id);
+		ELSEIF
+			new.insolvent = 0
+		THEN
+			DELETE FROM sales_report_insolvent_users
+            WHERE user_id = new.id;
+        END IF;
+	END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `validity_period`
@@ -470,4 +778,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-03-30 14:42:23
+-- Dump completed on 2022-04-05 11:21:43

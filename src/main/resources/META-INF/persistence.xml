@@ -11,6 +11,11 @@
         <class>it.polimi.db2.telcoservice.entities.ServicePackage</class>
         <class>it.polimi.db2.telcoservice.entities.User</class>
         <class>it.polimi.db2.telcoservice.entities.ValidityPeriod</class>
+        <class>it.polimi.db2.telcoservice.entities.materialized.SalesReportInsolventUsers</class>
+        <class>it.polimi.db2.telcoservice.entities.materialized.SalesReportPackages</class>
+        <class>it.polimi.db2.telcoservice.entities.materialized.SalesReportProductSales</class>
+        <class>it.polimi.db2.telcoservice.entities.materialized.SalesReportSuspendedOrders</class>
+        <class>it.polimi.db2.telcoservice.entities.materialized.SalesReportValidityPackage</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/db2_jpa?serverTimezone=UTC"/>
