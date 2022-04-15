@@ -11,18 +11,17 @@ public class SalesReportInsolventUsers {
     }
 
     @Id
-    @OneToOne
     @Column(
             nullable = false,
             name = "user_id"
     )
-    private User user;
+    private int userId;
 
-    public User getUser() {
-        return user;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

@@ -12,10 +12,17 @@ public class SalesReportSuspendedOrders {
     }
 
     @Id
-    @OneToOne
     @Column(
             nullable = false,
             name = "sub_order_id"
     )
-    private SubscriptionOrder subscriptionOrder;
+    private int subOrderId;
+
+    public int getSubOrderId() {
+        return subOrderId;
+    }
+
+    public void setSubOrderId(int subOrderId) {
+        this.subOrderId = subOrderId;
+    }
 }

@@ -13,12 +13,11 @@ public class SalesReportPackages {
     }
 
     @Id
-    @OneToOne
     @Column(
             nullable = false,
             name = "serv_pckg_id"
     )
-    private ServicePackage servicePackage;
+    private int servPckgId;
 
     @Column()
     private int purchases;
@@ -29,12 +28,12 @@ public class SalesReportPackages {
     @Column(name = "avg_num_products")
     private BigDecimal avgNumProducts;
 
-    public ServicePackage getServicePackage() {
-        return servicePackage;
+    public int getServPckgId() {
+        return servPckgId;
     }
 
-    public void setServicePackage(ServicePackage servicePackage) {
-        this.servicePackage = servicePackage;
+    public void setServPckgId(int servPckgId) {
+        this.servPckgId = servPckgId;
     }
 
     public int getPurchases() {
