@@ -7,6 +7,10 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "sales_report_suspended_orders")
+@NamedQueries({
+        @NamedQuery(name = "SalesReportSuspendedOrders.findAllSuspended", query = "SELECT srso FROM SalesReportSuspendedOrders srso"),
+
+})
 public class SalesReportSuspendedOrders {
     public SalesReportSuspendedOrders() {
     }

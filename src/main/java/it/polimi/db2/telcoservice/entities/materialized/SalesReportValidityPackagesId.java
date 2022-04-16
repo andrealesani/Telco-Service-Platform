@@ -3,8 +3,8 @@ package it.polimi.db2.telcoservice.entities.materialized;
 
 import java.io.Serializable;
 
-public class SalesReportValidityPackageId implements Serializable {
-    public SalesReportValidityPackageId() {
+public class SalesReportValidityPackagesId implements Serializable {
+    public SalesReportValidityPackagesId() {
     }
     private int servPckgId;
     private int valPeriodId;

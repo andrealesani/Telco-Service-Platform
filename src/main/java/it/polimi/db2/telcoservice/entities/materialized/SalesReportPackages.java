@@ -8,6 +8,10 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "sales_report_packages")
+@NamedQueries({
+        @NamedQuery(name = "SalesReportPackages.findAllSalesReports", query = "SELECT srp FROM SalesReportPackages srp"),
+
+})
 public class SalesReportPackages {
     public SalesReportPackages() {
     }

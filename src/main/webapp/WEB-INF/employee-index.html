@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<link href="css/style.css" rel="stylesheet">
+<head>
+    <title>Employee Application</title>
+</head>
+<body>
+<h1>Welcome, employee!</h1>
+<br>
+Sign in
+<form action="login"
+      method="POST">
+    username: <label>
+    <input type="text" name="username">
+</label> <br>
+    password: <label>
+    <input type="password" name="password">
+</label><br> <input
+        type="submit" value="Login" disabled="true">
+</form>
+<br>
+<form action="GoToEmployeeHomePage">
+    <input type="submit" value="Go to home page">
+</form>
+<form action="GoToSalesReportPage">
+    <input type="submit" value="View sales report">
+</form>
+</body>
+</html>

@@ -1,15 +1,16 @@
 package it.polimi.db2.telcoservice.entities.materialized;
 
-import it.polimi.db2.telcoservice.entities.ServicePackage;
-import it.polimi.db2.telcoservice.entities.ValidityPeriod;
-
 import javax.persistence.*;
 
 @Entity
 @Table(name = "sales_report_validity_packages")
-@IdClass(SalesReportValidityPackageId.class)
-public class SalesReportValidityPackage {
-    public SalesReportValidityPackage() {
+@IdClass(SalesReportValidityPackagesId.class)
+@NamedQueries({
+        @NamedQuery(name = "SalesReportValidityPackage.findAllSalesReports", query = "SELECT srvp FROM SalesReportValidityPackages srvp"),
+
+})
+public class SalesReportValidityPackages {
+    public SalesReportValidityPackages() {
     }
 
     @Id

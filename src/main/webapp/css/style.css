@@ -44,7 +44,7 @@ form [type=submit] {
 }
 
 input[type=submit]:hover {
-    background-color: #185020; /* Green */
+    background-color: #808080; /* Green */
     cursor: pointer;
 }
 

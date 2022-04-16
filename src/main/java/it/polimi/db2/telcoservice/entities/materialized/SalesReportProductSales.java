@@ -1,13 +1,20 @@
 package it.polimi.db2.telcoservice.entities.materialized;
 
-import it.polimi.db2.telcoservice.entities.OptionalProduct;
-import it.polimi.db2.telcoservice.entities.ServicePackage;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "sales_report_product_sales")
+@NamedQueries({
+        @NamedQuery(name = "SalesReportProductSales.findBestSeller", query = "" +
+                "SELECT srps " +
+                "FROM SalesReportProductSales srps " +
+                "WHERE srps.totalSales = (" +
+                "SELECT MAX(srps1.totalSales)" +
+                "FROM SalesReportProductSales srps1" +
+                ")"),
+
+})
 public class SalesReportProductSales {
     public SalesReportProductSales() {
     }
