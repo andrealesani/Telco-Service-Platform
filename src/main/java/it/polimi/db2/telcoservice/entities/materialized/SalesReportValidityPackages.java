@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Table(name = "sales_report_validity_packages")
 @IdClass(SalesReportValidityPackagesId.class)
 @NamedQueries({
-        @NamedQuery(name = "SalesReportValidityPackage.findAllSalesReports", query = "SELECT srvp FROM SalesReportValidityPackages srvp"),
+        @NamedQuery(name = "SalesReportValidityPackages.findAllSalesReports", query = "SELECT srvp FROM SalesReportValidityPackages srvp"),
 
 })
 public class SalesReportValidityPackages {

@@ -2,7 +2,9 @@ package it.polimi.db2.telcoservice.web;
 
 import it.polimi.db2.telcoservice.entities.ServicePackage;
 import it.polimi.db2.telcoservice.entities.materialized.SalesReportPackages;
+import it.polimi.db2.telcoservice.entities.materialized.SalesReportValidityPackages;
 import it.polimi.db2.telcoservice.services.SalesReportPackagesService;
+import it.polimi.db2.telcoservice.services.SalesReportValidityPackagesService;
 import it.polimi.db2.telcoservice.services.ServicePackageService;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
@@ -38,10 +40,16 @@ public class GoToSalesReportPage extends HttpServlet {
         List<SalesReportPackages> srServicePackages;
         SalesReportPackagesService salesReportPackagesService = new SalesReportPackagesService();
         srServicePackages = salesReportPackagesService.findAllSalesReports();
+
+        List<SalesReportValidityPackages> srValidityPeriodServicePackages;
+        SalesReportValidityPackagesService salesReportValidityPackagesService = new SalesReportValidityPackagesService();
+        srValidityPeriodServicePackages = salesReportValidityPackagesService.findAllSalesReports();
+
         String path = "/WEB-INF/sales-report.html";
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
         ctx.setVariable("srServicePackages", srServicePackages);
+        ctx.setVariable("srValidityPeriodServicePackages", srValidityPeriodServicePackages);
 
         templateEngine.process(path, ctx, response.getWriter());
 

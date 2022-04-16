@@ -1,6 +1,5 @@
 package it.polimi.db2.telcoservice.services;
 
-import it.polimi.db2.telcoservice.entities.materialized.SalesReportPackages;
 import it.polimi.db2.telcoservice.entities.materialized.SalesReportValidityPackages;
 
 import javax.ejb.Stateless;
@@ -12,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
-public class SalesReportValidityPackageService {
+public class SalesReportValidityPackagesService {
     public List<SalesReportValidityPackages> findAllSalesReports() {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
