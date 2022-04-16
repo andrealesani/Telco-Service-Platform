@@ -14,11 +14,14 @@
         <ul>
             <li>
                 Purchases: <span th:text="${srsp.getPurchases()}"></span>
-                <br>
+            </li>
+            <li>
                 Total sales without counting products: <span th:text="${srsp.getSalesValueNoProducts()}"></span>
-                <br>
+            </li>
+            <li>
                 Total sales counting products: <span th:text="${srsp.getSalesValueWithProducts()}"></span>
-                <br>
+            </li>
+            <li>
                 Average number of products: <span th:text="${srsp.getAvgNumProducts()}"></span>
             </li>
         </ul>
@@ -37,6 +40,14 @@
                 Number of purchases: <span th:text="${srvpsp.getPurchases()}"></span>
             </li>
         </ul>
+    </li>
+</ul>
+<br>
+<h3>Insolvent users:</h3>
+<ul th:if="${#lists.isEmpty(srInsolventUsers)}"><li>There are currently no insolvent users in the sales report.<br></li></ul>
+<ul th:unless="${#lists.isEmpty(srInsolventUsers)}">
+    <li th:each="sriu : ${srInsolventUsers}">
+        User ID: <span th:text="${sriu.getUserId()}"></span>
     </li>
 </ul>
 <br>
