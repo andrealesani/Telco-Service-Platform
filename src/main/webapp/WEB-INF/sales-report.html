@@ -59,6 +59,34 @@
     </li>
 </ul>
 <br>
-
+<h3>Best seller optional product:</h3>
+<ul>
+    <li>
+        Product ID: <span th:text="${srBestSellerProduct.getOptProdId()}"></span>
+        <ul>
+            <li>
+                Total sales: <span th:text="${srBestSellerProduct.getTotalSales()}"></span>
+            </li>
+        </ul>
+    </li>
+</ul>
+<br>
+<h3>Auditing:</h3>
+<ul th:if="${#lists.isEmpty(srAuditingRecords)}"><li>There are currently no auditing records in the sales report.<br></li></ul>
+<ul th:unless="${#lists.isEmpty(srAuditingRecords)}">
+    <li th:each="srar : ${srAuditingRecords}">
+        User ID: <span th:text="${srar.getUser.getId()}"></span>
+        <br>
+        Auditing ID: <span th:text="${srar.getId()}"></span>
+        <ul>
+            <li>
+                Payment rejection date: <span th:text="${srar.getRejectionTs()}"></span>
+            </li>
+            <li>
+                Rejected amount: <span th:text="${srar.getRejectedAmount()}"></span>
+            </li>
+        </ul>
+    </li>
+</ul>
 </body>
 </html>

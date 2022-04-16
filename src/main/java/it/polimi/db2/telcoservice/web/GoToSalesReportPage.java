@@ -1,10 +1,7 @@
 package it.polimi.db2.telcoservice.web;
 
-import it.polimi.db2.telcoservice.entities.ServicePackage;
-import it.polimi.db2.telcoservice.entities.materialized.SalesReportInsolventUsers;
-import it.polimi.db2.telcoservice.entities.materialized.SalesReportPackages;
-import it.polimi.db2.telcoservice.entities.materialized.SalesReportSuspendedOrders;
-import it.polimi.db2.telcoservice.entities.materialized.SalesReportValidityPackages;
+import it.polimi.db2.telcoservice.entities.Auditing;
+import it.polimi.db2.telcoservice.entities.materialized.*;
 import it.polimi.db2.telcoservice.services.*;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
@@ -53,6 +50,13 @@ public class GoToSalesReportPage extends HttpServlet {
         SalesReportSuspendedOrdersService salesReporSuspendedOrdersService = new SalesReportSuspendedOrdersService();
         srSuspendedOrders = salesReporSuspendedOrdersService.findAllSuspended();
 
+        List<Auditing> srAuditingRecords;
+        AuditingService auditingService = new AuditingService();
+        srAuditingRecords = auditingService.findAllAuditings();
+
+        SalesReportProductSalesService salesReportProductSalesService = new SalesReportProductSalesService();
+        SalesReportProductSales srBestSellerProduct = salesReportProductSalesService.findBestSeller();
+
         String path = "/WEB-INF/sales-report.html";
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
@@ -61,6 +65,8 @@ public class GoToSalesReportPage extends HttpServlet {
         ctx.setVariable("srValidityPeriodServicePackages", srValidityPeriodServicePackages);
         ctx.setVariable("srInsolventUsers", srInsolventUsers);
         ctx.setVariable("srSuspendedOrders", srSuspendedOrders);
+        ctx.setVariable("srBestSellerProduct", srBestSellerProduct);
+        ctx.setVariable("srAuditingRecords", srAuditingRecords);
 
         templateEngine.process(path, ctx, response.getWriter());
 

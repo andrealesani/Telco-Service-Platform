@@ -6,6 +6,9 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name = "auditing")
+@NamedQueries({
+        @NamedQuery(name = "Auditing.findAllAuditings", query = "SELECT a FROM Auditing a"),
+})
 public class Auditing {
     public Auditing() {
     }
