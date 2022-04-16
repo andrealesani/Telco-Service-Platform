@@ -1,5 +1,13 @@
 package it.polimi.db2.telcoservice.web;
 
+import it.polimi.db2.telcoservice.entities.OptionalProduct;
+import it.polimi.db2.telcoservice.entities.Service;
+import it.polimi.db2.telcoservice.entities.ServicePackage;
+import it.polimi.db2.telcoservice.entities.ValidityPeriod;
+import it.polimi.db2.telcoservice.services.OptionalProductService;
+import it.polimi.db2.telcoservice.services.ServicePackageService;
+import it.polimi.db2.telcoservice.services.ServiceService;
+import it.polimi.db2.telcoservice.services.ValidityPeriodService;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
@@ -11,6 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Servlet implementation class GoToEmployeePage
@@ -31,8 +40,25 @@ public class GoToEmployeeHomePage extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String path = "/WEB-INF/employee-home.html";
+
+        List<Service> services;
+        ServiceService serviceService = new ServiceService();
+        services = serviceService.findAllServices();
+
+        List<ValidityPeriod> validityPeriods;
+        ValidityPeriodService validityPeriodService = new ValidityPeriodService();
+        validityPeriods = validityPeriodService.findAllValidityPeriods();
+
+        List<OptionalProduct> optionalProducts;
+        OptionalProductService optionalProductService = new OptionalProductService();
+        optionalProducts = optionalProductService.findAllOptionalProducts();
+
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+
+        ctx.setVariable("services", services);
+        ctx.setVariable("validityPeriods", validityPeriods);
+        ctx.setVariable("optionalProducts", optionalProducts);
 
         templateEngine.process(path, ctx, response.getWriter());
 

@@ -39,11 +39,15 @@ public class GoToBuyServicePage extends HttpServlet {
         List<ServicePackage> servicePackages;
         ServicePackageService servicePackageService = new ServicePackageService();
         servicePackages = servicePackageService.findAllServicePackages();
+
         String path = "/WEB-INF/buy-service.html";
+
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+
         ctx.setVariable("servicePackages", servicePackages);
         ctx.setVariable("user", request.getSession().getAttribute("user"));
+
         templateEngine.process(path, ctx, response.getWriter());
     }
 

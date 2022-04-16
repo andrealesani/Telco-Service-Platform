@@ -9,6 +9,9 @@ import java.util.Set;
 
 @Entity
 @Table(name = "service")
+@NamedQueries({
+        @NamedQuery(name = "Service.findAllServices", query = "SELECT s FROM Service s"),
+})
 public class Service {
     public Service() {
     }

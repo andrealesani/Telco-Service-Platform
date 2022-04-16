@@ -16,8 +16,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@WebServlet(name = "CreateServicePackage", value = "/create-service-package")
+@WebServlet("/create-service-package")
 public class CreateServicePackage extends HttpServlet {
+    private static final long serialVersionUID = 1L;
     private String message;
 
     public void init() {
@@ -26,7 +27,9 @@ public class CreateServicePackage extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
+
         String name = request.getParameter("name");
+
         List<Integer> servicesIds = new ArrayList<>();
         int i = 0;
         while (true) {
