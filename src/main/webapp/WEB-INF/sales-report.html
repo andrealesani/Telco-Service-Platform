@@ -51,5 +51,14 @@
     </li>
 </ul>
 <br>
+<h3>Suspended orders:</h3>
+<ul th:if="${#lists.isEmpty(srSuspendedOrders)}"><li>There are currently no suspended orders in the sales report.<br></li></ul>
+<ul th:unless="${#lists.isEmpty(srSuspendedOrders)}">
+    <li th:each="srso : ${srSuspendedOrders}">
+        Order ID: <span th:text="${srso.getSubOrderId()}"></span>
+    </li>
+</ul>
+<br>
+
 </body>
 </html>

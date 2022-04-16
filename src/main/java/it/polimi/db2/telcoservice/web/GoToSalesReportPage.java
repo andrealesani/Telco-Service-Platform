@@ -3,11 +3,9 @@ package it.polimi.db2.telcoservice.web;
 import it.polimi.db2.telcoservice.entities.ServicePackage;
 import it.polimi.db2.telcoservice.entities.materialized.SalesReportInsolventUsers;
 import it.polimi.db2.telcoservice.entities.materialized.SalesReportPackages;
+import it.polimi.db2.telcoservice.entities.materialized.SalesReportSuspendedOrders;
 import it.polimi.db2.telcoservice.entities.materialized.SalesReportValidityPackages;
-import it.polimi.db2.telcoservice.services.SalesReportInsolventUsersService;
-import it.polimi.db2.telcoservice.services.SalesReportPackagesService;
-import it.polimi.db2.telcoservice.services.SalesReportValidityPackagesService;
-import it.polimi.db2.telcoservice.services.ServicePackageService;
+import it.polimi.db2.telcoservice.services.*;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
@@ -51,6 +49,10 @@ public class GoToSalesReportPage extends HttpServlet {
         SalesReportInsolventUsersService salesReportInsolventUsersService = new SalesReportInsolventUsersService();
         srInsolventUsers = salesReportInsolventUsersService.findAllInsolvent();
 
+        List<SalesReportSuspendedOrders> srSuspendedOrders;
+        SalesReportSuspendedOrdersService salesReporSuspendedOrdersService = new SalesReportSuspendedOrdersService();
+        srSuspendedOrders = salesReporSuspendedOrdersService.findAllSuspended();
+
         String path = "/WEB-INF/sales-report.html";
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
@@ -58,6 +60,7 @@ public class GoToSalesReportPage extends HttpServlet {
         ctx.setVariable("srServicePackages", srServicePackages);
         ctx.setVariable("srValidityPeriodServicePackages", srValidityPeriodServicePackages);
         ctx.setVariable("srInsolventUsers", srInsolventUsers);
+        ctx.setVariable("srSuspendedOrders", srSuspendedOrders);
 
         templateEngine.process(path, ctx, response.getWriter());
 
