@@ -28,33 +28,33 @@ public class CreateServicePackage extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
 
-        String name = request.getParameter("name");
+        String name = request.getParameter("package-name");
 
-        List<Integer> servicesIds = new ArrayList<>();
+        List<Integer> serviceIds = new ArrayList<>();
         int i = 0;
         while (true) {
             try {
-                servicesIds.add(Integer.parseInt(request.getParameter("service_id" + i)));
+                serviceIds.add(Integer.parseInt(request.getParameter("service" + i)));
                 i++;
             } catch (NumberFormatException e) {
                 break;
             }
         }
-        List<Integer> valPerIds = new ArrayList<>();
+        List<Integer> valPeriodIds = new ArrayList<>();
         i = 0;
         while (true) {
             try {
-                valPerIds.add(Integer.parseInt(request.getParameter("val_per_id" + i)));
+                valPeriodIds.add(Integer.parseInt(request.getParameter("validity-period" + i)));
                 i++;
             } catch (NumberFormatException e) {
                 break;
             }
         }
-        List<Integer> opt_prod_ids = new ArrayList<>();
+        List<Integer> optProdIds = new ArrayList<>();
         i = 0;
         while (true) {
             try {
-                opt_prod_ids.add(Integer.parseInt(request.getParameter("opt_prod_id" + i)));
+                optProdIds.add(Integer.parseInt(request.getParameter("optional-product" + i)));
                 i++;
             } catch (NumberFormatException e) {
                 break;
@@ -65,15 +65,15 @@ public class CreateServicePackage extends HttpServlet {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
         Set<Service> services = new HashSet<>();
-        for (int id : servicesIds) {
+        for (int id : serviceIds) {
             services.add(entityManager.find(Service.class, id));
         }
         Set<ValidityPeriod> validityPeriods = new HashSet<>();
-        for (int id : valPerIds) {
+        for (int id : valPeriodIds) {
             validityPeriods.add(entityManager.find(ValidityPeriod.class, id));
         }
         Set<OptionalProduct> optionalProducts = new HashSet<>();
-        for (int id : opt_prod_ids) {
+        for (int id : optProdIds) {
             optionalProducts.add(entityManager.find(OptionalProduct.class, id));
         }
 
@@ -88,5 +88,9 @@ public class CreateServicePackage extends HttpServlet {
         out.println("<html><link href=\"css/style.css\" rel=\"stylesheet\"><body>");
         out.println("<h1>" + message + "</h1>");
         out.println("</body></html>");
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        doGet(request, response);
     }
 }

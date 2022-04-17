@@ -11,7 +11,7 @@
 <form action="create-service-package" method="POST">
     Package name:
     <label>
-        <input type="text" name="name">
+        <input type="text" name="package-name">
     </label>
     <br>
     Services:
@@ -54,6 +54,20 @@
 <br>
 
 <h3>Create optional product:</h3>
+<form action="create-optional-product" method="POST">
+    Product name:
+    <label>
+        <input type="text" name="product-name">
+    </label>
+    <br>
+    Monthly fee:
+    <label>
+        <input type="number" name="monthly-fee" step=".01">
+    </label>
+    <br>
+    <br>
+    <input type="submit" value="Create product">
+</form>
 
 </body>
 </html>

@@ -30,7 +30,8 @@ public class CreateOptionalProduct extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
-        String name = request.getParameter("name");
+
+        String name = request.getParameter("product-name");
         BigDecimal monthlyFee = new BigDecimal(request.getParameter("monthly-fee"));
 
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
@@ -47,5 +48,9 @@ public class CreateOptionalProduct extends HttpServlet {
         out.println("<html><link href=\"css/style.css\" rel=\"stylesheet\"><body>");
         out.println("<h1>" + message + "</h1>");
         out.println("</body></html>");
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        doGet(request, response);
     }
 }
