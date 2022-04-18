@@ -1,9 +1,6 @@
 package it.polimi.db2.telcoservice.web;
 
-import it.polimi.db2.telcoservice.entities.OptionalProduct;
-import it.polimi.db2.telcoservice.entities.Service;
-import it.polimi.db2.telcoservice.entities.ServicePackage;
-import it.polimi.db2.telcoservice.entities.ValidityPeriod;
+import it.polimi.db2.telcoservice.entities.*;
 import it.polimi.db2.telcoservice.services.OptionalProductService;
 import it.polimi.db2.telcoservice.services.ServicePackageService;
 import it.polimi.db2.telcoservice.services.ServiceService;
@@ -41,6 +38,8 @@ public class GoToEmployeeHomePage extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String path = "/WEB-INF/employee-home.html";
 
+        User user = (User) request.getSession().getAttribute("user");
+
         List<Service> services;
         ServiceService serviceService = new ServiceService();
         services = serviceService.findAllServices();
@@ -59,6 +58,7 @@ public class GoToEmployeeHomePage extends HttpServlet {
         ctx.setVariable("services", services);
         ctx.setVariable("validityPeriods", validityPeriods);
         ctx.setVariable("optionalProducts", optionalProducts);
+        ctx.setVariable("user", user);
 
         templateEngine.process(path, ctx, response.getWriter());
 

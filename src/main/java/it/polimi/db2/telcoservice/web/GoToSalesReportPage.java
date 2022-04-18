@@ -1,6 +1,7 @@
 package it.polimi.db2.telcoservice.web;
 
 import it.polimi.db2.telcoservice.entities.Auditing;
+import it.polimi.db2.telcoservice.entities.User;
 import it.polimi.db2.telcoservice.entities.materialized.*;
 import it.polimi.db2.telcoservice.services.*;
 import org.thymeleaf.TemplateEngine;
@@ -34,6 +35,10 @@ public class GoToSalesReportPage extends HttpServlet {
     };
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String path = "/WEB-INF/sales-report.html";
+
+        User user = (User) request.getSession().getAttribute("user");
+
         List<SalesReportPackages> srServicePackages;
         SalesReportPackagesService salesReportPackagesService = new SalesReportPackagesService();
         srServicePackages = salesReportPackagesService.findAllSalesReports();
@@ -57,7 +62,6 @@ public class GoToSalesReportPage extends HttpServlet {
         SalesReportProductSalesService salesReportProductSalesService = new SalesReportProductSalesService();
         SalesReportProductSales srBestSellerProduct = salesReportProductSalesService.findBestSeller();
 
-        String path = "/WEB-INF/sales-report.html";
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 
@@ -67,6 +71,7 @@ public class GoToSalesReportPage extends HttpServlet {
         ctx.setVariable("srSuspendedOrders", srSuspendedOrders);
         ctx.setVariable("srBestSellerProduct", srBestSellerProduct);
         ctx.setVariable("srAuditingRecords", srAuditingRecords);
+        ctx.setVariable("user", user);
 
         templateEngine.process(path, ctx, response.getWriter());
 

@@ -7,16 +7,34 @@
     <title>Telco Service - Home</title>
 </head>
 <body>
+
 <p class="login-status" th:text="'Welcome, ' + (*{user != null}? *{user.username} : 'user')"></p>
+
 <br>
-<div th:if="${user != null && user.isinsolvent}">
+
+<div th:if="${user != null && user.isEmployee()}">
+    <form action="GoToEmployeeHomePage">
+        <input type="submit" value="Go to employee home page">
+    </form>
+    <form action="GoToSalesReportPage">
+        <input type="submit" value="View sales report">
+    </form>
+</div>
+
+<br>
+
+<div th:if="${user != null && user.isInsolvent()}">
     <h2>Rejected orders</h2>
     <ul>
         <li th:each="order : ${user.orders}" th:if="${!order.isvalid}" th:text="'id: ' + ${order.id} + ' amount due: ' + ${order.totalvalue}"></li>
     </ul>
 </div>
+
 <h2>List of all service packages</h2>
-<ul th:if="${#lists.isEmpty(servicePackages)}"><li>There are currently no service packages available<br></li></ul>
+<ul th:if="${#lists.isEmpty(servicePackages)}">
+    <li>There are currently no service packages available<br>
+    </li>
+</ul>
 <ul th:unless="${#lists.isEmpty(servicePackages)}">
     <li th:each="servpckg : ${servicePackages}">
         <span th:text="${servpckg.id +  '  '  + servpckg.name}"></span>
@@ -43,8 +61,10 @@
         </ul>
     </li>
 </ul>
+
 <form action="GoToBuyServicePage">
     <input type="submit" value="Buy a service">
 </form>
+
 </body>
 </html>

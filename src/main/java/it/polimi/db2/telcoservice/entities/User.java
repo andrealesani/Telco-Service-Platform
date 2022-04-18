@@ -30,9 +30,9 @@ public class User {
     private String password;
     @Column(nullable = false, unique = true)
     private String email;
-    @Column(nullable = true)
+    @Column(nullable = false)
     private Boolean insolvent;
-    @Column(name = "rejected_payments", nullable = true)
+    @Column(name = "rejected_payments", nullable = false)
     private int rejectedPayments;
     @Column(name = "employee", nullable = false)
     private boolean employee;
@@ -114,5 +114,21 @@ public class User {
 
     public void setOrders(List<SubscriptionOrder> orders) {
         this.orders = orders;
+    }
+
+    public Boolean getInsolvent() {
+        return insolvent;
+    }
+
+    public void setInsolvent(Boolean insolvent) {
+        this.insolvent = insolvent;
+    }
+
+    public boolean isEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(boolean employee) {
+        this.employee = employee;
     }
 }
