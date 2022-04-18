@@ -30,10 +30,12 @@ public class User {
     private String password;
     @Column(nullable = false, unique = true)
     private String email;
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Boolean insolvent;
-    @Column(name = "rejected_payments", nullable = false)
+    @Column(name = "rejected_payments", nullable = true)
     private int rejectedPayments;
+    @Column(name = "employee", nullable = false)
+    private boolean employee;
 
     @OneToMany(
             fetch = FetchType.EAGER,
