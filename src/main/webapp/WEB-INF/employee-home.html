@@ -1,6 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <link href="css/style.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $(function () {
+        const requiredCheckboxes = $('.services :checkbox[required]');
+        requiredCheckboxes.change(function () {
+            if (requiredCheckboxes.is(':checked')) {
+                requiredCheckboxes.removeAttr('required');
+            } else {
+                requiredCheckboxes.attr('required', 'required');
+            }
+        });
+    });
+    $(function () {
+        const requiredCheckboxes = $('.validity-periods :checkbox[required]');
+        requiredCheckboxes.change(function () {
+            if (requiredCheckboxes.is(':checked')) {
+                requiredCheckboxes.removeAttr('required');
+            } else {
+                requiredCheckboxes.attr('required', 'required');
+            }
+        });
+    });
+</script>
 <head>
     <title>Employee Home</title>
 </head>
@@ -14,13 +37,14 @@
 
 <div class="container">
     <div th:if="${user != null && user.isEmployee()}">
-        <p></p><h1>Employee home</h1>
+        <p></p>
+        <h1>Employee home</h1>
 
         <h3>Create service package:</h3>
         <form action="create-service-package" method="POST">
             Package name:
             <label>
-                <input type="text" name="package-name">
+                <input required type="text" name="package-name">
             </label>
             <br>
             Services:
@@ -29,22 +53,28 @@
                     No services available
                 </span>
             </div>
-            <div th:unless="${#lists.isEmpty(services)}" th:each="se,iter : ${services}">
-                <input type="checkbox" th:name="service+${iter.index}" th:value="${se.getId()}">
-                <label th:text="'Id: ' + ${se.getId()} + ' - Type: ' + ${se.getType()}">
-                </label>
+            <div class="services">
+                <div th:unless="${#lists.isEmpty(services)}" th:each="se,iter : ${services}">
+                    <input required type="checkbox" th:name="service+${iter.index}" th:value="${se.getId()}">
+                    <label th:text="'Id: ' + ${se.getId()} + ' - Type: ' + ${se.getType()}">
+                    </label>
+                </div>
             </div>
+
             Validity periods:
             <div th:if="${#lists.isEmpty(validityPeriods)}">
                 <span>
                     No validity periods available
                 </span>
             </div>
-            <div th:unless="${#lists.isEmpty(validityPeriods)}" th:each="vp,iter : ${validityPeriods}">
-                <input type="checkbox" th:name="validity-period+${iter.index}" th:value="${vp.getId()}">
-                <label th:text="'Id: ' + ${vp.getId()} + ' - Months: ' + ${vp.getMonths()} + ' - Fee: ' + ${vp.getMonthlyFee()}">
-                </label>
+            <div class="validity-periods">
+                <div th:unless="${#lists.isEmpty(validityPeriods)}" th:each="vp,iter : ${validityPeriods}">
+                    <input required type="checkbox" th:name="validity-period+${iter.index}" th:value="${vp.getId()}">
+                    <label th:text="'Id: ' + ${vp.getId()} + ' - Months: ' + ${vp.getMonths()} + ' - Fee: ' + ${vp.getMonthlyFee()}">
+                    </label>
+                </div>
             </div>
+
             Optional products:
             <div th:if="${#lists.isEmpty(optionalProducts)}">
                 <span>
@@ -66,12 +96,12 @@
         <form action="create-optional-product" method="POST">
             Product name:
             <label>
-                <input type="text" name="product-name">
+                <input required type="text" name="product-name">
             </label>
             <br>
             Monthly fee:
             <label>
-                <input type="number" name="monthly-fee" step=".01">
+                <input required type="number" name="monthly-fee" step=".01">
             </label>
             <br>
             <br>
