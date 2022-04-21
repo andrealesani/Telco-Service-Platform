@@ -30,6 +30,7 @@ public class ValidPayment extends HttpServlet {
         SubscriptionOrder order = entityManager.find(SubscriptionOrder.class, orderId);
         order.setStartDateTs(new Timestamp(System.currentTimeMillis()));
         order.setValid(true);
+        order.setUser(entityManager.find(User.class, ((User) request.getSession().getAttribute("user")).getId()));
 
         entityManager.getTransaction().begin();
         entityManager.persist(order);

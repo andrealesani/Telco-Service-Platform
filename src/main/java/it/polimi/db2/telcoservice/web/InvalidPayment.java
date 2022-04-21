@@ -1,6 +1,7 @@
 package it.polimi.db2.telcoservice.web;
 
 import it.polimi.db2.telcoservice.entities.SubscriptionOrder;
+import it.polimi.db2.telcoservice.entities.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -24,6 +25,7 @@ public class InvalidPayment extends HttpServlet {
 
         SubscriptionOrder order = entityManager.find(SubscriptionOrder.class, orderId);
         order.setValid(false);
+        order.setUser(entityManager.find(User.class, ((User) request.getSession().getAttribute("user")).getId()));
 
         entityManager.getTransaction().begin();
         entityManager.persist(order);

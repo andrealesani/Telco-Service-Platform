@@ -46,16 +46,15 @@ public class PrepareOrder extends HttpServlet {
         for (int id : opt_prod_ids) {
             optionalProducts.add(entityManager.find(OptionalProduct.class, id));
         }
-        User user = (User) request.getSession().getAttribute("user");
-        user = entityManager.find(User.class, user.getId());
 
-        SubscriptionOrder order = new SubscriptionOrder(servicePackage, validityPeriod, optionalProducts, user, new Timestamp(System.currentTimeMillis()));
+        SubscriptionOrder order = new SubscriptionOrder(servicePackage, validityPeriod, optionalProducts, null, new Timestamp(System.currentTimeMillis()));
 
         entityManager.getTransaction().begin();
         entityManager.persist(order);
         entityManager.getTransaction().commit();
 
         request.getSession().setAttribute("order", order);
+        System.out.println("order has been saved in session");
 
         //try {
         //    getServletContext().getRequestDispatcher("/GoToConfirmationPage").forward(request, response);

@@ -20,7 +20,11 @@ public class Login extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        request.getSession().invalidate();
+        // If there is another user already logged in, then invalidate the whole session and start a new one.
+        // If the user was not logged in (and does login now) the order in session is kept
+        if (request.getSession().getAttribute("user") != null) {
+            request.getSession().invalidate();
+        }
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
