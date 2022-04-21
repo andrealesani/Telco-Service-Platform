@@ -7,36 +7,44 @@
     <title>Telco Service - Buy</title>
 </head>
 <body>
-<p class="login-status" th:text="'Welcome, ' + (*{user != null}? *{user.username} : 'user')"></p>
-<h1>Buy a service package</h1>
-<h3>Choose a service package and the related period:</h3>
-<span th:if="${#lists.isEmpty(servicePackages)}">No service packages available</span>
-<form th:each="servpckg : ${servicePackages}" th:id="buy-form+${servpckg.id}" method="GET" action="PrepareOrder">
-    <br>
-    <input type="hidden" name="serv_pckg_id" th:value="${servpckg.id}" th:form="buy-form+${servpckg.id}">
-    <label th:text="${servpckg.id} + ' ' + ${servpckg.name}"></label>
-    <br>
-    <label th:for="validity-period+${servpckg.id}">Validity period:
-        <select th:id="validity-period+${servpckg.id}" name="val_per_id" th:form="buy-form+${servpckg.id}">
-            <option value="-1" th:if="${#sets.isEmpty(servpckg.validityPeriods)}">No periods available</option>
-            <option th:each="valPer : ${servpckg.validityPeriods}" th:value="${valPer.id}"
-                    th:text="${valPer.months} + ' months'"></option>
-        </select>
-    </label>
-    <br>
-    <div th:if="${#sets.isEmpty(servpckg.optionalProducts)}">
-        <span>No optional products available</span>
-        <br>
-    </div>
-    <div th:each="optProd,iter : ${servpckg.optionalProducts}">
-        <label th:text="${optProd.name}"></label>
-        <input type="checkbox" th:name="opt_prod_id+${iter.index}" th:value="${optProd.id}" th:form="buy-form+${servpckg.id}">
-    </div>
-    <input type="submit" th:form="buy-form+${servpckg.id}" value="BUY">
-</form>
+<div class="navbar">
+    <a class="active" href="GoToHomePage">Home</a>
+    <span class="login-status" th:text="'Welcome, ' + (*{user != null}? *{user.username} : 'user')"></span>
+</div>
+
 <br>
-<form action="GoToHomePage" id="go-back" method="GET">
-    <input type="submit" value="Homepage">
-</form>
+
+<div class="container">
+    <h1>Buy a service package</h1>
+    <h3>Choose a service package and the related period:</h3>
+    <span th:if="${#lists.isEmpty(servicePackages)}">No service packages available</span>
+    <form th:each="servpckg : ${servicePackages}" th:id="buy-form+${servpckg.id}" method="GET" action="PrepareOrder">
+        <br>
+        <input type="hidden" name="serv_pckg_id" th:value="${servpckg.id}" th:form="buy-form+${servpckg.id}">
+        <label th:text="${servpckg.id} + ' ' + ${servpckg.name}"></label>
+        <br>
+        <label th:for="validity-period+${servpckg.id}">Validity period:
+            <select th:id="validity-period+${servpckg.id}" name="val_per_id" th:form="buy-form+${servpckg.id}">
+                <option value="-1" th:if="${#sets.isEmpty(servpckg.validityPeriods)}">No periods available</option>
+                <option th:each="valPer : ${servpckg.validityPeriods}" th:value="${valPer.id}"
+                        th:text="${valPer.months} + ' months'"></option>
+            </select>
+        </label>
+        <br>
+        <div th:if="${#sets.isEmpty(servpckg.optionalProducts)}">
+            <span>No optional products available</span>
+            <br>
+        </div>
+        <div th:each="optProd,iter : ${servpckg.optionalProducts}">
+            <label th:text="${optProd.name}"></label>
+            <input type="checkbox" th:name="opt_prod_id+${iter.index}" th:value="${optProd.id}" th:form="buy-form+${servpckg.id}">
+        </div>
+        <input type="submit" th:form="buy-form+${servpckg.id}" value="BUY">
+    </form>
+    <br>
+    <form action="GoToHomePage" id="go-back" method="GET">
+        <input type="submit" value="Homepage">
+    </form>
+</div>
 </body>
 </html>

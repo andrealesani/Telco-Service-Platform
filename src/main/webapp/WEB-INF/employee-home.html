@@ -5,75 +5,83 @@
     <title>Employee Home</title>
 </head>
 <body>
-<div th:if="${user != null && user.isEmployee()}">
-    <p></p><h1>Employee home</h1>
-
-    <h3>Create service package:</h3>
-    <form action="create-service-package" method="POST">
-        Package name:
-        <label>
-            <input type="text" name="package-name">
-        </label>
-        <br>
-        Services:
-        <div th:if="${#lists.isEmpty(services)}">
-            <span>
-                No services available
-            </span>
-        </div>
-        <div th:unless="${#lists.isEmpty(services)}" th:each="se,iter : ${services}">
-            <input type="checkbox" th:name="service+${iter.index}" th:value="${se.getId()}">
-            <label th:text="'Id: ' + ${se.getId()} + ' - Type: ' + ${se.getType()}">
-            </label>
-        </div>
-        Validity periods:
-        <div th:if="${#lists.isEmpty(validityPeriods)}">
-            <span>
-                No validity periods available
-            </span>
-        </div>
-        <div th:unless="${#lists.isEmpty(validityPeriods)}" th:each="vp,iter : ${validityPeriods}">
-            <input type="checkbox" th:name="validity-period+${iter.index}" th:value="${vp.getId()}">
-            <label th:text="'Id: ' + ${vp.getId()} + ' - Months: ' + ${vp.getMonths()} + ' - Fee: ' + ${vp.getMonthlyFee()}">
-            </label>
-        </div>
-        Optional products:
-        <div th:if="${#lists.isEmpty(optionalProducts)}">
-            <span>
-                No optional products available
-            </span>
-        </div>
-        <div th:unless="${#lists.isEmpty(optionalProducts)}" th:each="op,iter : ${optionalProducts}">
-            <input type="checkbox" th:name="optional-product+${iter.index}" th:value="${op.getId()}">
-            <label th:text="'Id: ' + ${op.getId()} + ' - Name: ' + ${op.getName()}">
-            </label>
-        </div>
-        <br>
-        <input type="submit" value="Create package">
-    </form>
-
-    <br>
-
-    <h3>Create optional product:</h3>
-    <form action="create-optional-product" method="POST">
-        Product name:
-        <label>
-            <input type="text" name="product-name">
-        </label>
-        <br>
-        Monthly fee:
-        <label>
-            <input type="number" name="monthly-fee" step=".01">
-        </label>
-        <br>
-        <br>
-        <input type="submit" value="Create product">
-    </form>
+<div class="navbar">
+    <a class="active" href="GoToHomePage">Home</a>
+    <span class="login-status" th:text="'Welcome, ' + (*{user != null}? *{user.username} : 'user')"></span>
 </div>
 
-<div th:if="${user == null || !user.isEmployee()}">
-    You need to be an employee to access this page.
-</div>
+<br>
 
+<div class="container">
+    <div th:if="${user != null && user.isEmployee()}">
+        <p></p><h1>Employee home</h1>
+
+        <h3>Create service package:</h3>
+        <form action="create-service-package" method="POST">
+            Package name:
+            <label>
+                <input type="text" name="package-name">
+            </label>
+            <br>
+            Services:
+            <div th:if="${#lists.isEmpty(services)}">
+                <span>
+                    No services available
+                </span>
+            </div>
+            <div th:unless="${#lists.isEmpty(services)}" th:each="se,iter : ${services}">
+                <input type="checkbox" th:name="service+${iter.index}" th:value="${se.getId()}">
+                <label th:text="'Id: ' + ${se.getId()} + ' - Type: ' + ${se.getType()}">
+                </label>
+            </div>
+            Validity periods:
+            <div th:if="${#lists.isEmpty(validityPeriods)}">
+                <span>
+                    No validity periods available
+                </span>
+            </div>
+            <div th:unless="${#lists.isEmpty(validityPeriods)}" th:each="vp,iter : ${validityPeriods}">
+                <input type="checkbox" th:name="validity-period+${iter.index}" th:value="${vp.getId()}">
+                <label th:text="'Id: ' + ${vp.getId()} + ' - Months: ' + ${vp.getMonths()} + ' - Fee: ' + ${vp.getMonthlyFee()}">
+                </label>
+            </div>
+            Optional products:
+            <div th:if="${#lists.isEmpty(optionalProducts)}">
+                <span>
+                    No optional products available
+                </span>
+            </div>
+            <div th:unless="${#lists.isEmpty(optionalProducts)}" th:each="op,iter : ${optionalProducts}">
+                <input type="checkbox" th:name="optional-product+${iter.index}" th:value="${op.getId()}">
+                <label th:text="'Id: ' + ${op.getId()} + ' - Name: ' + ${op.getName()}">
+                </label>
+            </div>
+            <br>
+            <input type="submit" value="Create package">
+        </form>
+
+        <br>
+
+        <h3>Create optional product:</h3>
+        <form action="create-optional-product" method="POST">
+            Product name:
+            <label>
+                <input type="text" name="product-name">
+            </label>
+            <br>
+            Monthly fee:
+            <label>
+                <input type="number" name="monthly-fee" step=".01">
+            </label>
+            <br>
+            <br>
+            <input type="submit" value="Create product">
+        </form>
+    </div>
+
+    <div th:if="${user == null || !user.isEmployee()}">
+        You need to be an employee to access this page.
+    </div>
+</div>
 </body>
 </html>

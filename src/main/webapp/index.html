@@ -5,45 +5,54 @@
     <title>Telco Service Company</title>
 </head>
 <body>
-<h1 th:if="${order == null}">Welcome to GeeGee Simulator!</h1>
-<h2 th:text="${registered}"></h2>
-<form th:if="${order == null}" action="GoToHomePage">
-    <input type="submit" value="View products without logging in">
-</form>
-<br><br>
-Sign in
-<form action="login"
-      method="POST">
-    username: <label>
-    <input type="text" name="username">
-</label> <br>
-    password: <label>
-    <input type="password" name="password">
-</label><br> <input
-        type="submit" value="Login">
-</form>
-<br><br>
-New user? Sign up
-<form action="register-new-user"
-      method="POST">
-    <label> username:
+<div class="navbar">
+    <a class="active" href="/GoToHomePage">Home</a>
+    <span class="login-status" th:text="'Welcome, ' + (*{user != null}? *{user.username} : 'user')"></span>
+</div>
+
+<br>
+
+<div class="container">
+    <h1 th:if="${order == null}">Welcome to GeeGee Simulator!</h1>
+    <h2 th:text="${registered}"></h2>
+    <form th:if="${order == null}" action="GoToHomePage">
+        <input type="submit" value="View products without logging in">
+    </form>
+    <br><br>
+    Sign in
+    <form action="login"
+          method="POST">
+        username: <label>
         <input type="text" name="username">
     </label> <br>
-    <label> email:
-        <input type="text" name="email">
-    </label> <br>
-    <label> password:
+        password: <label>
         <input type="password" name="password">
-    </label><br>
-    <input
-        type="submit" value="Sign up">
-</form>
-<br>
-<form th:if="${order == null}" action="add-gee-gee">
-    <input type="submit" value="Add GeeGee to the database">
-</form>
-<form th:if="${order == null}" action="add-default-service-package">
-    <input type="submit" value="Add default service package for testing">
-</form>
+    </label><br> <input
+            type="submit" value="Login">
+    </form>
+    <br><br>
+    New user? Sign up
+    <form action="register-new-user"
+          method="POST">
+        <label> username:
+            <input type="text" name="username">
+        </label> <br>
+        <label> email:
+            <input type="text" name="email">
+        </label> <br>
+        <label> password:
+            <input type="password" name="password">
+        </label><br>
+        <input
+            type="submit" value="Sign up">
+    </form>
+    <br>
+    <form th:if="${order == null}" action="add-gee-gee">
+        <input type="submit" value="Add GeeGee to the database">
+    </form>
+    <form th:if="${order == null}" action="add-default-service-package">
+        <input type="submit" value="Add default service package for testing">
+    </form>
+</div>
 </body>
 </html>

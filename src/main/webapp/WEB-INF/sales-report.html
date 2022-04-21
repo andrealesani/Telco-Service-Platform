@@ -5,104 +5,112 @@
     <title>Sales Report</title>
 </head>
 <body>
-<div th:if="${user != null && user.isEmployee()}">
-    <h1>Sales report:</h1>
-
-    <h3>Service packages:</h3>
-    <ul th:if="${#lists.isEmpty(srServicePackages)}"><li>There are currently no service packages in the sales report.<br></li></ul>
-    <ul th:unless="${#lists.isEmpty(srServicePackages)}">
-        <li th:each="srsp : ${srServicePackages}">
-            Service Package ID: <span th:text="${srsp.getServPckgId()}"></span>
-            <ul>
-                <li>
-                    Purchases: <span th:text="${srsp.getPurchases()}"></span>
-                </li>
-                <li>
-                    Total sales without counting products: <span th:text="${srsp.getSalesValueNoProducts()}"></span>
-                </li>
-                <li>
-                    Total sales counting products: <span th:text="${srsp.getSalesValueWithProducts()}"></span>
-                </li>
-                <li>
-                    Average number of products: <span th:text="${srsp.getAvgNumProducts()}"></span>
-                </li>
-            </ul>
-        </li>
-    </ul>
-
-    <br>
-
-    <h3>Service packages / validity periods:</h3>
-    <ul th:if="${#lists.isEmpty(srValidityPeriodServicePackages)}"><li>There are currently no service packages / validity period pairings in the sales report.<br></li></ul>
-    <ul th:unless="${#lists.isEmpty(srValidityPeriodServicePackages)}">
-        <li th:each="srvpsp : ${srValidityPeriodServicePackages}">
-            Service Package ID: <span th:text="${srvpsp.getServPckgId()}"></span>
-            <br>
-            Validity Period ID: <span th:text="${srvpsp.getValPeriodId()}"></span>
-            <ul>
-                <li>
-                    Number of purchases: <span th:text="${srvpsp.getPurchases()}"></span>
-                </li>
-            </ul>
-        </li>
-    </ul>
-
-    <br>
-
-    <h3>Insolvent users:</h3>
-    <ul th:if="${#lists.isEmpty(srInsolventUsers)}"><li>There are currently no insolvent users in the sales report.<br></li></ul>
-    <ul th:unless="${#lists.isEmpty(srInsolventUsers)}">
-        <li th:each="sriu : ${srInsolventUsers}">
-            User ID: <span th:text="${sriu.getUserId()}"></span>
-        </li>
-    </ul>
-
-    <br>
-
-    <h3>Suspended orders:</h3>
-    <ul th:if="${#lists.isEmpty(srSuspendedOrders)}"><li>There are currently no suspended orders in the sales report.<br></li></ul>
-    <ul th:unless="${#lists.isEmpty(srSuspendedOrders)}">
-        <li th:each="srso : ${srSuspendedOrders}">
-            Order ID: <span th:text="${srso.getSubOrderId()}"></span>
-        </li>
-    </ul>
-
-    <br>
-
-    <h3>Best seller optional product:</h3>
-    <ul>
-        <li>
-            Product ID: <span th:text="${srBestSellerProduct.getOptProdId()}"></span>
-            <ul>
-                <li>
-                    Total sales: <span th:text="${srBestSellerProduct.getTotalSales()}"></span>
-                </li>
-            </ul>
-        </li>
-    </ul>
-    <br>
-    <h3>Auditing:</h3>
-    <ul th:if="${#lists.isEmpty(srAuditingRecords)}"><li>There are currently no auditing records in the sales report.<br></li></ul>
-    <ul th:unless="${#lists.isEmpty(srAuditingRecords)}">
-        <li th:each="srar : ${srAuditingRecords}">
-            User ID: <span th:text="${srar.getUser.getId()}"></span>
-            <br>
-            Auditing ID: <span th:text="${srar.getId()}"></span>
-            <ul>
-                <li>
-                    Payment rejection date: <span th:text="${srar.getRejectionTs()}"></span>
-                </li>
-                <li>
-                    Rejected amount: <span th:text="${srar.getRejectedAmount()}"></span>
-                </li>
-            </ul>
-        </li>
-    </ul>
+<div class="navbar">
+    <a class="active" href="GoToHomePage">Home</a>
+    <span class="login-status" th:text="'Welcome, ' + (*{user != null}? *{user.username} : 'user')"></span>
 </div>
 
-<div th:if="${user == null || !user.isEmployee()}">
-    You need to be an employee to access this page.
-</div>
+<br>
 
+<div class="container">
+    <div th:if="${user != null && user.isEmployee()}">
+        <h1>Sales report:</h1>
+
+        <h3>Service packages:</h3>
+        <ul th:if="${#lists.isEmpty(srServicePackages)}"><li>There are currently no service packages in the sales report.<br></li></ul>
+        <ul th:unless="${#lists.isEmpty(srServicePackages)}">
+            <li th:each="srsp : ${srServicePackages}">
+                Service Package ID: <span th:text="${srsp.getServPckgId()}"></span>
+                <ul>
+                    <li>
+                        Purchases: <span th:text="${srsp.getPurchases()}"></span>
+                    </li>
+                    <li>
+                        Total sales without counting products: <span th:text="${srsp.getSalesValueNoProducts()}"></span>
+                    </li>
+                    <li>
+                        Total sales counting products: <span th:text="${srsp.getSalesValueWithProducts()}"></span>
+                    </li>
+                    <li>
+                        Average number of products: <span th:text="${srsp.getAvgNumProducts()}"></span>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+        <br>
+
+        <h3>Service packages / validity periods:</h3>
+        <ul th:if="${#lists.isEmpty(srValidityPeriodServicePackages)}"><li>There are currently no service packages / validity period pairings in the sales report.<br></li></ul>
+        <ul th:unless="${#lists.isEmpty(srValidityPeriodServicePackages)}">
+            <li th:each="srvpsp : ${srValidityPeriodServicePackages}">
+                Service Package ID: <span th:text="${srvpsp.getServPckgId()}"></span>
+                <br>
+                Validity Period ID: <span th:text="${srvpsp.getValPeriodId()}"></span>
+                <ul>
+                    <li>
+                        Number of purchases: <span th:text="${srvpsp.getPurchases()}"></span>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+        <br>
+
+        <h3>Insolvent users:</h3>
+        <ul th:if="${#lists.isEmpty(srInsolventUsers)}"><li>There are currently no insolvent users in the sales report.<br></li></ul>
+        <ul th:unless="${#lists.isEmpty(srInsolventUsers)}">
+            <li th:each="sriu : ${srInsolventUsers}">
+                User ID: <span th:text="${sriu.getUserId()}"></span>
+            </li>
+        </ul>
+
+        <br>
+
+        <h3>Suspended orders:</h3>
+        <ul th:if="${#lists.isEmpty(srSuspendedOrders)}"><li>There are currently no suspended orders in the sales report.<br></li></ul>
+        <ul th:unless="${#lists.isEmpty(srSuspendedOrders)}">
+            <li th:each="srso : ${srSuspendedOrders}">
+                Order ID: <span th:text="${srso.getSubOrderId()}"></span>
+            </li>
+        </ul>
+
+        <br>
+
+        <h3>Best seller optional product:</h3>
+        <ul>
+            <li>
+                Product ID: <span th:text="${srBestSellerProduct.getOptProdId()}"></span>
+                <ul>
+                    <li>
+                        Total sales: <span th:text="${srBestSellerProduct.getTotalSales()}"></span>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <br>
+        <h3>Auditing:</h3>
+        <ul th:if="${#lists.isEmpty(srAuditingRecords)}"><li>There are currently no auditing records in the sales report.<br></li></ul>
+        <ul th:unless="${#lists.isEmpty(srAuditingRecords)}">
+            <li th:each="srar : ${srAuditingRecords}">
+                User ID: <span th:text="${srar.getUser.getId()}"></span>
+                <br>
+                Auditing ID: <span th:text="${srar.getId()}"></span>
+                <ul>
+                    <li>
+                        Payment rejection date: <span th:text="${srar.getRejectionTs()}"></span>
+                    </li>
+                    <li>
+                        Rejected amount: <span th:text="${srar.getRejectedAmount()}"></span>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div th:if="${user == null || !user.isEmployee()}">
+        You need to be an employee to access this page.
+    </div>
+</div>
 </body>
 </html>

@@ -8,63 +8,66 @@
 </head>
 <body>
 
-<p class="login-status" th:text="'Welcome, ' + (*{user != null}? *{user.username} : 'user')"></p>
-
-<br>
-
-<div th:if="${user != null && user.isEmployee()}">
-    <form action="GoToEmployeeHomePage">
-        <input type="submit" value="Go to employee home page">
-    </form>
-    <form action="GoToSalesReportPage">
-        <input type="submit" value="View sales report">
-    </form>
+<div class="navbar">
+    <a class="active" href="GoToHomePage">Home</a>
+    <span class="login-status" th:text="'Welcome, ' + (*{user != null}? *{user.username} : 'user')"></span>
 </div>
 
 <br>
 
-<div th:if="${user != null && user.isInsolvent()}">
-    <h2>Rejected orders</h2>
+<div class="container">
+    <div th:if="${user != null && user.isEmployee()}">
+        <form action="GoToEmployeeHomePage">
+            <input type="submit" value="Go to employee home page">
+        </form>
+        <form action="GoToSalesReportPage">
+            <input type="submit" value="View sales report">
+        </form>
+    </div>
+
+    <br>
+
+    <div th:if="${user != null && user.isInsolvent()}">
+        <h2>Rejected orders</h2>
+        <ul>
+            <li th:each="order : ${user.orders}" th:if="${!order.isvalid}" th:text="'id: ' + ${order.id} + ' amount due: ' + ${order.totalvalue}"></li>
+        </ul>
+    </div>
+
+    <h2>List of all service packages</h2>
+
     <ul>
-        <li th:each="order : ${user.orders}" th:if="${!order.isvalid}" th:text="'id: ' + ${order.id} + ' amount due: ' + ${order.totalvalue}"></li>
+        <li th:if="${#lists.isEmpty(servicePackages)}">There are currently no service packages available</li>
+        <li th:each="servpckg : ${servicePackages}">
+            <span th:text="${servpckg.id +  '  '  + servpckg.name}"></span>
+            <ul th:unless="${#sets.isEmpty(servpckg.services)}">
+                <li th:if="${#sets.isEmpty(servpckg.services)}">This package has no services</li>
+                <li th:each="service : ${servpckg.services}">
+                    <span th:text="${service.type}"></span>
+                    <br>
+                    <span th:text="${service.getFeesString()}"></span>
+                </li>
+            </ul>
+            <ul>
+                <li th:if="${#sets.isEmpty(servpckg.optionalProducts)}">This package has no optional products</li>
+                <li th:each="optionalProduct : ${servpckg.optionalProducts}">
+                    <span>Optional Product</span><br>
+                    <span th:text="${optionalProduct.name}"></span>
+                </li>
+            </ul>
+
+            <ul>
+                <li th:if="${#sets.isEmpty(servpckg.validityPeriods)}">This package has no validity periods</li>
+                <li th:each="validityPeriod : ${servpckg.validityPeriods}">
+                    <span th:text="'Valid for ' + ${validityPeriod.months} + ' months at a cost of ' + ${validityPeriod.monthlyFee} + ' euros per month'"></span>
+                </li>
+            </ul>
+        </li>
     </ul>
+
+    <form action="GoToBuyServicePage">
+        <input type="submit" value="Buy a service">
+    </form>
 </div>
-
-<h2>List of all service packages</h2>
-<ul th:if="${#lists.isEmpty(servicePackages)}">
-    <li>There are currently no service packages available<br>
-    </li>
-</ul>
-<ul th:unless="${#lists.isEmpty(servicePackages)}">
-    <li th:each="servpckg : ${servicePackages}">
-        <span th:text="${servpckg.id +  '  '  + servpckg.name}"></span>
-        <div th:if="${#sets.isEmpty(servpckg.services)}"><ul><li>This package has no services</li></ul></div>
-        <ul th:unless="${#sets.isEmpty(servpckg.services)}">
-            <li th:each="service : ${servpckg.services}">
-                <span th:text="${service.type}"></span>
-                <br>
-                <span th:text="${service.getFeesString()}"></span>
-            </li>
-        </ul>
-        <span th:if="${#sets.isEmpty(servpckg.optionalProducts)}">This package has no optional products<br></span>
-        <ul th:unless="${#sets.isEmpty(servpckg.optionalProducts)}">
-            <li th:each="optionalProduct : ${servpckg.optionalProducts}">
-                <span>Optional Product</span><br>
-                <span th:text="${optionalProduct.name}"></span>
-            </li>
-        </ul>
-        <span th:if="${#sets.isEmpty(servpckg.validityPeriods)}">This package has no validity periods<br></span>
-        <ul th:unless="${#sets.isEmpty(servpckg.validityPeriods)}">
-            <li th:each="validityPeriod : ${servpckg.validityPeriods}">
-                <span th:text="'Valid for ' + ${validityPeriod.months} + ' months at a cost of ' + ${validityPeriod.monthlyFee} + ' euros per month'"></span>
-            </li>
-        </ul>
-    </li>
-</ul>
-
-<form action="GoToBuyServicePage">
-    <input type="submit" value="Buy a service">
-</form>
-
 </body>
 </html>
