@@ -26,8 +26,9 @@
         <span th:if="${#sets.isEmpty(order.optionalProducts)}">No optional products selected</span>
         <div th:unless="${#sets.isEmpty(order.optionalProducts)}" th:each="opt : ${order.optionalProducts}">
             <span th:text="'Optional product: '+ ${opt.name}"></span>
-            <br>
         </div>
+        <br>
+        <span th:text="'Monthly fee: '+ ${order.validityPeriod.monthlyFee} + ' euro'"></span><br>
     </div>
     <br><br>
     <form th:unless="${user != null}" action="GoToLoginPage"
