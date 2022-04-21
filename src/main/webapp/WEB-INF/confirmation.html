@@ -28,7 +28,7 @@
             <span th:text="'Optional product: '+ ${opt.name}"></span>
         </div>
         <br>
-        <span th:text="'Monthly fee: '+ ${order.validityPeriod.monthlyFee} + ' euro'"></span><br>
+        <span th:text="'Total value: '+ ${order.totalValue} + ' euro'"></span><br>
     </div>
     <br><br>
     <form th:unless="${user != null}" action="GoToLoginPage"
