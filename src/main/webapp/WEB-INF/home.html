@@ -30,7 +30,10 @@
     <div th:if="${user != null && user.isInsolvent()}">
         <h2>Rejected orders</h2>
         <ul>
-            <li th:each="order : ${user.orders}" th:if="${!order.isvalid}" th:text="'id: ' + ${order.id} + ' amount due: ' + ${order.totalvalue}"></li>
+            <li th:each="order : ${user.orders}" th:if="${!order.isvalid}">
+                <span th:text="'id: ' + ${order.id} + ' amount due: ' + ${order.totalvalue}"></span>
+                <a th:href="'RetryOrder?order_id=' + ${order.id}">Pay now</a>
+            </li>
         </ul>
     </div>
 
