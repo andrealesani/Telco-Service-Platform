@@ -3,6 +3,9 @@ package it.polimi.db2.telcoservice.web;
 import java.io.IOException;
 
 import javax.ejb.EJB;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -47,8 +50,16 @@ public class GoToHomePage extends HttpServlet {
         String path = "/WEB-INF/home.html";
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
         ctx.setVariable("servicePackages", servicePackages);
-        ctx.setVariable("user", request.getSession().getAttribute("user"));
+        // user might not be logged in, but it's not a problem. So we ignore
+        // the exception and just don't set any user inside the context
+        try {
+            ctx.setVariable("user", entityManager.find(User.class, ((User) request.getSession().getAttribute("user")).getId()));
+        } catch (Exception ignored) {}
 
         //response.getWriter().println("validityPeriods is empty: " + servicePackages.get(0).getValidityPeriods().isEmpty());
         templateEngine.process(path, ctx, response.getWriter());

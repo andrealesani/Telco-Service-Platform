@@ -1,6 +1,7 @@
 package it.polimi.db2.telcoservice.web;
 
 import it.polimi.db2.telcoservice.entities.ServicePackage;
+import it.polimi.db2.telcoservice.entities.User;
 import it.polimi.db2.telcoservice.services.ServicePackageService;
 import it.polimi.db2.telcoservice.services.UserService;
 import org.thymeleaf.TemplateEngine;
@@ -9,6 +10,9 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import javax.ejb.EJB;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -45,8 +49,15 @@ public class GoToBuyServicePage extends HttpServlet {
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
         ctx.setVariable("servicePackages", servicePackages);
-        ctx.setVariable("user", request.getSession().getAttribute("user"));
+        // user might not be logged in, but it's not a problem. So we ignore
+        // the exception and just don't set any user inside the context
+        try {
+            ctx.setVariable("user", entityManager.find(User.class, ((User) request.getSession().getAttribute("user")).getId()));
+        } catch (Exception ignored) {}
 
         templateEngine.process(path, ctx, response.getWriter());
     }
