@@ -120,3 +120,30 @@ li:not(:last-child) {
     padding: 15px 20px 0 15px;
     color: white;
 }
+
+/* tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+tr.even {
+    background: #a6ffd4;
+}
+tr.odd {
+    background: #f8f8f8;
+}
+th {
+    background: #04AA6D;
+    color: white;
+}
+td, th {
+    vertical-align: center;
+    text-align: center;
+    padding: 5px;
+}
+td.services {
+    font-size: 15px;
+}
+td.validity-period, td.optional-product {
+    font-size: 12px;
+}

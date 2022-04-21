@@ -30,6 +30,7 @@
 <body>
 <div class="navbar">
     <a class="active" href="GoToHomePage">Home</a>
+    <a href="GoToLoginPage">Login</a>
     <span class="login-status" th:text="'Welcome, ' + (*{user != null}? *{user.username} : 'user')"></span>
 </div>
 
