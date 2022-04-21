@@ -47,7 +47,7 @@
             <label>
                 <input required type="text" name="package-name">
             </label>
-            <br>
+            <br><br>
             Services:
             <div th:if="${#lists.isEmpty(services)}">
                 <span>
@@ -61,7 +61,7 @@
                     </label>
                 </div>
             </div>
-
+            <br>
             Validity periods:
             <div th:if="${#lists.isEmpty(validityPeriods)}">
                 <span>
@@ -75,7 +75,7 @@
                     </label>
                 </div>
             </div>
-
+            <br>
             Optional products:
             <div th:if="${#lists.isEmpty(optionalProducts)}">
                 <span>

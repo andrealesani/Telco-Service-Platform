@@ -38,7 +38,7 @@
         </ul>
     </div>
 
-    <h2>List of all service packages</h2>
+    <h1>List of all service packages</h1>
 
     <table>
         <tr th:if="${#lists.isEmpty(servicePackages)}">There are currently no service packages available</tr>
@@ -81,6 +81,8 @@
             </td>
         </tr>
     </table>
+
+    <br>
 
     <form action="GoToBuyServicePage">
         <input type="submit" value="Buy a service">

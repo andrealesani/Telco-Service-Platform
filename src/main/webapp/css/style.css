@@ -126,6 +126,13 @@ table {
     width: 100%;
     border-collapse: collapse;
 }
+table.login-table {
+    width: fit-content;
+}
+table.login-table td {
+    text-align: left;
+}
+
 tr.even {
     background: #a6ffd4;
 }

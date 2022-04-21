@@ -18,95 +18,99 @@
         <h1>Sales report:</h1>
 
         <h3>Service packages:</h3>
-        <ul th:if="${#lists.isEmpty(srServicePackages)}"><li>There are currently no service packages in the sales report.<br></li></ul>
-        <ul th:unless="${#lists.isEmpty(srServicePackages)}">
-            <li th:each="srsp : ${srServicePackages}">
-                Service Package ID: <span th:text="${srsp.getServPckgId()}"></span>
-                <ul>
-                    <li>
-                        Purchases: <span th:text="${srsp.getPurchases()}"></span>
-                    </li>
-                    <li>
-                        Total sales without counting products: <span th:text="${srsp.getSalesValueNoProducts()}"></span>
-                    </li>
-                    <li>
-                        Total sales counting products: <span th:text="${srsp.getSalesValueWithProducts()}"></span>
-                    </li>
-                    <li>
-                        Average number of products: <span th:text="${srsp.getAvgNumProducts()}"></span>
-                    </li>
-                </ul>
-            </li>
-        </ul>
+        <span th:if="${#lists.isEmpty(srServicePackages)}">There are currently no service packages in the sales report.</span>
+        <table th:unless="${#lists.isEmpty(srServicePackages)}">
+            <tr>
+                <th>ID</th>
+                <th>Purchases</th>
+                <th>Revenues w/o prods</th>
+                <th>Revenues w/ prods</th>
+                <th>Avg no. of prods</th>
+            </tr>
+            <tr th:each="srsp,iter : ${srServicePackages}" th:class="${iter.odd}? 'odd' : 'even'">
+                <td th:text="${srsp.getServPckgId()}"></td>
+                <td th:text="${srsp.getPurchases()}"></td>
+                <td th:text="${srsp.getSalesValueNoProducts()}"></td>
+                <td th:text="${srsp.getSalesValueWithProducts()}"></td>
+                <td th:text="${srsp.getAvgNumProducts()}"></td>
+            </tr>
+        </table>
 
         <br>
 
         <h3>Service packages / validity periods:</h3>
-        <ul th:if="${#lists.isEmpty(srValidityPeriodServicePackages)}"><li>There are currently no service packages / validity period pairings in the sales report.<br></li></ul>
-        <ul th:unless="${#lists.isEmpty(srValidityPeriodServicePackages)}">
-            <li th:each="srvpsp : ${srValidityPeriodServicePackages}">
-                Service Package ID: <span th:text="${srvpsp.getServPckgId()}"></span>
-                <br>
-                Validity Period ID: <span th:text="${srvpsp.getValPeriodId()}"></span>
-                <ul>
-                    <li>
-                        Number of purchases: <span th:text="${srvpsp.getPurchases()}"></span>
-                    </li>
-                </ul>
-            </li>
-        </ul>
+        <span th:if="${#lists.isEmpty(srValidityPeriodServicePackages)}">There are currently no service packages / validity period pairings in the sales report.</span>
+        <table th:unless="${#lists.isEmpty(srValidityPeriodServicePackages)}">
+            <tr>
+                <th>ID</th>
+                <th>Validity Period</th>
+                <th>No. of purchases</th>
+            </tr>
+            <tr th:each="srvpsp,iter : ${srValidityPeriodServicePackages}" th:class="${iter.odd}? 'odd' : 'even'">
+                <td th:text="${srvpsp.getServPckgId()}"></td>
+                <td th:text="${srvpsp.getValPeriodId()}"></td>
+                <td th:text="${srvpsp.getPurchases()}"></td>
+            </tr>
+        </table>
 
         <br>
 
         <h3>Insolvent users:</h3>
-        <ul th:if="${#lists.isEmpty(srInsolventUsers)}"><li>There are currently no insolvent users in the sales report.<br></li></ul>
-        <ul th:unless="${#lists.isEmpty(srInsolventUsers)}">
-            <li th:each="sriu : ${srInsolventUsers}">
-                User ID: <span th:text="${sriu.getUserId()}"></span>
-            </li>
-        </ul>
+        <span th:if="${#lists.isEmpty(srInsolventUsers)}">There are currently no insolvent users in the sales report.</span>
+        <table th:unless="${#lists.isEmpty(srInsolventUsers)}">
+            <tr>
+                <th>User ID</th>
+            </tr>
+            <tr th:each="sriu,iter : ${srInsolventUsers}" th:class="${iter.odd}? 'odd' : 'even'">
+                <td th:text="${sriu.getUserId()}"></td>
+            </tr>
+        </table>
 
         <br>
 
         <h3>Suspended orders:</h3>
-        <ul th:if="${#lists.isEmpty(srSuspendedOrders)}"><li>There are currently no suspended orders in the sales report.<br></li></ul>
-        <ul th:unless="${#lists.isEmpty(srSuspendedOrders)}">
-            <li th:each="srso : ${srSuspendedOrders}">
-                Order ID: <span th:text="${srso.getSubOrderId()}"></span>
-            </li>
-        </ul>
+        <span th:if="${#lists.isEmpty(srSuspendedOrders)}">There are currently no suspended orders in the sales report.</span>
+        <table th:unless="${#lists.isEmpty(srSuspendedOrders)}">
+            <tr>
+                <th>Order ID</th>
+            </tr>
+            <tr th:each="srso,iter : ${srSuspendedOrders}" th:class="${iter.odd}? 'odd' : 'even'">
+                <td th:text="${srso.getSubOrderId()}"></td>
+            </tr>
+        </table>
 
         <br>
 
         <h3>Best seller optional product:</h3>
-        <ul>
-            <li>
-                Product ID: <span th:text="${srBestSellerProduct.getOptProdId()}"></span>
-                <ul>
-                    <li>
-                        Total sales: <span th:text="${srBestSellerProduct.getTotalSales()}"></span>
-                    </li>
-                </ul>
-            </li>
-        </ul>
+        <table>
+            <tr>
+                <th>Product ID</th>
+                <th>Total sales</th>
+            </tr>
+            <tr>
+                <td th:text="${srBestSellerProduct.getOptProdId()}"></td>
+                <td th:text="${srBestSellerProduct.getTotalSales()}"></td>
+            </tr>
+        </table>
+
         <br>
+
         <h3>Auditing:</h3>
-        <ul th:if="${#lists.isEmpty(srAuditingRecords)}"><li>There are currently no auditing records in the sales report.<br></li></ul>
-        <ul th:unless="${#lists.isEmpty(srAuditingRecords)}">
-            <li th:each="srar : ${srAuditingRecords}">
-                User ID: <span th:text="${srar.getUser.getId()}"></span>
-                <br>
-                Auditing ID: <span th:text="${srar.getId()}"></span>
-                <ul>
-                    <li>
-                        Payment rejection date: <span th:text="${srar.getRejectionTs()}"></span>
-                    </li>
-                    <li>
-                        Rejected amount: <span th:text="${srar.getRejectedAmount()}"></span>
-                    </li>
-                </ul>
-            </li>
-        </ul>
+        <span th:if="${#lists.isEmpty(srAuditingRecords)}">There are currently no auditing records in the sales report.</span>
+        <table th:unless="${#lists.isEmpty(srAuditingRecords)}">
+            <tr>
+                <th>User ID</th>
+                <th>Auditing ID</th>
+                <th>Payment rejection date</th>
+                <th>Amount due</th>
+            </tr>
+            <tr th:each="srar,iter : ${srAuditingRecords}" th:class="${iter.odd}? 'odd' : 'even'">
+                <td th:text="${srar.getUser.getId()}"></td>
+                <td th:text="${srar.getId()}"></td>
+                <td th:text="${srar.getRejectionTs()}"></td>
+                <td th:text="${srar.getRejectedAmount()}"></td>
+            </tr>
+        </table>
     </div>
 
     <div th:if="${user == null || !user.isEmployee()}">
