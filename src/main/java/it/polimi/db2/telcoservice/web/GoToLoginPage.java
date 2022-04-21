@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Servlet implementation class GoToHomePage
+ * Servlet implementation class GoToLoginPage
  */
 @WebServlet("/GoToLoginPage")
 public class GoToLoginPage extends HttpServlet {

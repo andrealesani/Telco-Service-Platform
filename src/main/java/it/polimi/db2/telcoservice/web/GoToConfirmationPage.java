@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Servlet implementation class GoToBuyServicePage
+ * Servlet implementation class GoToConfirmationPage
  */
 @WebServlet("/GoToConfirmationPage")
 public class GoToConfirmationPage extends HttpServlet {
