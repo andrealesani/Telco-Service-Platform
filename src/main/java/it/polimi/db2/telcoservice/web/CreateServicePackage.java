@@ -1,6 +1,9 @@
 package it.polimi.db2.telcoservice.web;
 
 import it.polimi.db2.telcoservice.entities.*;
+import it.polimi.db2.telcoservice.services.OptionalProductService;
+import it.polimi.db2.telcoservice.services.ServiceService;
+import it.polimi.db2.telcoservice.services.ValidityPeriodService;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -28,41 +31,49 @@ public class CreateServicePackage extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
 
-        String name = request.getParameter("package-name");
-
-        List<Integer> serviceIds = new ArrayList<>();
-        int i = 0;
-        while (true) {
-            try {
-                serviceIds.add(Integer.parseInt(request.getParameter("service" + i)));
-                i++;
-            } catch (NumberFormatException e) {
-                break;
-            }
-        }
-        List<Integer> valPeriodIds = new ArrayList<>();
-        i = 0;
-        while (true) {
-            try {
-                valPeriodIds.add(Integer.parseInt(request.getParameter("validity-period" + i)));
-                i++;
-            } catch (NumberFormatException e) {
-                break;
-            }
-        }
-        List<Integer> optProdIds = new ArrayList<>();
-        i = 0;
-        while (true) {
-            try {
-                optProdIds.add(Integer.parseInt(request.getParameter("optional-product" + i)));
-                i++;
-            } catch (NumberFormatException e) {
-                break;
-            }
-        }
-
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+        String name = request.getParameter("package-name");
+        if (name.trim().isEmpty()) {
+            response.sendError(400, "Service package must have a name.");
+            return;
+        }
+
+        ServiceService ss = new ServiceService();
+        int numServices = ss.findNumServices();
+        List<Integer> serviceIds = new ArrayList<>();
+        for (int i = 0; i < numServices; i++) {
+            try {
+                serviceIds.add(Integer.parseInt(request.getParameter("service" + i)));
+            } catch (NumberFormatException ignored) {}
+        }
+        if (serviceIds.isEmpty()) {
+            response.sendError(400, "Service package must be associated to at least 1 service.");
+            return;
+        }
+
+        ValidityPeriodService vps = new ValidityPeriodService();
+        int numValPeriods = vps.findNumValidityPeriods();
+        List<Integer> valPeriodIds = new ArrayList<>();
+        for (int i = 0; i < numValPeriods; i++) {
+            try {
+                valPeriodIds.add(Integer.parseInt(request.getParameter("validity-period" + i)));
+            } catch (NumberFormatException ignored) {}
+        }
+        if (valPeriodIds.isEmpty()) {
+            response.sendError(400, "Service package must be associated to at least 1 validity period.");
+            return;
+        }
+
+        OptionalProductService ops = new OptionalProductService();
+        int numOptProducts = ops.findNumOptionalProducts();
+        List<Integer> optProdIds = new ArrayList<>();
+        for (int i = 0; i < numOptProducts; i++) {
+            try {
+                optProdIds.add(Integer.parseInt(request.getParameter("optional-product" + i)));
+            } catch (NumberFormatException ignored) {}
+        }
 
         Set<Service> services = new HashSet<>();
         for (int id : serviceIds) {

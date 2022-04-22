@@ -32,7 +32,16 @@ public class CreateOptionalProduct extends HttpServlet {
         response.setContentType("text/html");
 
         String name = request.getParameter("product-name");
+        if (name.trim().isEmpty()) {
+            response.sendError(400, "Optional product must have a name.");
+            return;
+        }
+
         BigDecimal monthlyFee = new BigDecimal(request.getParameter("monthly-fee"));
+        if (monthlyFee.longValue() < 0.0) {
+            response.sendError(400, "Optional product cannot have a negative monthly fee.");
+            return;
+        }
 
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
         EntityManager entityManager = entityManagerFactory.createEntityManager();

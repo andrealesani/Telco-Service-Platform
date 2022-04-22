@@ -8,7 +8,7 @@ import java.util.Set;
 @Table(name = "validity_period")
 @NamedQueries({
         @NamedQuery(name = "ValidityPeriod.findAllValidityPeriods", query = "SELECT vp FROM ValidityPeriod vp"),
-
+        @NamedQuery(name = "ValidityPeriod.findNumValidityPeriods", query = "SELECT count(vp) FROM ValidityPeriod vp"),
 })
 public class ValidityPeriod {
     public ValidityPeriod() {

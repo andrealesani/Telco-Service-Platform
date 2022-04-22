@@ -32,4 +32,17 @@ public class ValidityPeriodService {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		return entityManager.find(ValidityPeriod.class, id);
 	}
+
+	public int findNumValidityPeriods() {
+		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		int numPeriods = 0;
+		try {
+			numPeriods = ((Number) entityManager.createNamedQuery("ValidityPeriod.findNumValidityPeriods", Integer.class)
+					.getSingleResult()).intValue();
+		} catch (PersistenceException e) {
+			e.printStackTrace();
+		}
+		return numPeriods;
+	}
 }

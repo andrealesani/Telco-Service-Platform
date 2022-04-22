@@ -2,6 +2,7 @@ package it.polimi.db2.telcoservice.services;
 
 import it.polimi.db2.telcoservice.entities.Service;
 import it.polimi.db2.telcoservice.entities.ServicePackage;
+import it.polimi.db2.telcoservice.entities.materialized.SalesReportProductSales;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -24,5 +25,18 @@ public class ServiceService {
             e.printStackTrace();
         }
         return sList;
+    }
+
+    public int findNumServices() {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        int numServices = 0;
+        try {
+            numServices = ((Number) entityManager.createNamedQuery("Service.findNumServices", Integer.class)
+                    .getSingleResult()).intValue();
+        } catch (PersistenceException e) {
+            e.printStackTrace();
+        }
+        return numServices;
     }
 }

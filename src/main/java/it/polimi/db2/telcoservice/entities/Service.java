@@ -11,6 +11,7 @@ import java.util.Set;
 @Table(name = "service")
 @NamedQueries({
         @NamedQuery(name = "Service.findAllServices", query = "SELECT s FROM Service s"),
+        @NamedQuery(name = "Service.findNumServices", query = "SELECT count(s) FROM Service s"),
 })
 public class Service {
     public Service() {

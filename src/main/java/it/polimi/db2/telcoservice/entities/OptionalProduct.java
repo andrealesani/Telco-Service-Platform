@@ -8,6 +8,7 @@ import java.util.Set;
 @Table(name = "optional_product")
 @NamedQueries({
         @NamedQuery(name = "OptionalProduct.findAllOptionalProducts", query = "SELECT op FROM OptionalProduct op"),
+        @NamedQuery(name = "OptionalProduct.findNumOptionalProducts", query = "SELECT count(op) FROM OptionalProduct op"),
 })
 public class OptionalProduct {
     public OptionalProduct() {

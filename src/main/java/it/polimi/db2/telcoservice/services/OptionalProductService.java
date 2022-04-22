@@ -10,7 +10,6 @@ import java.util.List;
 
 @Stateless
 public class OptionalProductService {
-	// @PersistenceContext(unitName = "db2_jpa")
 	@PersistenceUnit
 	private EntityManagerFactory emf; // not used
 
@@ -31,5 +30,18 @@ public class OptionalProductService {
 		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		return entityManager.find(OptionalProduct.class, id);
+	}
+
+	public int findNumOptionalProducts() {
+		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		int numProducts = 0;
+		try {
+			numProducts = ((Number) entityManager.createNamedQuery("OptionalProduct.findNumOptionalProducts", Integer.class)
+					.getSingleResult()).intValue();
+		} catch (PersistenceException e) {
+			e.printStackTrace();
+		}
+		return numProducts;
 	}
 }
