@@ -23,13 +23,21 @@ public class SalesReportPackages {
     )
     private int servPckgId;
 
-    @Column()
+    @Column(
+            nullable = false
+    )
     private int purchases;
-    @Column(name = "sales_value_no_products")
+    @Column(
+            nullable = false,
+            name = "sales_value_no_products")
     private BigDecimal salesValueNoProducts;
-    @Column(name = "sales_value_with_products")
+    @Column(
+            nullable = false,
+            name = "sales_value_with_products")
     private BigDecimal salesValueWithProducts;
-    @Column(name = "avg_num_products")
+    @Column(
+            nullable = false,
+            name = "avg_num_products")
     private BigDecimal avgNumProducts;
 
     public int getServPckgId() {

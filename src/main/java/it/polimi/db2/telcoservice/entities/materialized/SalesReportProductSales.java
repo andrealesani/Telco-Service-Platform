@@ -26,7 +26,10 @@ public class SalesReportProductSales {
     )
     private int optProdId;
 
-    @Column(name = "total_sales")
+    @Column(
+            nullable = false,
+            name = "total_sales"
+    )
     private BigDecimal totalSales;
 
     public int getOptProdId() {

@@ -27,7 +27,9 @@ public class SalesReportValidityPackages {
     )
     private int valPeriodId;
 
-    @Column()
+    @Column(
+            nullable=false
+    )
     private int purchases;
 
     public int getServPckgId() {
