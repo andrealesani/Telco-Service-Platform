@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<link href="css/style.css" rel="stylesheet">
+<head>
+    <meta charset="UTF-8">
+    <title>Telco Service - Home</title>
+</head>
+<body>
+
+<div class="navbar">
+    <a class="active" href="GoToHomePage">Home</a>
+    <a href="GoToLoginPage">Login</a>
+    <span class="login-status" th:text="'Welcome, ' + (*{user != null}? *{user.username} : 'user')"></span>
+</div>
+
+<br>
+
+<div class="container">
+    <h1 th:text="'Your payment was ' + ${result}"></h1>
+    <br>
+    <form action="GoToHomePage" id="go-back" method="GET">
+        <input type="submit" value="Homepage">
+    </form>
+</div>
+</body>
+</html>

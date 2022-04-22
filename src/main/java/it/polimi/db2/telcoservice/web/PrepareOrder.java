@@ -1,9 +1,9 @@
 package it.polimi.db2.telcoservice.web;
 
-import it.polimi.db2.telcoservice.entities.*;
-import it.polimi.db2.telcoservice.services.OptionalProductService;
-import it.polimi.db2.telcoservice.services.ServicePackageService;
-import it.polimi.db2.telcoservice.services.ValidityPeriodService;
+import it.polimi.db2.telcoservice.entities.OptionalProduct;
+import it.polimi.db2.telcoservice.entities.ServicePackage;
+import it.polimi.db2.telcoservice.entities.SubscriptionOrder;
+import it.polimi.db2.telcoservice.entities.ValidityPeriod;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -55,12 +55,6 @@ public class PrepareOrder extends HttpServlet {
         request.getSession().setAttribute("order", order);
         System.out.println("order has been saved in session");
 
-        //try {
-        //    getServletContext().getRequestDispatcher("/GoToConfirmationPage").forward(request, response);
-        //} catch (ServletException e) {
-        //    response.sendError(500);
-        //    e.printStackTrace();
-        //}
         response.sendRedirect(getServletContext().getContextPath() + "/GoToConfirmationPage");
     }
 

@@ -56,29 +56,32 @@ td {
     padding: 10px 0;
 }
 
-button {
+button, .container a {
     background-color: #04AA6D;
     border: none;
     border-radius: 8px;
     color: white;
-    padding: 10px 20px;
+    padding: 8px 15px;
+    margin: 3px 5px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 14px;
 }
 
-button:hover {
+button:hover, .container a:hover {
     background-color: #04db8a;
     cursor: pointer;
 }
 
+/* not used anymore
 li:not(:last-child) {
     margin-bottom: 20px;
 }
+*/
 
 /* navbar */
-/* Add a black background color to the top navigation */
+/* Add a dark background color to the top navigation */
 .navbar {
     width: 100% !important;
     margin: 0 !important;
