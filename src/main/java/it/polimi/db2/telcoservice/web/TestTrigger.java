@@ -33,17 +33,10 @@ public class TestTrigger extends HttpServlet {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-
-//        OptionalProduct op = entityManager.find(OptionalProduct.class, 1);
-//        OptionalProduct op1 = new OptionalProduct();
-//        op1.setName("ehe");
-//        op1.setMonthlyFee(new BigDecimal(5));
-//        Set<OptionalProduct> opSet = new HashSet<>();
-//        opSet.add(op);
-//        opSet.add(op1 );
-//        so.setOptionalProducts(opSet);
+        Service service = new Service(ServiceType.MOBILE_PHONE, 1, 1, 1, new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"));
 
         entityManager.getTransaction().begin();
+        entityManager.persist(service);
         entityManager.getTransaction().commit();
         entityManagerFactory.close();
 

@@ -31,7 +31,7 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
     @Column(nullable = false)
-    private Boolean insolvent;
+    private boolean insolvent;
     @Column(name = "rejected_payments", nullable = false)
     private int rejectedPayments;
     @Column(name = "employee", nullable = false)
@@ -66,10 +66,6 @@ public class User {
         return email;
     }
 
-    public boolean isInsolvent() {
-        return insolvent;
-    }
-
     public int getRejectedPayments() {
         return rejectedPayments;
     }
@@ -100,10 +96,6 @@ public class User {
         this.email = email;
     }
 
-    public void setInsolvent(boolean insolvent) {
-        this.insolvent = insolvent;
-    }
-
     public void setRejectedPayments(int rejectedPayments) {
         this.rejectedPayments = rejectedPayments;
     }
@@ -116,11 +108,11 @@ public class User {
         this.orders = orders;
     }
 
-    public Boolean getInsolvent() {
+    public boolean isInsolvent() {
         return insolvent;
     }
 
-    public void setInsolvent(Boolean insolvent) {
+    public void setInsolvent(boolean insolvent) {
         this.insolvent = insolvent;
     }
 
