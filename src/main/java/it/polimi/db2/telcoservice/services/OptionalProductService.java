@@ -5,6 +5,7 @@ import it.polimi.db2.telcoservice.entities.ValidityPeriod;
 
 import javax.ejb.Stateless;
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +30,9 @@ public class OptionalProductService {
 	public OptionalProduct findOptionalProductById(int id) {
 		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
-		return entityManager.find(OptionalProduct.class, id);
+		OptionalProduct optionalProduct = entityManager.find(OptionalProduct.class, id);
+		entityManager.detach(optionalProduct);
+		return optionalProduct;
 	}
 
 	public int findNumOptionalProducts() {
@@ -43,5 +46,17 @@ public class OptionalProductService {
 			e.printStackTrace();
 		}
 		return numProducts;
+	}
+
+	public void createOptionalProduct(String name, BigDecimal monthlyFee) {
+		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+		OptionalProduct optionalProduct = new OptionalProduct(name, monthlyFee);
+
+		entityManager.getTransaction().begin();
+		entityManager.persist(optionalProduct);
+		entityManager.getTransaction().commit();
+		entityManagerFactory.close();
 	}
 }

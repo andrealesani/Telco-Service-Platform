@@ -38,12 +38,12 @@ public class User {
     private boolean employee;
 
     @OneToMany(
-            fetch = FetchType.EAGER,
+            fetch = FetchType.LAZY,
             mappedBy = "user"
     )
     private List<Auditing> auditing;
     @OneToMany(
-            fetch = FetchType.EAGER,
+            fetch = FetchType.LAZY,
             mappedBy = "user"
     )
     private List<SubscriptionOrder> orders;

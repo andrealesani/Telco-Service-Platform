@@ -39,19 +39,19 @@ public class SubscriptionOrder {
     @Column()
     private Boolean valid;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(
             nullable = false,
             name = "serv_pckg_id"
     )
     private ServicePackage servicePackage;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(
             nullable = false,
             name = "val_period_id"
     )
     private ValidityPeriod validityPeriod;
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(
             joinColumns = @JoinColumn(name = "sub_order_id"),
             inverseJoinColumns = @JoinColumn(name = "opt_prod_id")

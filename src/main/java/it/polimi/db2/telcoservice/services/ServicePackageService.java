@@ -1,7 +1,6 @@
 package it.polimi.db2.telcoservice.services;
 
-import it.polimi.db2.telcoservice.entities.ServicePackage;
-import it.polimi.db2.telcoservice.entities.User;
+import it.polimi.db2.telcoservice.entities.*;
 import it.polimi.db2.telcoservice.exceptions.CredentialsException;
 import it.polimi.db2.telcoservice.exceptions.UserAlreadyExistsException;
 
@@ -9,6 +8,7 @@ import javax.ejb.Stateless;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Stateless
 public class ServicePackageService {
@@ -32,6 +32,20 @@ public class ServicePackageService {
 	public ServicePackage findServicePackageById(int id) {
 		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
-		return entityManager.find(ServicePackage.class, id);
+		ServicePackage servicePackage = entityManager.find(ServicePackage.class, id);
+		entityManager.detach(servicePackage);
+		return servicePackage;
+	}
+
+	public void createServicePackage(String name, Set<Service> services, Set<ValidityPeriod> validityPeriods, Set<OptionalProduct> optionalProducts) {
+		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+		ServicePackage servicePackage = new ServicePackage(name, services, validityPeriods, optionalProducts);
+
+		entityManager.getTransaction().begin();
+		entityManager.persist(servicePackage);
+		entityManager.getTransaction().commit();
+		entityManagerFactory.close();
 	}
 }

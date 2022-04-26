@@ -29,6 +29,10 @@ import java.util.List;
 public class GoToBuyServicePage extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private TemplateEngine templateEngine;
+    @EJB(name = "it.polimi.db2.telcoservice.services/ServicePackageService")
+    private ServicePackageService spService;
+    @EJB(name = "it.polimi.db2.telcoservice.services/UserService")
+    private UserService uService;
 
     public void init() {
         ServletContext servletContext = getServletContext();
@@ -40,24 +44,22 @@ public class GoToBuyServicePage extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        List<ServicePackage> servicePackages;
-        ServicePackageService servicePackageService = new ServicePackageService();
-        servicePackages = servicePackageService.findAllServicePackages();
 
         String path = "/WEB-INF/buy-service.html";
+
+        List<ServicePackage> servicePackages  = spService.findAllServicePackages();
 
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-
         ctx.setVariable("servicePackages", servicePackages);
-        // user might not be logged in, but it's not a problem. So we ignore
+        // user might not be logged in, but it's not a problem. So in that case we ignore
         // the exception and just don't set any user inside the context
         try {
-            ctx.setVariable("user", entityManager.find(User.class, ((User) request.getSession().getAttribute("user")).getId()));
-        } catch (Exception ignored) {}
+            ctx.setVariable("user", uService.findUserById(((User) request.getSession().getAttribute("user")).getId()));
+        } catch (NullPointerException ex) {
+            System.out.println("No user was logged in when accessing service purchase page.");
+        }
 
         templateEngine.process(path, ctx, response.getWriter());
     }

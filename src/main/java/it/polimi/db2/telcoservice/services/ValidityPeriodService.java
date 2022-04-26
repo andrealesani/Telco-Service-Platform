@@ -30,7 +30,9 @@ public class ValidityPeriodService {
 	public ValidityPeriod findValidityPeriodById(int id) {
 		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
-		return entityManager.find(ValidityPeriod.class, id);
+		ValidityPeriod validityPeriod =  entityManager.find(ValidityPeriod.class, id);
+		entityManager.detach(validityPeriod);
+		return validityPeriod;
 	}
 
 	public int findNumValidityPeriods() {

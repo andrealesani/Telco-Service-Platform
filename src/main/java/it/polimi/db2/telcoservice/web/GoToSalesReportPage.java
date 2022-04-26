@@ -9,6 +9,7 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
+import javax.ejb.EJB;
 import javax.servlet.ServletContext;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,6 +25,18 @@ import java.util.List;
 public class GoToSalesReportPage extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private TemplateEngine templateEngine;
+    @EJB(name = "it.polimi.db2.telcoservice.services/SalesReportPackagesService")
+    private SalesReportPackagesService srpsService;
+    @EJB(name = "it.polimi.db2.telcoservice.services/SalesReportValidityPackagesService")
+    private SalesReportValidityPackagesService srvpService;
+    @EJB(name = "it.polimi.db2.telcoservice.services/SalesReportInsolventUsersService")
+    private SalesReportInsolventUsersService sriuService;
+    @EJB(name = "it.polimi.db2.telcoservice.services/SalesReportSuspendedOrdersService")
+    private SalesReportSuspendedOrdersService srsoService;
+    @EJB(name = "it.polimi.db2.telcoservice.services/SalesReportProductSalesService")
+    private SalesReportProductSalesService srprodsService;
+    @EJB(name = "it.polimi.db2.telcoservice.services/AuditingService")
+    private AuditingService aService;
 
     public void init(){
         ServletContext servletContext = getServletContext();
@@ -39,28 +52,12 @@ public class GoToSalesReportPage extends HttpServlet {
 
         User user = (User) request.getSession().getAttribute("user");
 
-        List<SalesReportPackages> srServicePackages;
-        SalesReportPackagesService salesReportPackagesService = new SalesReportPackagesService();
-        srServicePackages = salesReportPackagesService.findAllSalesReports();
-
-        List<SalesReportValidityPackages> srValidityPeriodServicePackages;
-        SalesReportValidityPackagesService salesReportValidityPackagesService = new SalesReportValidityPackagesService();
-        srValidityPeriodServicePackages = salesReportValidityPackagesService.findAllSalesReports();
-
-        List<SalesReportInsolventUsers> srInsolventUsers;
-        SalesReportInsolventUsersService salesReportInsolventUsersService = new SalesReportInsolventUsersService();
-        srInsolventUsers = salesReportInsolventUsersService.findAllInsolvent();
-
-        List<SalesReportSuspendedOrders> srSuspendedOrders;
-        SalesReportSuspendedOrdersService salesReporSuspendedOrdersService = new SalesReportSuspendedOrdersService();
-        srSuspendedOrders = salesReporSuspendedOrdersService.findAllSuspended();
-
-        List<Auditing> srAuditingRecords;
-        AuditingService auditingService = new AuditingService();
-        srAuditingRecords = auditingService.findAllAuditings();
-
-        SalesReportProductSalesService salesReportProductSalesService = new SalesReportProductSalesService();
-        SalesReportProductSales srBestSellerProduct = salesReportProductSalesService.findBestSeller();
+        List<SalesReportPackages> srServicePackages  = srpsService.findAllSalesReports();
+        List<SalesReportValidityPackages> srValidityPeriodServicePackages = srvpService.findAllSalesReports();
+        List<SalesReportInsolventUsers> srInsolventUsers = sriuService.findAllInsolvent();
+        List<SalesReportSuspendedOrders> srSuspendedOrders = srsoService.findAllSuspended();
+        SalesReportProductSales srBestSellerProduct = srprodsService.findBestSeller();
+        List<Auditing> srAuditingRecords = aService.findAllAuditings();
 
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
@@ -74,10 +71,12 @@ public class GoToSalesReportPage extends HttpServlet {
         ctx.setVariable("user", user);
 
         templateEngine.process(path, ctx, response.getWriter());
-
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         doGet(request, response);
+    }
+
+    public void destroy(){
     }
 }

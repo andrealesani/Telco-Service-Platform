@@ -4,7 +4,10 @@ import it.polimi.db2.telcoservice.entities.OptionalProduct;
 import it.polimi.db2.telcoservice.entities.Service;
 import it.polimi.db2.telcoservice.entities.ServicePackage;
 import it.polimi.db2.telcoservice.entities.ValidityPeriod;
+import it.polimi.db2.telcoservice.services.OptionalProductService;
+import it.polimi.db2.telcoservice.services.SalesReportPackagesService;
 
+import javax.ejb.EJB;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -23,6 +26,8 @@ import java.util.Set;
 @WebServlet(name = "CreateOptionalProduct", value = "/create-optional-product")
 public class CreateOptionalProduct extends HttpServlet {
     private String message;
+    @EJB(name = "it.polimi.db2.telcoservice.services/OptionalProductService")
+    private OptionalProductService opService;
 
     public void init() {
         message = "The optional product has been added to the database!";
@@ -43,15 +48,7 @@ public class CreateOptionalProduct extends HttpServlet {
             return;
         }
 
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-
-        OptionalProduct optionalProduct = new OptionalProduct(name, monthlyFee);
-
-        entityManager.getTransaction().begin();
-        entityManager.persist(optionalProduct);
-        entityManager.getTransaction().commit();
-        entityManagerFactory.close();
+        opService.createOptionalProduct(name, monthlyFee);
 
         PrintWriter out = response.getWriter();
         out.println("<html><link href=\"css/style.css\" rel=\"stylesheet\"><body>");
@@ -61,5 +58,8 @@ public class CreateOptionalProduct extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         doGet(request, response);
+    }
+
+    public void destroy(){
     }
 }

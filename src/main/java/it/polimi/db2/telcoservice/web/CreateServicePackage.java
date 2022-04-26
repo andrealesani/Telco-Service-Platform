@@ -1,10 +1,9 @@
 package it.polimi.db2.telcoservice.web;
 
 import it.polimi.db2.telcoservice.entities.*;
-import it.polimi.db2.telcoservice.services.OptionalProductService;
-import it.polimi.db2.telcoservice.services.ServiceService;
-import it.polimi.db2.telcoservice.services.ValidityPeriodService;
+import it.polimi.db2.telcoservice.services.*;
 
+import javax.ejb.EJB;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -23,16 +22,22 @@ import java.util.Set;
 public class CreateServicePackage extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private String message;
+    @EJB(name = "it.polimi.db2.telcoservice.services/ServiceService")
+    private ServiceService sService;
+    @EJB(name = "it.polimi.db2.telcoservice.services/ValidityPeriodService")
+    private ValidityPeriodService vpService;
+    @EJB(name = "it.polimi.db2.telcoservice.services/OptionalProductService")
+    private OptionalProductService opService;
+    @EJB(name = "it.polimi.db2.telcoservice.services/ServicePackageService")
+    private ServicePackageService spService;
 
     public void init() {
         message = "The service package has been added to the database!";
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/html");
 
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        response.setContentType("text/html");
 
         String name = request.getParameter("package-name");
         if (name.trim().isEmpty()) {
@@ -40,60 +45,42 @@ public class CreateServicePackage extends HttpServlet {
             return;
         }
 
-        ServiceService ss = new ServiceService();
-        int numServices = ss.findNumServices();
-        List<Integer> serviceIds = new ArrayList<>();
+        int numServices = sService.findNumServices();
+        Set<Service> services = new HashSet<>();
         for (int i = 0; i < numServices; i++) {
             try {
-                serviceIds.add(Integer.parseInt(request.getParameter("service" + i)));
+                int serviceId = Integer.parseInt(request.getParameter("service" + i));
+                services.add(sService.findServiceById(serviceId));
             } catch (NumberFormatException ignored) {}
         }
-        if (serviceIds.isEmpty()) {
+        if (services.isEmpty()) {
             response.sendError(400, "Service package must be associated to at least 1 service.");
             return;
         }
 
-        ValidityPeriodService vps = new ValidityPeriodService();
-        int numValPeriods = vps.findNumValidityPeriods();
-        List<Integer> valPeriodIds = new ArrayList<>();
+        int numValPeriods = vpService.findNumValidityPeriods();
+        Set<ValidityPeriod> validityPeriods = new HashSet<>();
         for (int i = 0; i < numValPeriods; i++) {
             try {
-                valPeriodIds.add(Integer.parseInt(request.getParameter("validity-period" + i)));
+                int valPeriodId = Integer.parseInt(request.getParameter("validity-period" + i));
+                validityPeriods.add(vpService.findValidityPeriodById(valPeriodId));
             } catch (NumberFormatException ignored) {}
         }
-        if (valPeriodIds.isEmpty()) {
+        if (validityPeriods.isEmpty()) {
             response.sendError(400, "Service package must be associated to at least 1 validity period.");
             return;
         }
 
-        OptionalProductService ops = new OptionalProductService();
-        int numOptProducts = ops.findNumOptionalProducts();
-        List<Integer> optProdIds = new ArrayList<>();
+        int numOptProducts = opService.findNumOptionalProducts();
+        Set<OptionalProduct> optionalProducts = new HashSet<>();
         for (int i = 0; i < numOptProducts; i++) {
             try {
-                optProdIds.add(Integer.parseInt(request.getParameter("optional-product" + i)));
+                int optProductId = Integer.parseInt(request.getParameter("optional-product" + i));
+                optionalProducts.add(opService.findOptionalProductById(optProductId));
             } catch (NumberFormatException ignored) {}
         }
 
-        Set<Service> services = new HashSet<>();
-        for (int id : serviceIds) {
-            services.add(entityManager.find(Service.class, id));
-        }
-        Set<ValidityPeriod> validityPeriods = new HashSet<>();
-        for (int id : valPeriodIds) {
-            validityPeriods.add(entityManager.find(ValidityPeriod.class, id));
-        }
-        Set<OptionalProduct> optionalProducts = new HashSet<>();
-        for (int id : optProdIds) {
-            optionalProducts.add(entityManager.find(OptionalProduct.class, id));
-        }
-
-        ServicePackage servicePackage = new ServicePackage(name, services, validityPeriods, optionalProducts);
-
-        entityManager.getTransaction().begin();
-        entityManager.persist(servicePackage);
-        entityManager.getTransaction().commit();
-        entityManagerFactory.close();
+        spService.createServicePackage(name, services, validityPeriods, optionalProducts);
 
         PrintWriter out = response.getWriter();
         out.println("<html><link href=\"css/style.css\" rel=\"stylesheet\"><body>");
@@ -103,5 +90,8 @@ public class CreateServicePackage extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         doGet(request, response);
+    }
+
+    public void destroy(){
     }
 }

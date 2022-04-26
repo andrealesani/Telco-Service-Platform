@@ -1,5 +1,6 @@
 package it.polimi.db2.telcoservice.services;
 
+import it.polimi.db2.telcoservice.entities.Service;
 import it.polimi.db2.telcoservice.entities.User;
 import it.polimi.db2.telcoservice.exceptions.CredentialsException;
 import it.polimi.db2.telcoservice.exceptions.UserAlreadyExistsException;
@@ -10,9 +11,14 @@ import java.util.List;
 
 @Stateless
 public class UserService {
-	// @PersistenceContext(unitName = "db2_jpa")
-	@PersistenceUnit
-	private EntityManagerFactory emf; // not used
+
+	public User findUserById(int id) {
+		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		User user = entityManager.find(User.class, id);
+		entityManager.detach(user);
+		return user;
+	}
 
 	public User checkCredentials(String username, String password) throws CredentialsException, NonUniqueResultException {
 		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
@@ -49,6 +55,6 @@ public class UserService {
 			entityManagerFactory.close();
 		}
 		else
-		throw new UserAlreadyExistsException("The specified username has already been used");
+			throw new UserAlreadyExistsException("The specified username has already been used");
 	}
 }
