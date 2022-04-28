@@ -22,6 +22,10 @@
     <div th:if="${order != null}">
         <span th:unless="${order.servicePackage.name != null}">Service package name unavailable</span>
         <span th:text="'Service package: '+ ${order.servicePackage.name}"></span><br>
+        <span th:if="${#sets.isEmpty(order.servicePackage.services)}">Services unavailable</span>
+        <div th:unless="${#sets.isEmpty(order.servicePackage.services)}" th:each="serv : ${order.servicePackage.services}">
+            <span th:text="'Service: '+ ${serv.type} + ' - Fees: ' + ${serv.getFeesString()}"></span>
+        </div>
         <span th:unless="${order.validityPeriod.months != null}">Validity period unavailable</span>
         <span th:text="'Validity months: '+ ${order.validityPeriod.months}"></span><br>
         <span th:if="${#sets.isEmpty(order.optionalProducts)}">No optional products selected</span>

@@ -53,9 +53,9 @@
             <td th:text="${servpckg.id}"></td>
             <td th:text="${servpckg.name}"></td>
             <td class="services">
-                <ul th:unless="${#sets.isEmpty(servpckg.services)}">
+                <ul>
                     <li th:if="${#sets.isEmpty(servpckg.services)}">This package has no services</li>
-                    <li th:each="service : ${servpckg.services}">
+                    <li th:unless="${#sets.isEmpty(servpckg.services)}" th:each="service : ${servpckg.services}">
                         <span th:text="${service.type}"></span>
                         <br>
                         <span th:text="${service.getFeesString()}"></span>

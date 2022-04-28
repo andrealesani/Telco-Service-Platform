@@ -29,14 +29,14 @@ public class ServicePackage {
     private String name;
 
     @ManyToMany(
-            fetch = FetchType.LAZY
+            fetch = FetchType.EAGER
     )
     @JoinTable(
             joinColumns = @JoinColumn(name = "serv_pckg_id"),
             inverseJoinColumns = @JoinColumn(name = "service_id"))
     private Set<Service> services;
     @ManyToMany(
-            fetch = FetchType.LAZY
+            fetch = FetchType.EAGER
     )
     @JoinTable(
             joinColumns = @JoinColumn(name = "serv_pckg_id"),
@@ -44,7 +44,7 @@ public class ServicePackage {
     )
     private Set<ValidityPeriod> validityPeriods;
     @ManyToMany(
-            fetch = FetchType.LAZY
+            fetch = FetchType.EAGER
     )
     @JoinTable(
             joinColumns = @JoinColumn(name = "serv_pckg_id"),
@@ -52,7 +52,7 @@ public class ServicePackage {
     )
     private Set<OptionalProduct> optionalProducts;
     @OneToMany(
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             mappedBy = "servicePackage",
             cascade = CascadeType.PERSIST
     )

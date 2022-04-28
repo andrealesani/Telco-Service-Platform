@@ -4,7 +4,12 @@ import it.polimi.db2.telcoservice.entities.OptionalProduct;
 import it.polimi.db2.telcoservice.entities.ServicePackage;
 import it.polimi.db2.telcoservice.entities.SubscriptionOrder;
 import it.polimi.db2.telcoservice.entities.ValidityPeriod;
+import it.polimi.db2.telcoservice.services.OptionalProductService;
+import it.polimi.db2.telcoservice.services.ServicePackageService;
+import it.polimi.db2.telcoservice.services.SubscriptionOrderService;
+import it.polimi.db2.telcoservice.services.ValidityPeriodService;
 
+import javax.ejb.EJB;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -22,38 +27,35 @@ import java.util.Set;
 @WebServlet("/PrepareOrder")
 public class PrepareOrder extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    @EJB(name = "it.polimi.db2.telcoservice.services/ServicePackageService")
+    private ServicePackageService spService;
+    @EJB(name = "it.polimi.db2.telcoservice.services/ValidityPeriodService")
+    private ValidityPeriodService vpService;
+    @EJB(name = "it.polimi.db2.telcoservice.services/OptionalProductService")
+    private OptionalProductService opService;
+    @EJB(name = "it.polimi.db2.telcoservice.services/SubscriptionOrderService")
+    private SubscriptionOrderService soService;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        int serv_pckg_id = Integer.parseInt(request.getParameter("serv_pckg_id"));
+
         int val_per_id = Integer.parseInt(request.getParameter("val_per_id"));
-        List<Integer> opt_prod_ids = new ArrayList<>();
+        int serv_pckg_id = Integer.parseInt(request.getParameter("serv_pckg_id"));
 
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        ServicePackage servicePackage = spService.findServicePackageById(serv_pckg_id);
+        ValidityPeriod validityPeriod = vpService.findValidityPeriodById(val_per_id);
 
-        ServicePackage servicePackage = entityManager.find(ServicePackage.class, serv_pckg_id);
-
+        Set<OptionalProduct> optionalProducts = new HashSet<>();
         // for each possible optional product included in the package check if it has been checked and sent to the servlet
         for (int i = 0; i < servicePackage.getOptionalProducts().size(); i++) {
             try {
-                opt_prod_ids.add(Integer.parseInt(request.getParameter("opt_prod_id" + i)));
+                optionalProducts.add(opService.findOptionalProductById(Integer.parseInt(request.getParameter("opt_prod_id" + i))));
             } catch (NumberFormatException ignored) {}
         }
 
-        ValidityPeriod validityPeriod = entityManager.find(ValidityPeriod.class, val_per_id);
-        Set<OptionalProduct> optionalProducts = new HashSet<>();
-        for (int id : opt_prod_ids) {
-            optionalProducts.add(entityManager.find(OptionalProduct.class, id));
-        }
-
-        SubscriptionOrder order = new SubscriptionOrder(servicePackage, validityPeriod, optionalProducts, null, new Timestamp(System.currentTimeMillis()));
-
-        entityManager.getTransaction().begin();
-        entityManager.persist(order);
-        entityManager.getTransaction().commit();
+        SubscriptionOrder order = soService.createOrder(servicePackage, validityPeriod, optionalProducts, new Timestamp(System.currentTimeMillis()));
 
         request.getSession().setAttribute("order", order);
-        System.out.println("order has been saved in session");
+        System.out.println("Order has been saved in session.");
 
         response.sendRedirect(getServletContext().getContextPath() + "/GoToConfirmationPage");
     }

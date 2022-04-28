@@ -37,7 +37,7 @@ public class ServicePackageService {
 		return servicePackage;
 	}
 
-	public void createServicePackage(String name, Set<Service> services, Set<ValidityPeriod> validityPeriods, Set<OptionalProduct> optionalProducts) {
+	public ServicePackage createServicePackage(String name, Set<Service> services, Set<ValidityPeriod> validityPeriods, Set<OptionalProduct> optionalProducts) {
 		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 
@@ -47,5 +47,7 @@ public class ServicePackageService {
 		entityManager.persist(servicePackage);
 		entityManager.getTransaction().commit();
 		entityManagerFactory.close();
+
+		return servicePackage;
 	}
 }

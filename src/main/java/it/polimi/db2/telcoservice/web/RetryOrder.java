@@ -4,7 +4,9 @@ import it.polimi.db2.telcoservice.entities.OptionalProduct;
 import it.polimi.db2.telcoservice.entities.ServicePackage;
 import it.polimi.db2.telcoservice.entities.SubscriptionOrder;
 import it.polimi.db2.telcoservice.entities.ValidityPeriod;
+import it.polimi.db2.telcoservice.services.SubscriptionOrderService;
 
+import javax.ejb.EJB;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -22,17 +24,16 @@ import java.util.Set;
 @WebServlet("/RetryOrder")
 public class RetryOrder extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    @EJB(name = "it.polimi.db2.telcoservice.services/SubscriptionOrderService")
+    private SubscriptionOrderService soService;
 
     protected void doGet (HttpServletRequest request, HttpServletResponse response) throws IOException {
         int order_id = Integer.parseInt(request.getParameter("order_id"));
 
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-
-        SubscriptionOrder order = entityManager.find(SubscriptionOrder.class, order_id);
+        SubscriptionOrder order = soService.findSubscriptionOrderById(order_id);
 
         request.getSession().setAttribute("order", order);
-        System.out.println("order has been saved in session");
+        System.out.println("Order has been saved in session.");
 
         //try {
         //    getServletContext().getRequestDispatcher("/GoToConfirmationPage").forward(request, response);

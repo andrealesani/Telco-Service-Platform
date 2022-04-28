@@ -14,7 +14,7 @@
 
 <div class="container">
     <h1 th:if="${order == null}">Welcome to GeeGee Simulator!</h1>
-    <h2 th:text="${registered}"></h2>
+    <h2 th:text="${message}"></h2>
     <form th:if="${order == null}" action="GoToHomePage">
         <input type="submit" value="View products without logging in">
     </form>
@@ -25,11 +25,11 @@
             <tr>Sign in</tr>
             <tr>
                 <td>Username:</td>
-                <td><label><input type="text" name="username"></label></td>
+                <td><label><input required type="text" name="username"></label></td>
             </tr>
             <tr>
                 <td>Password:</td>
-                <td><label><input type="password" name="password"></label></td>
+                <td><label><input required type="password" name="password"></label></td>
             </tr>
             <tr>
                 <td><input type="submit" value="Login"></td>
@@ -44,15 +44,15 @@
             <tr>New user? Sign up</tr>
             <tr>
                 <td>Username</td>
-                <td><label><input type="text" name="username"></label></td>
+                <td><label><input required type="text" name="username"></label></td>
             </tr>
             <tr>
                 <td>Email:</td>
-                <td><label><input type="text" name="email"></label></td>
+                <td><label><input required type="text" name="email"></label></td>
             </tr>
             <tr>
                 <td>Password</td>
-                <td><label><input type="password" name="password"></label></td>
+                <td><label><input required type="password" name="password"></label></td>
             </tr>
             <tr>
                 <td><input type="submit" value="Sign up"></td>

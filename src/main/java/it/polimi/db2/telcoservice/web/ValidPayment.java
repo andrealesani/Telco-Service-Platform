@@ -1,11 +1,14 @@
 package it.polimi.db2.telcoservice.web;
 
 import it.polimi.db2.telcoservice.entities.*;
+import it.polimi.db2.telcoservice.services.SubscriptionOrderService;
+import it.polimi.db2.telcoservice.services.UserService;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
+import javax.ejb.EJB;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -26,6 +29,10 @@ import java.util.Set;
 public class ValidPayment extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private TemplateEngine templateEngine;
+    @EJB(name = "it.polimi.db2.telcoservice.services/UserService")
+    private UserService uService;
+    @EJB(name = "it.polimi.db2.telcoservice.services/SubscriptionOrderService")
+    private SubscriptionOrderService soService;
 
     public void init() {
         ServletContext servletContext = getServletContext();
@@ -37,34 +44,28 @@ public class ValidPayment extends HttpServlet {
     }
 
     protected void doGet (HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        String path = "/WEB-INF/payment-result.html";
+
         int orderId = Integer.parseInt(request.getParameter("order-id"));
 
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        User user = uService.findUserById(((User) request.getSession().getAttribute("user")).getId());
 
-        SubscriptionOrder order = entityManager.find(SubscriptionOrder.class, orderId);
-        order.setValid(true);
-        order.setUser(entityManager.find(User.class, ((User) request.getSession().getAttribute("user")).getId()));
-
-        entityManager.getTransaction().begin();
-        entityManager.persist(order);
-        entityManager.getTransaction().commit();
+        soService.makePayment(orderId, true, user);
 
         request.getSession().removeAttribute("order");
 
-        String path = "/WEB-INF/payment-result.html";
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 
         // user might not be logged in, but it's not a problem. So we ignore
         // the exception and just don't set any user inside the context
         try {
-            ctx.setVariable("user", entityManager.find(User.class, ((User) request.getSession().getAttribute("user")).getId()));
+            ctx.setVariable("user", uService.findUserById(((User) request.getSession().getAttribute("user")).getId()));
         } catch (Exception ignored) {}
 
         ctx.setVariable("result", "successful");
 
-        //response.getWriter().println("validityPeriods is empty: " + servicePackages.get(0).getValidityPeriods().isEmpty());
         templateEngine.process(path, ctx, response.getWriter());
     }
 

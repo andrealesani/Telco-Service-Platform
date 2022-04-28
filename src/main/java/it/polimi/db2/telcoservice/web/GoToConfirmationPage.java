@@ -4,11 +4,14 @@ import it.polimi.db2.telcoservice.entities.ServicePackage;
 import it.polimi.db2.telcoservice.entities.SubscriptionOrder;
 import it.polimi.db2.telcoservice.entities.User;
 import it.polimi.db2.telcoservice.services.ServicePackageService;
+import it.polimi.db2.telcoservice.services.SubscriptionOrderService;
+import it.polimi.db2.telcoservice.services.UserService;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
+import javax.ejb.EJB;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -27,6 +30,10 @@ import java.io.IOException;
 public class GoToConfirmationPage extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private TemplateEngine templateEngine;
+    @EJB(name = "it.polimi.db2.telcoservice.services/UserService")
+    private UserService uService;
+    @EJB(name = "it.polimi.db2.telcoservice.services/SubscriptionOrderService")
+    private SubscriptionOrderService soService;
 
     public void init() {
         ServletContext servletContext = getServletContext();
@@ -38,20 +45,22 @@ public class GoToConfirmationPage extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
         String path = "/WEB-INF/confirmation.html";
+
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
 
         // user might not be logged in, but it's not a problem. So we ignore
         // the exception and just don't set any user inside the context
         try {
-            ctx.setVariable("user", entityManager.find(User.class, ((User) request.getSession().getAttribute("user")).getId()));
-        } catch (Exception ignored) {}
+            ctx.setVariable("user", uService.findUserById(((User) request.getSession().getAttribute("user")).getId()));
+        } catch (NullPointerException ex) {
+            System.out.println("No user was logged in when accessing confirmation page.");
+        }
 
-        ctx.setVariable("order", entityManager.find(SubscriptionOrder.class, ((SubscriptionOrder) request.getSession().getAttribute("order")).getId()));
+        ctx.setVariable("order", soService.findSubscriptionOrderById(((SubscriptionOrder) request.getSession().getAttribute("order")).getId()));
+
         templateEngine.process(path, ctx, response.getWriter());
     }
 
@@ -59,4 +68,5 @@ public class GoToConfirmationPage extends HttpServlet {
         doGet(request, response);
     }
 
+    public void destroy(){}
 }

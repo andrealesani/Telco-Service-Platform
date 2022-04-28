@@ -1,15 +1,13 @@
 package it.polimi.db2.telcoservice.web;
 
 import it.polimi.db2.telcoservice.entities.*;
-import it.polimi.db2.telcoservice.services.OptionalProductService;
-import it.polimi.db2.telcoservice.services.ServicePackageService;
-import it.polimi.db2.telcoservice.services.ServiceService;
-import it.polimi.db2.telcoservice.services.ValidityPeriodService;
+import it.polimi.db2.telcoservice.services.*;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
+import javax.ejb.EJB;
 import javax.servlet.ServletContext;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,6 +23,12 @@ import java.util.List;
 public class GoToEmployeeHomePage extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private TemplateEngine templateEngine;
+    @EJB(name = "it.polimi.db2.telcoservice.services/ServiceService")
+    private ServiceService sService;
+    @EJB(name = "it.polimi.db2.telcoservice.services/ValidityPeriodService")
+    private ValidityPeriodService vpService;
+    @EJB(name = "it.polimi.db2.telcoservice.services/OptionalProductService")
+    private OptionalProductService opService;
 
     public void init(){
         ServletContext servletContext = getServletContext();
@@ -40,17 +44,11 @@ public class GoToEmployeeHomePage extends HttpServlet {
 
         User user = (User) request.getSession().getAttribute("user");
 
-        List<Service> services;
-        ServiceService serviceService = new ServiceService();
-        services = serviceService.findAllServices();
+        List<Service> services  = sService.findAllServices();
 
-        List<ValidityPeriod> validityPeriods;
-        ValidityPeriodService validityPeriodService = new ValidityPeriodService();
-        validityPeriods = validityPeriodService.findAllValidityPeriods();
+        List<ValidityPeriod> validityPeriods = vpService.findAllValidityPeriods();
 
-        List<OptionalProduct> optionalProducts;
-        OptionalProductService optionalProductService = new OptionalProductService();
-        optionalProducts = optionalProductService.findAllOptionalProducts();
+        List<OptionalProduct> optionalProducts = opService.findAllOptionalProducts();
 
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
@@ -67,4 +65,6 @@ public class GoToEmployeeHomePage extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         doGet(request, response);
     }
+
+    public void destroy(){}
 }

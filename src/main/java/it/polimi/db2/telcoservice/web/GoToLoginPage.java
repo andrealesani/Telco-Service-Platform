@@ -33,16 +33,20 @@ public class GoToLoginPage extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String registered = request.getParameter("registered");
-        if (registered != null && registered.equals("true")) {
-            registered = "You have correctly registered, now you can log in";
-        }
+
         String path = "/index.html";
+
+        String message = request.getParameter("message");
+        if (message != null && message.equals("registered")) {
+            message = "You have correctly registered, now you can log in";
+        }
+
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-        ctx.setVariable("registered", registered);
+
+        ctx.setVariable("message", message);
         ctx.setVariable("order", request.getSession().getAttribute("order"));
-        //response.getWriter().println("validityPeriods is empty: " + servicePackages.get(0).getValidityPeriods().isEmpty());
+
         templateEngine.process(path, ctx, response.getWriter());
     }
 
@@ -50,4 +54,6 @@ public class GoToLoginPage extends HttpServlet {
         doGet(request, response);
     }
 
+    public void destroy(){
+    }
 }

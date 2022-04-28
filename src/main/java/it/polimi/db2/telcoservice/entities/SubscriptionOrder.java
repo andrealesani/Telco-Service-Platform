@@ -12,12 +12,12 @@ public class SubscriptionOrder {
     public SubscriptionOrder() {
     }
 
-    public SubscriptionOrder(ServicePackage servicePackage, ValidityPeriod validityPeriod, Set<OptionalProduct> optionalProducts, User user, Timestamp creationTs) {
+    public SubscriptionOrder(ServicePackage servicePackage, ValidityPeriod validityPeriod, Set<OptionalProduct> optionalProducts, Timestamp creationTs) {
         this.servicePackage = servicePackage;
         this.validityPeriod = validityPeriod;
         this.optionalProducts = optionalProducts;
-        this.user = user;
         this.creationTs = creationTs;
+        this.user = null;
     }
 
     @Id
@@ -39,19 +39,19 @@ public class SubscriptionOrder {
     @Column()
     private Boolean valid;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(
             nullable = false,
             name = "serv_pckg_id"
     )
     private ServicePackage servicePackage;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(
             nullable = false,
             name = "val_period_id"
     )
     private ValidityPeriod validityPeriod;
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             joinColumns = @JoinColumn(name = "sub_order_id"),
             inverseJoinColumns = @JoinColumn(name = "opt_prod_id")
