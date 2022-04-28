@@ -14,7 +14,7 @@ import java.util.List;
 @Stateless
 public class UserService {
 	@PersistenceContext
-	EntityManager entityManager;
+	private EntityManager entityManager;
 
 	public User findUserById(int id) {
 		return entityManager.find(User.class, id);

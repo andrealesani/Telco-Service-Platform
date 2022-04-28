@@ -52,7 +52,7 @@ public class ServicePackage {
     )
     private Set<OptionalProduct> optionalProducts;
     @OneToMany(
-            fetch = FetchType.EAGER,
+            fetch = FetchType.LAZY,
             mappedBy = "servicePackage",
             cascade = CascadeType.PERSIST
     )

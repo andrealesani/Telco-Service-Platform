@@ -7,10 +7,7 @@ import it.polimi.db2.telcoservice.entities.ValidityPeriod;
 import it.polimi.db2.telcoservice.entities.materialized.SalesReportProductSales;
 
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.PersistenceException;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +15,10 @@ import java.util.Set;
 
 @Stateless
 public class ServiceService {
+    @PersistenceContext
+    private EntityManager entityManager;
+
     public List<Service> findAllServices() {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
         List<Service> sList = new ArrayList<>();
         try {
             sList = entityManager.createNamedQuery("Service.findAllServices", Service.class)
@@ -32,16 +30,10 @@ public class ServiceService {
     }
 
     public Service findServiceById(int id) {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        Service service = entityManager.find(Service.class, id);
-        entityManager.detach(service);
-        return service;
+        return entityManager.find(Service.class, id);
     }
 
     public int findNumServices() {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
         int numServices = 0;
         try {
             numServices = ((Number) entityManager.createNamedQuery("Service.findNumServices", Integer.class)

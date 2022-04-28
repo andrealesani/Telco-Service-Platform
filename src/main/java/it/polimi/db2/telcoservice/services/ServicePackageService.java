@@ -12,13 +12,10 @@ import java.util.Set;
 
 @Stateless
 public class ServicePackageService {
-	// @PersistenceContext(unitName = "db2_jpa")
-	@PersistenceUnit
-	private EntityManagerFactory emf; // not used
+	@PersistenceContext
+	private EntityManager entityManager;
 
 	public List<ServicePackage> findAllServicePackages() {
-		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		List<ServicePackage> spList = new ArrayList<>();
 		try {
 			spList = entityManager.createNamedQuery("ServicePackage.findAllServicePackages", ServicePackage.class)
@@ -30,24 +27,12 @@ public class ServicePackageService {
 	}
 
 	public ServicePackage findServicePackageById(int id) {
-		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
-		ServicePackage servicePackage = entityManager.find(ServicePackage.class, id);
-		entityManager.detach(servicePackage);
-		return servicePackage;
+		return entityManager.find(ServicePackage.class, id);
 	}
 
 	public ServicePackage createServicePackage(String name, Set<Service> services, Set<ValidityPeriod> validityPeriods, Set<OptionalProduct> optionalProducts) {
-		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
-
 		ServicePackage servicePackage = new ServicePackage(name, services, validityPeriods, optionalProducts);
-
-		entityManager.getTransaction().begin();
 		entityManager.persist(servicePackage);
-		entityManager.getTransaction().commit();
-		entityManagerFactory.close();
-
 		return servicePackage;
 	}
 }

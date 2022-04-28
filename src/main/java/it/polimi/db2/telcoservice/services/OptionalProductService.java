@@ -11,12 +11,10 @@ import java.util.List;
 
 @Stateless
 public class OptionalProductService {
-	@PersistenceUnit
-	private EntityManagerFactory emf; // not used
+	@PersistenceContext
+	private EntityManager entityManager;
 
 	public List<OptionalProduct> findAllOptionalProducts() {
-		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		List<OptionalProduct> opList = new ArrayList<>();
 		try {
 			opList = entityManager.createNamedQuery("OptionalProduct.findAllOptionalProducts", OptionalProduct.class)
@@ -28,16 +26,10 @@ public class OptionalProductService {
 	}
 
 	public OptionalProduct findOptionalProductById(int id) {
-		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
-		OptionalProduct optionalProduct = entityManager.find(OptionalProduct.class, id);
-		entityManager.detach(optionalProduct);
-		return optionalProduct;
+		return entityManager.find(OptionalProduct.class, id);
 	}
 
 	public int findNumOptionalProducts() {
-		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		int numProducts = 0;
 		try {
 			numProducts = ((Number) entityManager.createNamedQuery("OptionalProduct.findNumOptionalProducts", Integer.class)
@@ -48,15 +40,9 @@ public class OptionalProductService {
 		return numProducts;
 	}
 
-	public void createOptionalProduct(String name, BigDecimal monthlyFee) {
-		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
-
+	public OptionalProduct createOptionalProduct(String name, BigDecimal monthlyFee) {
 		OptionalProduct optionalProduct = new OptionalProduct(name, monthlyFee);
-
-		entityManager.getTransaction().begin();
 		entityManager.persist(optionalProduct);
-		entityManager.getTransaction().commit();
-		entityManagerFactory.close();
+		return optionalProduct;
 	}
 }

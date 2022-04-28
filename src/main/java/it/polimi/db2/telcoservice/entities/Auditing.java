@@ -32,7 +32,7 @@ public class Auditing {
     )
     private BigDecimal rejectedAmount;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(
             nullable = false,
             name = "user_id"
