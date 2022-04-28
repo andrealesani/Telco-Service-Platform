@@ -46,7 +46,7 @@ public class RegisterNewUser extends HttpServlet {
             return;
         }
 
-        response.sendRedirect(getServletContext().getContextPath() + "/GoToLoginPage?message=true");
+        response.sendRedirect(getServletContext().getContextPath() + "/GoToLoginPage?message=registered");
     }
 }
 
