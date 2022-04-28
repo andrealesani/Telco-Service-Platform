@@ -5,24 +5,22 @@ import it.polimi.db2.telcoservice.entities.User;
 import it.polimi.db2.telcoservice.exceptions.CredentialsException;
 import it.polimi.db2.telcoservice.exceptions.UserAlreadyExistsException;
 
+import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.persistence.*;
+import javax.transaction.UserTransaction;
 import java.util.List;
 
 @Stateless
 public class UserService {
+	@PersistenceContext
+	EntityManager entityManager;
 
 	public User findUserById(int id) {
-		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
-		User user = entityManager.find(User.class, id);
-		entityManager.detach(user);
-		return user;
+		return entityManager.find(User.class, id);
 	}
 
 	public User checkCredentials(String username, String password) throws CredentialsException, NonUniqueResultException {
-		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		List<User> uList;
 		try {
 			uList = entityManager.createNamedQuery("User.checkCredentials", User.class).setParameter(1, username).setParameter(2, password)
@@ -38,8 +36,6 @@ public class UserService {
 	}
 
 	public void registerNewUser(String username, String password, String email) throws CredentialsException, UserAlreadyExistsException {
-		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		List<User> uList;
 		try {
 			uList = entityManager.createNamedQuery("User.existsUsername", User.class).setParameter(1, username)
@@ -49,10 +45,7 @@ public class UserService {
 		}
 		if (uList.isEmpty()) {
 			User user = new User(username, password, email, false, 0);
-			entityManager.getTransaction().begin();
 			entityManager.persist(user);
-			entityManager.getTransaction().commit();
-			entityManagerFactory.close();
 		}
 		else
 			throw new UserAlreadyExistsException("The specified username has already been used");
