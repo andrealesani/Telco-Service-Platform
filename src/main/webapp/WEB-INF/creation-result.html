@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<link href="css/style.css" rel="stylesheet">
+<head>
+  <meta charset="UTF-8">
+  <title>Telco Service - Home</title>
+</head>
+<body>
+
+<div class="navbar">
+  <a class="active" href="GoToHomePage">Home</a>
+  <span th:if="${user != null && user.isEmployee()}">
+    <a href="GoToEmployeeHomePage">Employee Home</a>
+    <a href="GoToSalesReportPage">Sales Report</a>
+  </span>
+  <a href="GoToLoginPage">Login</a>
+  <span class="login-status" th:text="'Welcome, ' + (*{user != null}? *{user.username} : 'user')"></span>
+</div>
+
+<br>
+
+<div class="container">
+  <h1 th:text="'The ' + ${entity} + ' was created correctly.'"></h1>
+  <br>
+  <form action="GoToEmployeeHomePage" id="go-back" method="GET">
+    <input type="submit" value="Employee Home">
+  </form>
+</div>
+</body>
+</html>

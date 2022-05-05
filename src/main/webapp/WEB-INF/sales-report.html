@@ -7,6 +7,10 @@
 <body>
 <div class="navbar">
     <a class="active" href="GoToHomePage">Home</a>
+    <span th:if="${user != null && user.isEmployee()}">
+        <a href="GoToEmployeeHomePage">Employee Home</a>
+        <a href="GoToSalesReportPage">Sales Report</a>
+    </span>
     <a href="GoToLoginPage">Login</a>
     <span class="login-status" th:text="'Welcome, ' + (*{user != null}? *{user.username} : 'user')"></span>
 </div>
@@ -21,11 +25,11 @@
         <span th:if="${#lists.isEmpty(srServicePackages)}">There are currently no service packages in the sales report.</span>
         <table th:unless="${#lists.isEmpty(srServicePackages)}">
             <tr>
-                <th>ID</th>
+                <th>Service Package ID</th>
                 <th>Purchases</th>
-                <th>Revenues w/o prods</th>
-                <th>Revenues w/ prods</th>
-                <th>Avg no. of prods</th>
+                <th>Revenues w/o products</th>
+                <th>Revenues w/ products</th>
+                <th>Avg no. of products</th>
             </tr>
             <tr th:each="srsp,iter : ${srServicePackages}" th:class="${iter.odd}? 'odd' : 'even'">
                 <td th:text="${srsp.getServPckgId()}"></td>
@@ -42,8 +46,8 @@
         <span th:if="${#lists.isEmpty(srValidityPeriodServicePackages)}">There are currently no service packages / validity period pairings in the sales report.</span>
         <table th:unless="${#lists.isEmpty(srValidityPeriodServicePackages)}">
             <tr>
-                <th>ID</th>
-                <th>Validity Period</th>
+                <th>Service Package ID</th>
+                <th>Validity Period ID</th>
                 <th>No. of purchases</th>
             </tr>
             <tr th:each="srvpsp,iter : ${srValidityPeriodServicePackages}" th:class="${iter.odd}? 'odd' : 'even'">

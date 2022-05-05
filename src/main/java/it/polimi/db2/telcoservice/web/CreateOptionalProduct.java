@@ -1,16 +1,19 @@
 package it.polimi.db2.telcoservice.web;
 
-import it.polimi.db2.telcoservice.entities.OptionalProduct;
-import it.polimi.db2.telcoservice.entities.Service;
-import it.polimi.db2.telcoservice.entities.ServicePackage;
-import it.polimi.db2.telcoservice.entities.ValidityPeriod;
+import it.polimi.db2.telcoservice.entities.*;
 import it.polimi.db2.telcoservice.services.OptionalProductService;
 import it.polimi.db2.telcoservice.services.SalesReportPackagesService;
+import it.polimi.db2.telcoservice.services.UserService;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.WebContext;
+import org.thymeleaf.templatemode.TemplateMode;
+import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import javax.ejb.EJB;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.servlet.ServletContext;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -25,16 +28,25 @@ import java.util.Set;
 
 @WebServlet(name = "CreateOptionalProduct", value = "/create-optional-product")
 public class CreateOptionalProduct extends HttpServlet {
-    private String message;
+    private static final long serialVersionUID = 1L;
+    private TemplateEngine templateEngine;
     @EJB(name = "it.polimi.db2.telcoservice.services/OptionalProductService")
     private OptionalProductService opService;
+    @EJB(name = "it.polimi.db2.telcoservice.services/UserService")
+    private UserService uService;
 
     public void init() {
-        message = "The optional product has been added to the database!";
+        ServletContext servletContext = getServletContext();
+        ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
+        templateResolver.setTemplateMode(TemplateMode.HTML);
+        this.templateEngine = new TemplateEngine();
+        this.templateEngine.setTemplateResolver(templateResolver);
+        templateResolver.setSuffix(".html");
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/html");
+
+        String path = "/WEB-INF/creation-result.html";
 
         String name = request.getParameter("product-name");
         if (name.trim().isEmpty()) {
@@ -50,10 +62,15 @@ public class CreateOptionalProduct extends HttpServlet {
 
         opService.createOptionalProduct(name, monthlyFee);
 
-        PrintWriter out = response.getWriter();
-        out.println("<html><link href=\"css/style.css\" rel=\"stylesheet\"><body>");
-        out.println("<h1>" + message + "</h1>");
-        out.println("</body></html>");
+        ServletContext servletContext = getServletContext();
+        final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+
+        try {
+            ctx.setVariable("user", uService.findUserById(((User) request.getSession().getAttribute("user")).getId()));
+        } catch (Exception ignored) {}
+        ctx.setVariable("entity", "Optional Product");
+
+        templateEngine.process(path, ctx, response.getWriter());
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {

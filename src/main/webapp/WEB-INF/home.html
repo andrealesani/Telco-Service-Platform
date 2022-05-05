@@ -10,6 +10,10 @@
 
 <div class="navbar">
     <a class="active" href="GoToHomePage">Home</a>
+    <span th:if="${user != null && user.isEmployee()}">
+        <a href="GoToEmployeeHomePage">Employee Home</a>
+        <a href="GoToSalesReportPage">Sales Report</a>
+    </span>
     <a href="GoToLoginPage">Login</a>
     <span class="login-status" th:text="'Welcome, ' + (*{user != null}? *{user.username} : 'user')"></span>
 </div>
@@ -17,16 +21,6 @@
 <br>
 
 <div class="container">
-    <div th:if="${user != null && user.isEmployee()}">
-        <form action="GoToEmployeeHomePage">
-            <input type="submit" value="Go to employee home page">
-        </form>
-        <form action="GoToSalesReportPage">
-            <input type="submit" value="View sales report">
-        </form>
-    </div>
-
-    <br>
 
     <div th:if="${user != null && user.isInsolvent()}">
         <h2>Rejected orders</h2>
@@ -38,7 +32,7 @@
             </tr>
             <tr th:each="order, iter : ${user.orders}" th:if="${!order.isvalid}" th:class="${iter.odd}? 'odd' : 'even'">
                 <td th:text="${order.creationTs}"></td>
-                <td th:text="${order.totalvalue} + 'euros'"></td>
+                <td th:text="${order.totalvalue} + ' euros'"></td>
                 <td><a th:href="'RetryOrder?order_id=' + ${order.id}">Pay now</a></td>
             </tr>
         </table>

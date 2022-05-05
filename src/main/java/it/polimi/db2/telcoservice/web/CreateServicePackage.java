@@ -2,11 +2,16 @@ package it.polimi.db2.telcoservice.web;
 
 import it.polimi.db2.telcoservice.entities.*;
 import it.polimi.db2.telcoservice.services.*;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.WebContext;
+import org.thymeleaf.templatemode.TemplateMode;
+import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import javax.ejb.EJB;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.servlet.ServletContext;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +26,7 @@ import java.util.Set;
 @WebServlet("/create-service-package")
 public class CreateServicePackage extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private String message;
+    private TemplateEngine templateEngine;
     @EJB(name = "it.polimi.db2.telcoservice.services/ServiceService")
     private ServiceService sService;
     @EJB(name = "it.polimi.db2.telcoservice.services/ValidityPeriodService")
@@ -30,14 +35,21 @@ public class CreateServicePackage extends HttpServlet {
     private OptionalProductService opService;
     @EJB(name = "it.polimi.db2.telcoservice.services/ServicePackageService")
     private ServicePackageService spService;
+    @EJB(name = "it.polimi.db2.telcoservice.services/UserService")
+    private UserService uService;
 
     public void init() {
-        message = "The service package has been added to the database!";
+        ServletContext servletContext = getServletContext();
+        ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
+        templateResolver.setTemplateMode(TemplateMode.HTML);
+        this.templateEngine = new TemplateEngine();
+        this.templateEngine.setTemplateResolver(templateResolver);
+        templateResolver.setSuffix(".html");
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        response.setContentType("text/html");
+        String path = "/WEB-INF/creation-result.html";
 
         String name = request.getParameter("package-name");
         if (name.trim().isEmpty()) {
@@ -82,10 +94,15 @@ public class CreateServicePackage extends HttpServlet {
 
         spService.createServicePackage(name, services, validityPeriods, optionalProducts);
 
-        PrintWriter out = response.getWriter();
-        out.println("<html><link href=\"css/style.css\" rel=\"stylesheet\"><body>");
-        out.println("<h1>" + message + "</h1>");
-        out.println("</body></html>");
+        ServletContext servletContext = getServletContext();
+        final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+
+        try {
+            ctx.setVariable("user", uService.findUserById(((User) request.getSession().getAttribute("user")).getId()));
+        } catch (Exception ignored) {}
+        ctx.setVariable("entity", "Service Package");
+
+        templateEngine.process(path, ctx, response.getWriter());
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
