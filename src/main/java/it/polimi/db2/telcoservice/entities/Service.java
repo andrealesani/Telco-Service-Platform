@@ -92,11 +92,11 @@ public class Service {
     public String getFeesString() {
         String fees = "";
         if (gb != 0)
-            fees += gb + " GBs. Extra fee per GB: " + extraGbFee + " euros ";
+            fees += gb + " GBs. Extra GB fee: " + extraGbFee + " euros/GB. ";
         if (minutes != 0)
-            fees += minutes + " minutes. Extra fee per minute: " + extraMinFee + " euros ";
+            fees += minutes + " minutes. Extra minutes fee: " + extraMinFee + " euros/minute. ";
         if (sms != 0)
-            fees += sms + " SMSs. Extra fee for SMS " + extraSmsFee + " euros";
+            fees += sms + " SMSs. Extra SMS fee: " + extraSmsFee + " euros/SMS. ";
 
         return fees;
     }

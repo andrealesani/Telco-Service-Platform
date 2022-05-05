@@ -18,22 +18,28 @@
 <div class="container">
     <h1>Confirm your choices</h1>
     <br>
-    <span th:unless="${order != null}">The order is empty</span>
+    <span th:unless="${order != null}" style="color:red">The order is empty</span>
     <div th:if="${order != null}">
-        <span th:unless="${order.servicePackage.name != null}">Service package name unavailable</span>
+        <span th:unless="${order.servicePackage.name != null}" style="color:red">Service package name unavailable</span>
         <span th:text="'Service package: '+ ${order.servicePackage.name}"></span><br>
-        <span th:if="${#sets.isEmpty(order.servicePackage.services)}">Services unavailable</span>
+
+        <span th:if="${#sets.isEmpty(order.servicePackage.services)}" style="color:red">Services unavailable</span>
         <div th:unless="${#sets.isEmpty(order.servicePackage.services)}" th:each="serv : ${order.servicePackage.services}">
-            <span th:text="'Service: '+ ${serv.type} + ' - Fees: ' + ${serv.getFeesString()}"></span>
+            <span th:text="'Services: '+ ${serv.type} + ' - Fees: ' + ${serv.getFeesString()}"></span>
         </div>
-        <span th:unless="${order.validityPeriod.months != null}">Validity period unavailable</span>
+        <span th:unless="${order.validityPeriod.months != null}" style="color:red">Validity period unavailable</span>
         <span th:text="'Validity months: '+ ${order.validityPeriod.months}"></span><br>
         <span th:if="${#sets.isEmpty(order.optionalProducts)}">No optional products selected</span>
-        <div th:unless="${#sets.isEmpty(order.optionalProducts)}" th:each="opt : ${order.optionalProducts}">
-            <span th:text="'Optional product: '+ ${opt.name}"></span>
+        <div th:unless="${#sets.isEmpty(order.optionalProducts)}">
+            Optional products:
+            <br>
+            <span th:each="opt : ${order.optionalProducts}">
+                <span th:text="'- ' + ${opt.name}"></span>
+                <br>
+            </span>
         </div>
         <br>
-        <span th:text="'Total value: '+ ${order.totalValue} + ' euro'"></span><br>
+        <span th:text="'Total value: '+ ${order.totalValue} + ' euros'"></span><br>
     </div>
     <br><br>
     <form th:unless="${user != null}" action="GoToLoginPage"

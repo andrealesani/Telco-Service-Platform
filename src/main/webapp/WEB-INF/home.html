@@ -30,31 +30,37 @@
 
     <div th:if="${user != null && user.isInsolvent()}">
         <h2>Rejected orders</h2>
-        <ul>
-            <li th:each="order : ${user.orders}" th:if="${!order.isvalid}">
-                <span th:text="'id: ' + ${order.id} + ' amount due: ' + ${order.totalvalue}"></span>
-                <a th:href="'RetryOrder?order_id=' + ${order.id}">Pay now</a>
-            </li>
-        </ul>
+        <table>
+            <tr>
+                <th>Creation date</th>
+                <th>Amount due</th>
+                <th>Payment</th>
+            </tr>
+            <tr th:each="order, iter : ${user.orders}" th:if="${!order.isvalid}" th:class="${iter.odd}? 'odd' : 'even'">
+                <td th:text="${order.creationTs}"></td>
+                <td th:text="${order.totalvalue} + 'euros'"></td>
+                <td><a th:href="'RetryOrder?order_id=' + ${order.id}">Pay now</a></td>
+            </tr>
+        </table>
     </div>
 
     <h1>List of all service packages</h1>
 
     <table>
-        <tr th:if="${#lists.isEmpty(servicePackages)}">There are currently no service packages available</tr>
+        <tr th:if="${#lists.isEmpty(servicePackages)}" style="color:red">There are currently no service packages available</tr>
         <tr th:unless="${#lists.isEmpty(servicePackages)}">
-            <th>ID</th>
+            <!-- <th>ID</th> -->
             <th>Name</th>
             <th>Services</th>
             <th>Validity Periods</th>
             <th>Optional Products</th>
         </tr>
         <tr th:each="servpckg, iter : ${servicePackages}" th:class="${iter.odd}? 'odd' : 'even'">
-            <td th:text="${servpckg.id}"></td>
+            <!-- <td th:text="${servpckg.id}"></td> -->
             <td th:text="${servpckg.name}"></td>
             <td class="services">
                 <ul>
-                    <li th:if="${#sets.isEmpty(servpckg.services)}">This package has no services</li>
+                    <span th:if="${#sets.isEmpty(servpckg.services)}" style="color:red">This package has no services</span>
                     <li th:unless="${#sets.isEmpty(servpckg.services)}" th:each="service : ${servpckg.services}">
                         <span th:text="${service.type}"></span>
                         <br>
@@ -64,17 +70,17 @@
             </td>
             <td class="validity-period">
                 <ul>
-                    <li th:if="${#sets.isEmpty(servpckg.validityPeriods)}">This package has no validity periods</li>
+                    <span th:if="${#sets.isEmpty(servpckg.validityPeriods)}" style="color:red">This package has no validity periods</span>
                     <li th:each="validityPeriod : ${servpckg.validityPeriods}">
-                        <span th:text="'Valid for ' + ${validityPeriod.months} + ' months at a cost of ' + ${validityPeriod.monthlyFee} + ' euros per month'"></span>
+                        <span th:text="'Valid for ' + ${validityPeriod.months} + ' months at a cost of ' + ${validityPeriod.monthlyFee} + '€/month'"></span>
                     </li>
                 </ul>
             </td>
             <td class="optional-product">
                 <ul>
-                    <li th:if="${#sets.isEmpty(servpckg.optionalProducts)}">This package has no optional products</li>
+                    <span th:if="${#sets.isEmpty(servpckg.optionalProducts)}" style="color:red">This package has no optional products</span>
                     <li th:each="optionalProduct : ${servpckg.optionalProducts}">
-                        <span>Optional Product</span><br>
+                        <span>Product:</span><br>
                         <span th:text="${optionalProduct.name}"></span>
                     </li>
                 </ul>

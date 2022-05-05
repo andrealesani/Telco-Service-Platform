@@ -22,40 +22,48 @@
     <table>
         <tr th:if="${#lists.isEmpty(servicePackages)}">There are currently no service packages available</tr>
         <tr th:unless="${#lists.isEmpty(servicePackages)}">
-            <th>ID</th>
             <th>Name</th>
+            <th>Services</th>
             <th>Customize</th>
         </tr>
         <tr th:each="servpckg, iter : ${servicePackages}" th:class="${iter.odd}? 'odd' : 'even'">
-            <td th:text="${servpckg.id}"></td>
             <td th:text="${servpckg.name}"></td>
+            <td class="services">
+                <ul>
+                    <div th:if="${#sets.isEmpty(servpckg.services)}" style="color:red">No services available</div>
+                    <li th:unless="${#sets.isEmpty(servpckg.services)}" th:each="service : ${servpckg.services}">
+                        <span th:text="${service.type}"></span>
+                        <br>
+                        <span th:text="${service.getFeesString()}"></span>
+                    </li>
+                </ul>
+            </td>
             <td>
-                <div th:if="${#sets.isEmpty(servpckg.services)}">
-                    <span>No services available</span>
-                </div>
-                <div th:unless="${#sets.isEmpty(servpckg.services)}" th:each="service : ${servpckg.services}">
-                    <label th:text="${service.type}"></label>
-                    <br>
-                    <label th:text="${service.getFeesString()}"></label>
-                </div>
                 <form th:id="buy-form+${servpckg.id}" method="GET" action="PrepareOrder">
                     <input type="hidden" name="serv_pckg_id" th:value="${servpckg.id}" th:form="buy-form+${servpckg.id}">
                     <br>
-                    <label th:for="validity-period+${servpckg.id}">Validity period:
+                    <div th:if="${#sets.isEmpty(servpckg.validityPeriods)}">
+                        <span style="color:red">No validity periods available</span>
+                    </div>
+                    <label th:unless="${#sets.isEmpty(servpckg.validityPeriods)}" th:for="validity-period+${servpckg.id}">Validity Period:
                         <select th:id="validity-period+${servpckg.id}" name="val_per_id" th:form="buy-form+${servpckg.id}">
-                            <option value="-1" th:if="${#sets.isEmpty(servpckg.validityPeriods)}">No periods available</option>
-                            <option th:each="valPer : ${servpckg.validityPeriods}" th:value="${valPer.id}"
+                             <option th:each="valPer : ${servpckg.validityPeriods}" th:value="${valPer.id}"
                                     th:text="${valPer.months} + ' months'"></option>
                         </select>
+                        <br>
                     </label>
-                    <br>
                     <div th:if="${#sets.isEmpty(servpckg.optionalProducts)}">
                         <span>No optional products available</span>
-                        <br>
                     </div>
-                    <div th:each="optProd,iter : ${servpckg.optionalProducts}">
-                        <label th:text="${optProd.name}"></label>
-                        <input type="checkbox" th:name="opt_prod_id+${iter.index}" th:value="${optProd.id}" th:form="buy-form+${servpckg.id}">
+                    <div th:unless="${#sets.isEmpty(servpckg.optionalProducts)}">
+                        <span>Optional Products:</span>
+                        <br>
+                        <div th:each="optProd,iter : ${servpckg.optionalProducts}">
+                            <span style="text-align: justify">
+                                <label th:text="${optProd.name}"></label>
+                                <input type="checkbox" th:name="opt_prod_id+${iter.index}" th:value="${optProd.id}" th:form="buy-form+${servpckg.id}">
+                            </span>
+                        </div>
                     </div>
                     <input type="submit" th:form="buy-form+${servpckg.id}" value="BUY">
                 </form>
