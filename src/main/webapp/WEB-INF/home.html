@@ -43,14 +43,14 @@
     <table>
         <tr th:if="${#lists.isEmpty(servicePackages)}" style="color:red">There are currently no service packages available</tr>
         <tr th:unless="${#lists.isEmpty(servicePackages)}">
-            <!-- <th>ID</th> -->
+            <th>ID</th>
             <th>Name</th>
             <th>Services</th>
             <th>Validity Periods</th>
             <th>Optional Products</th>
         </tr>
         <tr th:each="servpckg, iter : ${servicePackages}" th:class="${iter.odd}? 'odd' : 'even'">
-            <!-- <td th:text="${servpckg.id}"></td> -->
+            <td th:text="${servpckg.id}"></td>
             <td th:text="${servpckg.name}"></td>
             <td class="services">
                 <ul>
@@ -66,7 +66,7 @@
                 <ul>
                     <span th:if="${#sets.isEmpty(servpckg.validityPeriods)}" style="color:red">This package has no validity periods</span>
                     <li th:each="validityPeriod : ${servpckg.validityPeriods}">
-                        <span th:text="'Valid for ' + ${validityPeriod.months} + ' months at a cost of ' + ${validityPeriod.monthlyFee} + '€/month'"></span>
+                        <span th:text="'Valid for ' + ${validityPeriod.months} + ' months at a cost of ' + ${validityPeriod.monthlyFee} + ' euros/month'"></span>
                     </li>
                 </ul>
             </td>

@@ -26,9 +26,9 @@
         <table th:unless="${#lists.isEmpty(srServicePackages)}">
             <tr>
                 <th>Service Package ID</th>
-                <th>Purchases</th>
-                <th>Revenues w/o products</th>
-                <th>Revenues w/ products</th>
+                <th>No. of purchases</th>
+                <th>Total sales w/o products</th>
+                <th>Total sales w/ products</th>
                 <th>Avg no. of products</th>
             </tr>
             <tr th:each="srsp,iter : ${srServicePackages}" th:class="${iter.odd}? 'odd' : 'even'">
@@ -104,12 +104,16 @@
         <table th:unless="${#lists.isEmpty(srAuditingRecords)}">
             <tr>
                 <th>User ID</th>
+                <th>Username</th>
+                <th>User email</th>
                 <th>Auditing ID</th>
                 <th>Payment rejection date</th>
                 <th>Amount due</th>
             </tr>
             <tr th:each="srar,iter : ${srAuditingRecords}" th:class="${iter.odd}? 'odd' : 'even'">
                 <td th:text="${srar.getUser.getId()}"></td>
+                <td th:text="${srar.getUser.getUsername()}"></td>
+                <td th:text="${srar.getUser.getEmail()}"></td>
                 <td th:text="${srar.getId()}"></td>
                 <td th:text="${srar.getRejectionTs()}"></td>
                 <td th:text="${srar.getRejectedAmount()}"></td>

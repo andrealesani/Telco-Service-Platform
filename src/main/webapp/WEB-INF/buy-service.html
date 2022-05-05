@@ -26,11 +26,13 @@
     <table>
         <tr th:if="${#lists.isEmpty(servicePackages)}">There are currently no service packages available</tr>
         <tr th:unless="${#lists.isEmpty(servicePackages)}">
+            <th>ID</th>
             <th>Name</th>
             <th>Services</th>
             <th>Customize</th>
         </tr>
         <tr th:each="servpckg, iter : ${servicePackages}" th:class="${iter.odd}? 'odd' : 'even'">
+            <td th:text="${servpckg.id}"></td>
             <td th:text="${servpckg.name}"></td>
             <td class="services">
                 <ul>
@@ -52,7 +54,8 @@
                     <label th:unless="${#sets.isEmpty(servpckg.validityPeriods)}" th:for="validity-period+${servpckg.id}">Validity Period:
                         <select th:id="validity-period+${servpckg.id}" name="val_per_id" th:form="buy-form+${servpckg.id}">
                              <option th:each="valPer : ${servpckg.validityPeriods}" th:value="${valPer.id}"
-                                    th:text="${valPer.months} + ' months'"></option>
+                                    th:text="${valPer.months} + ' months - ' + ${valPer.monthlyFee} + ' euros/month'"
+                             ></option>
                         </select>
                         <br>
                     </label>
