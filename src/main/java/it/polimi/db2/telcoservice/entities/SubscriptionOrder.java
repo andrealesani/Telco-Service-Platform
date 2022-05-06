@@ -15,11 +15,12 @@ public class SubscriptionOrder {
     public SubscriptionOrder() {
     }
 
-    public SubscriptionOrder(ServicePackage servicePackage, ValidityPeriod validityPeriod, Set<OptionalProduct> optionalProducts, Timestamp creationTs) {
+    public SubscriptionOrder(ServicePackage servicePackage, ValidityPeriod validityPeriod, Set<OptionalProduct> optionalProducts, Timestamp creationTs, Timestamp startDateTs) {
         this.servicePackage = servicePackage;
         this.validityPeriod = validityPeriod;
         this.optionalProducts = optionalProducts;
         this.creationTs = creationTs;
+        this.startDateTs = startDateTs;
         this.user = null;
     }
 

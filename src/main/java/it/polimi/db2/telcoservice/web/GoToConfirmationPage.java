@@ -59,8 +59,12 @@ public class GoToConfirmationPage extends HttpServlet {
             System.out.println("No user was logged in when accessing confirmation page.");
         }
 
-        ctx.setVariable("order", soService.findSubscriptionOrderById(((SubscriptionOrder) request.getSession().getAttribute("order")).getId()));
-
+        try {
+            ctx.setVariable("order", soService.findSubscriptionOrderById(((SubscriptionOrder) request.getSession().getAttribute("order")).getId()));
+        } catch (NullPointerException e) {
+            response.sendError(400, "User has to select one order to access this page");
+            return;
+        }
         templateEngine.process(path, ctx, response.getWriter());
     }
 

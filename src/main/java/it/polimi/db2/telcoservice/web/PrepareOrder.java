@@ -18,7 +18,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
+import java.sql.Time;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -40,6 +44,16 @@ public class PrepareOrder extends HttpServlet {
 
         int val_per_id = Integer.parseInt(request.getParameter("val_per_id"));
         int serv_pckg_id = Integer.parseInt(request.getParameter("serv_pckg_id"));
+        String startDateString = request.getParameter("start-date");
+        Timestamp startDateTs;
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date parsedDate = dateFormat.parse(startDateString);
+            startDateTs = new java.sql.Timestamp(parsedDate.getTime());
+        } catch (ParseException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Provided start date " + startDateString + " is not valid");
+            return;
+        }
 
         ServicePackage servicePackage = spService.findServicePackageById(serv_pckg_id);
         ValidityPeriod validityPeriod = vpService.findValidityPeriodById(val_per_id);
@@ -52,7 +66,7 @@ public class PrepareOrder extends HttpServlet {
             } catch (NumberFormatException ignored) {}
         }
 
-        SubscriptionOrder order = soService.createOrder(servicePackage, validityPeriod, optionalProducts, new Timestamp(System.currentTimeMillis()));
+        SubscriptionOrder order = soService.createOrder(servicePackage, validityPeriod, optionalProducts, new Timestamp(System.currentTimeMillis()), startDateTs);
 
         request.getSession().setAttribute("order", order);
         System.out.println("Order has been saved in session.");

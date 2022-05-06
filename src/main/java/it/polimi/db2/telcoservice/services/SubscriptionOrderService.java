@@ -39,8 +39,8 @@ public class SubscriptionOrderService {
 		entityManager.flush();
 	}
 
-	public SubscriptionOrder createOrder(ServicePackage servicePackage, ValidityPeriod validityPeriod, Set<OptionalProduct> optionalProducts, Timestamp creationTs) {
-		SubscriptionOrder order = new SubscriptionOrder(servicePackage, validityPeriod, optionalProducts, creationTs);
+	public SubscriptionOrder createOrder(ServicePackage servicePackage, ValidityPeriod validityPeriod, Set<OptionalProduct> optionalProducts, Timestamp creationTs, Timestamp startDateTs) {
+		SubscriptionOrder order = new SubscriptionOrder(servicePackage, validityPeriod, optionalProducts, creationTs, startDateTs);
 		entityManager.persist(order);
 		return order;
 	}

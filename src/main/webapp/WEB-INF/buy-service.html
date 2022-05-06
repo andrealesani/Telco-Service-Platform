@@ -75,6 +75,9 @@
                             </span>
                         </div>
                     </div>
+                    <label>Start date
+                        <input required type="date" name="start-date" th:form="buy-form+${servpckg.id}">
+                    </label>
                     <input type="submit" th:form="buy-form+${servpckg.id}" value="BUY">
                 </form>
             </td>

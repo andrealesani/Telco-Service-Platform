@@ -30,7 +30,7 @@
         <span th:unless="${order.servicePackage.name != null}" style="color:red">Service package name unavailable</span>
         <span th:text="'Service package: '+ ${order.servicePackage.name}"></span><br>
 
-        <span th:if="${#sets.isEmpty(order.servicePackage.services)}" style="color:red">Services unavailable</span>
+        <span th:if="${#sets.isEmpty(order.servicePackage.services)}" style="color:red">Services unavailable<br /></span>
         <div th:unless="${#sets.isEmpty(order.servicePackage.services)}" th:each="serv : ${order.servicePackage.services}">
             <span th:text="'Services: '+ ${serv.type} + ' - Fees: ' + ${serv.getFeesString()}"></span>
         </div>
@@ -46,6 +46,7 @@
             </span>
         </div>
         <br>
+        <span th:text="'Start date: ' + ${order.startDateTs.toString().split(' ')[0]}"></span><br>
         <span th:text="'Total value: '+ ${order.totalValue} + ' euros'"></span><br>
     </div>
     <br><br>
