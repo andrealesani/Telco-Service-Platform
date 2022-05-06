@@ -56,11 +56,11 @@
                 </td>
                 <td>
                     <span th:if="${order.getStartDateTs() == null}"  style="color:red">This subscription has no start date.</span>
-                    <span th:if="${order.getStartDateTs() != null}" th:text="${order.getStartDateTs()}"></span>
+                    <span th:if="${order.getStartDateTs() != null}" th:text="${order.getStartDateTs().toString().split(' ')[0]}"></span>
                 </td>
                 <td>
                     <span th:if="${order.getDeactivationDateTs() == null}"  style="color:red">This subscription has no end date.</span>
-                    <span th:if="${order.getDeactivationDateTs() != null}" th:text="${order.getDeactivationDateTs()}"></span>
+                    <span th:if="${order.getDeactivationDateTs() != null}" th:text="${order.getDeactivationDateTs().toString().split(' ')[0]}"></span>
                 </td>
             </tr>
         </table>

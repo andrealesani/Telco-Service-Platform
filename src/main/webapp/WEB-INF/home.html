@@ -75,7 +75,7 @@
             </td>
             <td class="optional-product">
                 <ul>
-                    <span th:if="${#sets.isEmpty(servpckg.optionalProducts)}" style="color:red">This package has no optional products</span>
+                    <span th:if="${#sets.isEmpty(servpckg.optionalProducts)}">This package has no optional products</span>
                     <li th:each="optionalProduct : ${servpckg.optionalProducts}">
                         <span>Product:</span><br>
                         <span th:text="${optionalProduct.name}"></span>

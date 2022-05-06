@@ -45,8 +45,10 @@
                 <br>
             </span>
         </div>
+        <div>
+            <span th:text="'Start date: ' + ${order.startDateTs.toString().split(' ')[0]}"></span>
+        </div>
         <br>
-        <span th:text="'Start date: ' + ${order.startDateTs.toString().split(' ')[0]}"></span><br>
         <span th:text="'Total value: '+ ${order.totalValue} + ' euros'"></span><br>
     </div>
     <br><br>
