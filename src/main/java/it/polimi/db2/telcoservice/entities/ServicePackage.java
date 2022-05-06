@@ -9,7 +9,6 @@ import java.util.Set;
 @Table(name = "service_package")
 @NamedQueries({
         @NamedQuery(name = "ServicePackage.findAllServicePackages", query = "SELECT sp FROM ServicePackage sp"),
-
 })
 public class ServicePackage {
     public ServicePackage() {

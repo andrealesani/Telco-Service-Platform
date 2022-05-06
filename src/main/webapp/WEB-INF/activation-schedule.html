@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<link href="css/style.css" rel="stylesheet">
+<head>
+    <title>Sales Report</title>
+</head>
+<body>
+<div class="navbar">
+    <a class="active" href="GoToHomePage">Home</a>
+    <span th:if="${user != null}">
+        <a href="GoToSchedulePage">Activation Schedule</a>
+        <span th:if="${user.isEmployee()}">
+            <a href="GoToEmployeeHomePage">Employee Home</a>
+            <a href="GoToSalesReportPage">Sales Report</a>
+        </span>
+    </span>
+    <a href="GoToLoginPage">Login</a>
+    <span class="login-status" th:text="'Welcome, ' + (*{user != null}? *{user.username} : 'user')"></span>
+</div>
+
+<br>
+
+<div class="container">
+    <div th:if="${user != null}">
+        <h1>Service activation schedule:</h1>
+
+        <span th:if="${#lists.isEmpty(orders)}">You have no active orders.</span>
+        <table th:unless="${#lists.isEmpty(orders)}">
+            <tr>
+                <th>Order ID</th>
+                <th>Services</th>
+                <th>Optional Products</th>
+                <th>Date of activation</th>
+                <th>Date of deactivation</th>
+            </tr>
+            <tr th:each="order,iter : ${orders}" th:class="${iter.odd}? 'odd' : 'even'">
+                <td th:text="${order.getId()}"></td>
+                <td class="services">
+                    <ul>
+                        <span th:if="${#sets.isEmpty(order.getServicePackage().getServices())}" style="color:red">This subscription provides no services.</span>
+                        <li th:unless="${#sets.isEmpty(order.getServicePackage().getServices())}" th:each="service : ${order.getServicePackage().getServices()}">
+                            <span th:text="${service.type}"></span>
+                            <br>
+                            <span th:text="${service.getFeesString()}"></span>
+                        </li>
+                    </ul>
+                </td>
+                <td class="optional-product">
+                    <ul>
+                        <span th:if="${#sets.isEmpty(order.getOptionalProducts())}">This subscription has no associated optional products.</span>
+                        <li th:each="optionalProduct : ${order.getOptionalProducts()}">
+                            <span>Product:</span><br>
+                            <span th:text="${optionalProduct.name}"></span>
+                        </li>
+                    </ul>
+                </td>
+                <td>
+                    <span th:if="${order.getStartDateTs() == null}"  style="color:red">This subscription has no start date.</span>
+                    <span th:if="${order.getStartDateTs() != null}" th:text="${order.getStartDateTs()}"></span>
+                </td>
+                <td>
+                    <span th:if="${order.getDeactivationDateTs() == null}"  style="color:red">This subscription has no end date.</span>
+                    <span th:if="${order.getDeactivationDateTs() != null}" th:text="${order.getDeactivationDateTs()}"></span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div th:if="${user == null}">
+        You need to be logged-in to view this page.
+    </div>
+</div>
+</body>
+</html>

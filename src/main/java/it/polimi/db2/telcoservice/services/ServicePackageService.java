@@ -1,8 +1,6 @@
 package it.polimi.db2.telcoservice.services;
 
 import it.polimi.db2.telcoservice.entities.*;
-import it.polimi.db2.telcoservice.exceptions.CredentialsException;
-import it.polimi.db2.telcoservice.exceptions.UserAlreadyExistsException;
 
 import javax.ejb.Stateless;
 import javax.persistence.*;

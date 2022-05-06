@@ -7,9 +7,12 @@
 <body>
 <div class="navbar">
     <a class="active" href="GoToHomePage">Home</a>
-    <span th:if="${user != null && user.isEmployee()}">
-        <a href="GoToEmployeeHomePage">Employee Home</a>
-        <a href="GoToSalesReportPage">Sales Report</a>
+    <span th:if="${user != null}">
+        <a href="GoToSchedulePage">Activation Schedule</a>
+        <span th:if="${user.isEmployee()}">
+            <a href="GoToEmployeeHomePage">Employee Home</a>
+            <a href="GoToSalesReportPage">Sales Report</a>
+        </span>
     </span>
     <span class="login-status" th:text="'Welcome, ' + (*{user != null}? *{user.username} : 'user')"></span>
 </div>

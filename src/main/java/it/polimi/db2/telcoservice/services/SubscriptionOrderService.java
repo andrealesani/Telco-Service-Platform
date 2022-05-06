@@ -7,6 +7,7 @@ import it.polimi.db2.telcoservice.exceptions.UserAlreadyExistsException;
 import javax.ejb.Stateless;
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -17,6 +18,18 @@ public class SubscriptionOrderService {
 
 	public SubscriptionOrder findSubscriptionOrderById(int id) {
 		return entityManager.find(SubscriptionOrder.class, id);
+	}
+
+	public List<SubscriptionOrder> findOrdersByUser(int userId) {
+		List<SubscriptionOrder> soList = new ArrayList<>();
+		try {
+			soList = entityManager.createNamedQuery("SubscriptionOrder.findSubscriptionOrdersByUser", SubscriptionOrder.class)
+					.setParameter(1, userId)
+					.getResultList();
+		} catch (PersistenceException e) {
+			e.printStackTrace();
+		}
+		return soList;
 	}
 
 	public void makePayment(int id, boolean valid, User user) {

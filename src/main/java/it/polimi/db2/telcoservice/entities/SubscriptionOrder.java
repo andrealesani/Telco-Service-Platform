@@ -8,6 +8,9 @@ import java.util.Set;
 
 @Entity
 @Table(name = "subscription_order")
+@NamedQueries({
+        @NamedQuery(name = "SubscriptionOrder.findSubscriptionOrdersByUser", query = "SELECT so FROM SubscriptionOrder so WHERE so.user.id = ?1 ORDER BY so.startDateTs"),
+})
 public class SubscriptionOrder {
     public SubscriptionOrder() {
     }
@@ -83,6 +86,10 @@ public class SubscriptionOrder {
     }
 
     public Timestamp getDeactivationDateTs() {
+
+        if (startDateTs == null) {
+            return null;
+        }
 
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(startDateTs.getTime());
