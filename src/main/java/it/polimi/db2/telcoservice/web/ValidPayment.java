@@ -29,8 +29,6 @@ import java.util.Set;
 public class ValidPayment extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private TemplateEngine templateEngine;
-    @EJB(name = "it.polimi.db2.telcoservice.services/UserService")
-    private UserService uService;
     @EJB(name = "it.polimi.db2.telcoservice.services/SubscriptionOrderService")
     private SubscriptionOrderService soService;
 

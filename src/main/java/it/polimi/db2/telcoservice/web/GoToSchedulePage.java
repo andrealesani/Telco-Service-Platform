@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/GoToSchedulePage")
@@ -25,8 +24,6 @@ public class GoToSchedulePage extends HttpServlet {
     private TemplateEngine templateEngine;
     @EJB(name = "it.polimi.db2.telcoservice.services/UserService")
     private UserService uService;
-    @EJB(name = "it.polimi.db2.telcoservice.services/SubscriptionOrderService")
-    private SubscriptionOrderService soService;
 
     public void init() {
         ServletContext servletContext = getServletContext();
@@ -47,7 +44,7 @@ public class GoToSchedulePage extends HttpServlet {
             return;
         }
 
-        List<SubscriptionOrder> soList = soService.findOrdersByUser(user.getId());
+        List<SubscriptionOrder> soList = uService.getUserOrders(user.getId());
 
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());

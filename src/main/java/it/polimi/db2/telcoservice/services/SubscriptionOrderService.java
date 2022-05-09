@@ -30,18 +30,6 @@ public class SubscriptionOrderService {
 		return entityManager.find(SubscriptionOrder.class, id);
 	}
 
-	public List<SubscriptionOrder> findOrdersByUser(int userId) {
-		List<SubscriptionOrder> soList = new ArrayList<>();
-		try {
-			soList = entityManager.createNamedQuery("SubscriptionOrder.findSubscriptionOrdersByUser", SubscriptionOrder.class)
-					.setParameter(1, userId)
-					.getResultList();
-		} catch (PersistenceException e) {
-			e.printStackTrace();
-		}
-		return soList;
-	}
-
 	public void makePayment(int id, boolean valid, int userId) {
 
 		User user = uService.findUserById(userId);

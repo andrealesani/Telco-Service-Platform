@@ -35,8 +35,6 @@ public class GoToHomePage extends HttpServlet {
     private TemplateEngine templateEngine;
     @EJB(name = "it.polimi.db2.telcoservice.services/ServicePackageService")
     private ServicePackageService spService;
-    @EJB(name = "it.polimi.db2.telcoservice.services/SubscriptionOrderService")
-    private SubscriptionOrderService soService;
     @EJB(name = "it.polimi.db2.telcoservice.services/UserService")
     private UserService uService;
 
@@ -58,7 +56,7 @@ public class GoToHomePage extends HttpServlet {
 
         List<SubscriptionOrder> soList;
         if (user != null) {
-            soList = soService.findOrdersByUser(user.getId());
+            soList = uService.getUserOrders(user.getId());
         } else {
             soList = new ArrayList<>();
         }

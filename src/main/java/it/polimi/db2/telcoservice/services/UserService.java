@@ -1,6 +1,8 @@
 package it.polimi.db2.telcoservice.services;
 
+import it.polimi.db2.telcoservice.entities.OptionalProduct;
 import it.polimi.db2.telcoservice.entities.Service;
+import it.polimi.db2.telcoservice.entities.SubscriptionOrder;
 import it.polimi.db2.telcoservice.entities.User;
 import it.polimi.db2.telcoservice.exceptions.CredentialsException;
 import it.polimi.db2.telcoservice.exceptions.UserAlreadyExistsException;
@@ -10,6 +12,7 @@ import javax.ejb.Stateless;
 import javax.persistence.*;
 import javax.transaction.UserTransaction;
 import java.util.List;
+import java.util.Set;
 
 @Stateless
 public class UserService {
@@ -18,6 +21,11 @@ public class UserService {
 
 	public User findUserById(int id) {
 		return entityManager.find(User.class, id);
+	}
+
+	public List<SubscriptionOrder> getUserOrders(int id) {
+		User user = entityManager.find(User.class, id);
+		return user.getOrders();
 	}
 
 	public User checkCredentials(String username, String password) throws CredentialsException, NonUniqueResultException {

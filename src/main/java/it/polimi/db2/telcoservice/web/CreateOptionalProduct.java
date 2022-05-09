@@ -32,8 +32,6 @@ public class CreateOptionalProduct extends HttpServlet {
     private TemplateEngine templateEngine;
     @EJB(name = "it.polimi.db2.telcoservice.services/OptionalProductService")
     private OptionalProductService opService;
-    @EJB(name = "it.polimi.db2.telcoservice.services/UserService")
-    private UserService uService;
 
     public void init() {
         ServletContext servletContext = getServletContext();

@@ -36,8 +36,6 @@ public class CreateServicePackage extends HttpServlet {
     private OptionalProductService opService;
     @EJB(name = "it.polimi.db2.telcoservice.services/ServicePackageService")
     private ServicePackageService spService;
-    @EJB(name = "it.polimi.db2.telcoservice.services/UserService")
-    private UserService uService;
 
     public void init() {
         ServletContext servletContext = getServletContext();
