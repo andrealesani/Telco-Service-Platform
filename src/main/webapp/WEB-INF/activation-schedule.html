@@ -33,7 +33,7 @@
                 <th>Date of activation</th>
                 <th>Date of deactivation</th>
             </tr>
-            <tr th:each="order,iter : ${orders}" th:class="${iter.odd}? 'odd' : 'even'">
+            <tr th:each="order,iter : ${orders}" th:class="${iter.odd}? 'odd' : 'even'" th:if="${order.isValid()}">
                 <td th:text="${order.getId()}"></td>
                 <td class="services">
                     <ul>

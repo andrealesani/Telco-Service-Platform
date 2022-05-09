@@ -43,7 +43,7 @@ public class User {
     )
     private List<Auditing> auditing;
     @OneToMany(
-            fetch = FetchType.EAGER,
+            fetch = FetchType.LAZY,
             mappedBy = "user"
     )
     private List<SubscriptionOrder> orders;

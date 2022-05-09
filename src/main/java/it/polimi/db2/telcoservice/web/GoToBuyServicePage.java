@@ -56,7 +56,7 @@ public class GoToBuyServicePage extends HttpServlet {
         // user might not be logged in, but it's not a problem. So in that case we ignore
         // the exception and just don't set any user inside the context
         try {
-            ctx.setVariable("user", uService.findUserById(((User) request.getSession().getAttribute("user")).getId()));
+            ctx.setVariable("user", request.getSession().getAttribute("user"));
         } catch (NullPointerException ex) {
             System.out.println("No user was logged in when accessing service purchase page.");
         }

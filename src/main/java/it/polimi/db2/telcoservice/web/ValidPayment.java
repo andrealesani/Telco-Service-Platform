@@ -60,7 +60,7 @@ public class ValidPayment extends HttpServlet {
         // user might not be logged in, but it's not a problem. So we ignore
         // the exception and just don't set any user inside the context
         try {
-            ctx.setVariable("user", uService.findUserById(((User) request.getSession().getAttribute("user")).getId()));
+            ctx.setVariable("user", request.getSession().getAttribute("user"));
         } catch (Exception ignored) {}
 
         ctx.setVariable("result", "successful");

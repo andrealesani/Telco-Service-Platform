@@ -42,8 +42,6 @@ public class GoToEmployeeHomePage extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String path = "/WEB-INF/employee-home.html";
 
-        User user = (User) request.getSession().getAttribute("user");
-
         List<Service> services  = sService.findAllServices();
 
         List<ValidityPeriod> validityPeriods = vpService.findAllValidityPeriods();
@@ -56,7 +54,7 @@ public class GoToEmployeeHomePage extends HttpServlet {
         ctx.setVariable("services", services);
         ctx.setVariable("validityPeriods", validityPeriods);
         ctx.setVariable("optionalProducts", optionalProducts);
-        ctx.setVariable("user", user);
+        ctx.setVariable("user", request.getSession().getAttribute("user"));
 
         templateEngine.process(path, ctx, response.getWriter());
 

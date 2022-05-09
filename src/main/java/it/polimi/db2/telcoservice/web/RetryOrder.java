@@ -35,12 +35,6 @@ public class RetryOrder extends HttpServlet {
         request.getSession().setAttribute("order", order);
         System.out.println("Order has been saved in session.");
 
-        //try {
-        //    getServletContext().getRequestDispatcher("/GoToConfirmationPage").forward(request, response);
-        //} catch (ServletException e) {
-        //    response.sendError(500);
-        //    e.printStackTrace();
-        //}
         response.sendRedirect(getServletContext().getContextPath() + "/GoToConfirmationPage");
     }
 

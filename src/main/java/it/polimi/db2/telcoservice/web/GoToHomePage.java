@@ -35,8 +35,11 @@ public class GoToHomePage extends HttpServlet {
     private TemplateEngine templateEngine;
     @EJB(name = "it.polimi.db2.telcoservice.services/ServicePackageService")
     private ServicePackageService spService;
+    @EJB(name = "it.polimi.db2.telcoservice.services/SubscriptionOrderService")
+    private SubscriptionOrderService soService;
     @EJB(name = "it.polimi.db2.telcoservice.services/UserService")
     private UserService uService;
+
 
     public void init() {
         ServletContext servletContext = getServletContext();
@@ -51,19 +54,23 @@ public class GoToHomePage extends HttpServlet {
 
         String path = "/WEB-INF/home.html";
 
+        User user = null;
+        List<SubscriptionOrder> soList = new ArrayList<>();
+        try {
+            user = (User) request.getSession().getAttribute("user");
+            soList = soService.findOrdersByUser(user.getId());
+        } catch (NullPointerException ex) {
+            System.out.println("No user was logged in when accessing home page.");
+        }
+
         List<ServicePackage> servicePackages = spService.findAllServicePackages();
 
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 
         ctx.setVariable("servicePackages", servicePackages);
-        // user might not be logged in, but it's not a problem. So we ignore
-        // the exception and just don't set any user inside the context
-        try {
-            ctx.setVariable("user", uService.findUserById(((User) request.getSession().getAttribute("user")).getId()));
-        } catch (NullPointerException ex) {
-            System.out.println("No user was logged in when accessing home page.");
-        }
+        ctx.setVariable("orders", soList);
+        ctx.setVariable("user", user);
 
         templateEngine.process(path, ctx, response.getWriter());
     }

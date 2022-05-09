@@ -42,7 +42,7 @@ public class GoToSchedulePage extends HttpServlet {
 
         User user;
         try {
-            user = uService.findUserById(((User) request.getSession().getAttribute("user")).getId());
+            user = (User) request.getSession().getAttribute("user");
         } catch (Exception ex) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "User must be logged-in to access this page.");
             ex.printStackTrace();

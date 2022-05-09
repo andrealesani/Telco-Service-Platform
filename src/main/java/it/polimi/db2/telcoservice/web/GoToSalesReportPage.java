@@ -50,8 +50,6 @@ public class GoToSalesReportPage extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String path = "/WEB-INF/sales-report.html";
 
-        User user = (User) request.getSession().getAttribute("user");
-
         List<SalesReportPackages> srServicePackages  = srpsService.findAllSalesReports();
         List<SalesReportValidityPackages> srValidityPeriodServicePackages = srvpService.findAllSalesReports();
         List<SalesReportInsolventUsers> srInsolventUsers = sriuService.findAllInsolvent();
@@ -68,7 +66,7 @@ public class GoToSalesReportPage extends HttpServlet {
         ctx.setVariable("srSuspendedOrders", srSuspendedOrders);
         ctx.setVariable("srBestSellerProduct", srBestSellerProduct);
         ctx.setVariable("srAuditingRecords", srAuditingRecords);
-        ctx.setVariable("user", user);
+        ctx.setVariable("user", request.getSession().getAttribute("user"));
 
         templateEngine.process(path, ctx, response.getWriter());
     }
