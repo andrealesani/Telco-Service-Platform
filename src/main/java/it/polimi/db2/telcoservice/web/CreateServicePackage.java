@@ -16,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.image.AreaAveragingScaleFilter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -58,41 +59,38 @@ public class CreateServicePackage extends HttpServlet {
         }
 
         int numServices = sService.findNumServices();
-        Set<Service> services = new HashSet<>();
+        List<Integer> serviceIDs = new ArrayList<>();
         for (int i = 0; i < numServices; i++) {
             try {
-                int serviceId = Integer.parseInt(request.getParameter("service" + i));
-                services.add(sService.findServiceById(serviceId));
+                serviceIDs.add(Integer.parseInt(request.getParameter("service" + i)));
             } catch (NumberFormatException ignored) {}
         }
-        if (services.isEmpty()) {
+        if (serviceIDs.isEmpty()) {
             response.sendError(400, "Service package must be associated to at least 1 service.");
             return;
         }
 
         int numValPeriods = vpService.findNumValidityPeriods();
-        Set<ValidityPeriod> validityPeriods = new HashSet<>();
+        List<Integer> validityPeriodIDs = new ArrayList<>();
         for (int i = 0; i < numValPeriods; i++) {
             try {
-                int valPeriodId = Integer.parseInt(request.getParameter("validity-period" + i));
-                validityPeriods.add(vpService.findValidityPeriodById(valPeriodId));
+                validityPeriodIDs.add(Integer.parseInt(request.getParameter("validity-period" + i)));
             } catch (NumberFormatException ignored) {}
         }
-        if (validityPeriods.isEmpty()) {
+        if (validityPeriodIDs.isEmpty()) {
             response.sendError(400, "Service package must be associated to at least 1 validity period.");
             return;
         }
 
         int numOptProducts = opService.findNumOptionalProducts();
-        Set<OptionalProduct> optionalProducts = new HashSet<>();
+        List<Integer> optionalProductIDs = new ArrayList<>();
         for (int i = 0; i < numOptProducts; i++) {
             try {
-                int optProductId = Integer.parseInt(request.getParameter("optional-product" + i));
-                optionalProducts.add(opService.findOptionalProductById(optProductId));
+                optionalProductIDs.add(Integer.parseInt(request.getParameter("optional-product" + i)));
             } catch (NumberFormatException ignored) {}
         }
 
-        spService.createServicePackage(name, services, validityPeriods, optionalProducts);
+        spService.createServicePackage(name, serviceIDs, validityPeriodIDs, optionalProductIDs);
 
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());

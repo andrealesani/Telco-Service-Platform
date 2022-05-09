@@ -33,18 +33,15 @@ public class PrepareOrder extends HttpServlet {
     private static final long serialVersionUID = 1L;
     @EJB(name = "it.polimi.db2.telcoservice.services/ServicePackageService")
     private ServicePackageService spService;
-    @EJB(name = "it.polimi.db2.telcoservice.services/ValidityPeriodService")
-    private ValidityPeriodService vpService;
-    @EJB(name = "it.polimi.db2.telcoservice.services/OptionalProductService")
-    private OptionalProductService opService;
     @EJB(name = "it.polimi.db2.telcoservice.services/SubscriptionOrderService")
     private SubscriptionOrderService soService;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        int val_per_id = Integer.parseInt(request.getParameter("val_per_id"));
-        int serv_pckg_id = Integer.parseInt(request.getParameter("serv_pckg_id"));
+        int validityPeriodID = Integer.parseInt(request.getParameter("val_per_id"));
+        int servicePackageID = Integer.parseInt(request.getParameter("serv_pckg_id"));
         String startDateString = request.getParameter("start-date");
+
         Timestamp startDateTs;
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -55,18 +52,16 @@ public class PrepareOrder extends HttpServlet {
             return;
         }
 
-        ServicePackage servicePackage = spService.findServicePackageById(serv_pckg_id);
-        ValidityPeriod validityPeriod = vpService.findValidityPeriodById(val_per_id);
-
-        Set<OptionalProduct> optionalProducts = new HashSet<>();
         // for each possible optional product included in the package check if it has been checked and sent to the servlet
-        for (int i = 0; i < servicePackage.getOptionalProducts().size(); i++) {
+        List<Integer> optionalProductIDs = new ArrayList<>();
+        int numOfOptionalProducts = spService.findServicePackageById(servicePackageID).getOptionalProducts().size();
+        for (int i = 0; i < numOfOptionalProducts; i++) {
             try {
-                optionalProducts.add(opService.findOptionalProductById(Integer.parseInt(request.getParameter("opt_prod_id" + i))));
+                optionalProductIDs.add(Integer.parseInt(request.getParameter("opt_prod_id" + i)));
             } catch (NumberFormatException ignored) {}
         }
 
-        SubscriptionOrder order = soService.createOrder(servicePackage, validityPeriod, optionalProducts, new Timestamp(System.currentTimeMillis()), startDateTs);
+        SubscriptionOrder order = soService.createOrder(servicePackageID, validityPeriodID, optionalProductIDs, new Timestamp(System.currentTimeMillis()), startDateTs);
 
         request.getSession().setAttribute("order", order);
         System.out.println("Order has been saved in session.");

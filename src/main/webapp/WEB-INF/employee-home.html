@@ -57,12 +57,12 @@
             </div>
             <br>
             <div class="services">
+                <b>Services:</b>
+                <br>
                  <span style="color: red" th:if="${#lists.isEmpty(services)}">
                     No services available
                 </span>
                 <span th:unless="${#lists.isEmpty(services)}">
-                    <b>Services:</b>
-                    <br>
                     <span th:each="se,iter : ${services}">
                         <input type="checkbox" th:name="service+${iter.index}" th:value="${se.getId()}">
                         <b>Id:</b> <label th:text="${se.getId()}"></label>
@@ -74,12 +74,12 @@
             </div>
             <br>
             <div class="validity-periods">
+                <b>Validity periods:</b>
+                <br>
                 <span style="color: red" th:if="${#lists.isEmpty(validityPeriods)}">
                     No validity periods available
                 </span>
                 <span th:unless="${#lists.isEmpty(validityPeriods)}">
-                    <b>Validity periods:</b>
-                    <br>
                     <span th:each="vp,iter : ${validityPeriods}">
                         <input type="checkbox" th:name="validity-period+${iter.index}" th:value="${vp.getId()}">
                         <b>Id:</b> <label th:text="${vp.getId()}"></label>
@@ -91,12 +91,12 @@
             </div>
             <br>
             <div class="optional-products">
+                <b>Optional products:</b>
+                <br>
                 <span th:if="${#lists.isEmpty(optionalProducts)}" style="color: red">
                     No optional products available
                 </span>
                 <span th:unless="${#lists.isEmpty(optionalProducts)}">
-                    <b>Optional products:</b>
-                    <br>
                     <span th:each="op,iter : ${optionalProducts}">
                         <input type="checkbox" th:name="optional-product+${iter.index}" th:value="${op.getId()}">
                         <b>Id:</b> <label th:text="${op.getId()}"></label>

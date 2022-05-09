@@ -48,10 +48,9 @@ public class ValidPayment extends HttpServlet {
         String path = "/WEB-INF/payment-result.html";
 
         int orderId = Integer.parseInt(request.getParameter("order-id"));
+        int userId = ((User) request.getSession().getAttribute("user")).getId();
 
-        User user = uService.findUserById(((User) request.getSession().getAttribute("user")).getId());
-
-        soService.makePayment(orderId, true, user);
+        soService.makePayment(orderId, true, userId);
 
         request.getSession().removeAttribute("order");
 

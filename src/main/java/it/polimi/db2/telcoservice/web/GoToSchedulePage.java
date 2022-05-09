@@ -54,8 +54,6 @@ public class GoToSchedulePage extends HttpServlet {
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 
-        System.out.println(soList.get(0).getStartDateTs());
-
         ctx.setVariable("user", user);
         ctx.setVariable("orders", soList);
 

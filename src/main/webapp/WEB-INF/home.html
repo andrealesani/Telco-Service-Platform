@@ -33,7 +33,7 @@
                 <th>Amount due</th>
                 <th>Payment</th>
             </tr>
-            <tr th:each="order, iter : ${user.orders}" th:if="${!order.isvalid}" th:class="${iter.odd}? 'odd' : 'even'">
+            <tr th:each="order, iter : ${user.orders}" th:if="${order.isValid() == null || !order.isValid()}" th:class="${iter.odd}? 'odd' : 'even'">
                 <td th:text="${order.creationTs}"></td>
                 <td th:text="${order.totalvalue} + ' euros'"></td>
                 <td><a th:href="'RetryOrder?order_id=' + ${order.id}">Pay now</a></td>

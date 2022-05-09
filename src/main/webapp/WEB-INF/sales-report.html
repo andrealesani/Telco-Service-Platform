@@ -88,7 +88,8 @@
         <br>
 
         <h3>Best seller optional product:</h3>
-        <table>
+        <span th:if="${srBestSellerProduct == null}">There are currently no optional products in the system.</span>
+        <table th:unless="${srBestSellerProduct == null}">
             <tr>
                 <th>Product ID</th>
                 <th>Total sales</th>
