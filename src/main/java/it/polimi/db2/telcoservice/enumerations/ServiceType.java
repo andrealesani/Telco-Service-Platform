@@ -7,7 +7,7 @@ public enum ServiceType {
     FIXED_PHONE;
 
     @Override
-    public String toString(){
+    public String toString() {
         if (this == ServiceType.MOBILE_PHONE) {
             return "Mobile Phone";
         }

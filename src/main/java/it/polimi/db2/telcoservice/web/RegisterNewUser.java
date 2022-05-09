@@ -1,6 +1,5 @@
 package it.polimi.db2.telcoservice.web;
 
-import it.polimi.db2.telcoservice.entities.User;
 import it.polimi.db2.telcoservice.exceptions.CredentialsException;
 import it.polimi.db2.telcoservice.exceptions.UserAlreadyExistsException;
 import it.polimi.db2.telcoservice.services.UserService;

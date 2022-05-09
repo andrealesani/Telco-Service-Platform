@@ -1,17 +1,13 @@
 package it.polimi.db2.telcoservice.services;
 
-import it.polimi.db2.telcoservice.entities.OptionalProduct;
 import it.polimi.db2.telcoservice.entities.Service;
-import it.polimi.db2.telcoservice.entities.ServicePackage;
-import it.polimi.db2.telcoservice.entities.ValidityPeriod;
-import it.polimi.db2.telcoservice.entities.materialized.SalesReportProductSales;
 
 import javax.ejb.Stateless;
-import javax.persistence.*;
-import java.math.BigDecimal;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Stateless
 public class ServiceService {

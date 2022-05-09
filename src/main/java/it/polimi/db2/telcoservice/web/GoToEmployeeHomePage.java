@@ -30,14 +30,16 @@ public class GoToEmployeeHomePage extends HttpServlet {
     @EJB(name = "it.polimi.db2.telcoservice.services/OptionalProductService")
     private OptionalProductService opService;
 
-    public void init(){
+    public void init() {
         ServletContext servletContext = getServletContext();
         ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
         templateResolver.setTemplateMode(TemplateMode.HTML);
         this.templateEngine = new TemplateEngine();
         this.templateEngine.setTemplateResolver(templateResolver);
         templateResolver.setSuffix(".html");
-    };
+    }
+
+    ;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String path = "/WEB-INF/employee-home.html";
@@ -48,7 +50,7 @@ public class GoToEmployeeHomePage extends HttpServlet {
             return;
         }
 
-        List<Service> services  = sService.findAllServices();
+        List<Service> services = sService.findAllServices();
 
         List<ValidityPeriod> validityPeriods = vpService.findAllValidityPeriods();
 
@@ -70,5 +72,6 @@ public class GoToEmployeeHomePage extends HttpServlet {
         doGet(request, response);
     }
 
-    public void destroy(){}
+    public void destroy() {
+    }
 }

@@ -6,8 +6,6 @@ import java.io.Serializable;
 public class SalesReportValidityPackagesId implements Serializable {
     public SalesReportValidityPackagesId() {
     }
-    private int servPckgId;
-    private int valPeriodId;
 
     @Override
     public int hashCode() {

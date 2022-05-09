@@ -16,6 +16,7 @@ import java.util.Set;
 public class Service {
     public Service() {
     }
+
     public Service(ServiceType type, int gb, int minutes, int sms, BigDecimal extraGbFee, BigDecimal extraMinFee, BigDecimal extraSmsFee) {
         this.type = type;
         this.gb = gb;

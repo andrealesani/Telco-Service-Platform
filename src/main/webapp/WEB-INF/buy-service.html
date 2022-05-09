@@ -49,16 +49,19 @@
             </td>
             <td>
                 <form th:id="buy-form+${servpckg.id}" method="GET" action="PrepareOrder">
-                    <input type="hidden" name="serv_pckg_id" th:value="${servpckg.id}" th:form="buy-form+${servpckg.id}">
+                    <input type="hidden" name="serv_pckg_id" th:value="${servpckg.id}"
+                           th:form="buy-form+${servpckg.id}">
                     <br>
                     <div th:if="${#sets.isEmpty(servpckg.validityPeriods)}">
                         <span style="color:red">No validity periods available</span>
                     </div>
-                    <label th:unless="${#sets.isEmpty(servpckg.validityPeriods)}" th:for="validity-period+${servpckg.id}">Validity Period:
-                        <select th:id="validity-period+${servpckg.id}" name="val_per_id" th:form="buy-form+${servpckg.id}">
-                             <option th:each="valPer : ${servpckg.validityPeriods}" th:value="${valPer.id}"
+                    <label th:unless="${#sets.isEmpty(servpckg.validityPeriods)}"
+                           th:for="validity-period+${servpckg.id}">Validity Period:
+                        <select th:id="validity-period+${servpckg.id}" name="val_per_id"
+                                th:form="buy-form+${servpckg.id}">
+                            <option th:each="valPer : ${servpckg.validityPeriods}" th:value="${valPer.id}"
                                     th:text="${valPer.months} + ' months - ' + ${valPer.monthlyFee} + ' euros/month'"
-                             ></option>
+                            ></option>
                         </select>
                         <br>
                     </label>
@@ -71,7 +74,8 @@
                         <div th:each="optProd,iter : ${servpckg.optionalProducts}">
                             <span style="text-align: justify">
                                 <label th:text="${optProd.name}"></label>
-                                <input type="checkbox" th:name="opt_prod_id+${iter.index}" th:value="${optProd.id}" th:form="buy-form+${servpckg.id}">
+                                <input type="checkbox" th:name="opt_prod_id+${iter.index}" th:value="${optProd.id}"
+                                       th:form="buy-form+${servpckg.id}">
                             </span>
                         </div>
                     </div>
