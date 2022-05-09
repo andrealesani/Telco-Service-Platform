@@ -57,12 +57,7 @@ public class ValidPayment extends HttpServlet {
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 
-        // user might not be logged in, but it's not a problem. So we ignore
-        // the exception and just don't set any user inside the context
-        try {
-            ctx.setVariable("user", request.getSession().getAttribute("user"));
-        } catch (Exception ignored) {}
-
+        ctx.setVariable("user", request.getSession().getAttribute("user"));
         ctx.setVariable("result", "successful");
 
         templateEngine.process(path, ctx, response.getWriter());

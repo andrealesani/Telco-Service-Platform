@@ -51,13 +51,7 @@ public class GoToConfirmationPage extends HttpServlet {
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 
-        // user might not be logged in, but it's not a problem. So we ignore
-        // the exception and just don't set any user inside the context
-        try {
-            ctx.setVariable("user", request.getSession().getAttribute("user"));
-        } catch (NullPointerException ex) {
-            System.out.println("No user was logged in when accessing confirmation page.");
-        }
+        ctx.setVariable("user", request.getSession().getAttribute("user"));
 
         try {
             ctx.setVariable("order", soService.findSubscriptionOrderById(((SubscriptionOrder) request.getSession().getAttribute("order")).getId()));

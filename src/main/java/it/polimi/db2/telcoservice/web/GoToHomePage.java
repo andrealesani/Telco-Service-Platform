@@ -54,13 +54,13 @@ public class GoToHomePage extends HttpServlet {
 
         String path = "/WEB-INF/home.html";
 
-        User user = null;
-        List<SubscriptionOrder> soList = new ArrayList<>();
-        try {
-            user = (User) request.getSession().getAttribute("user");
+        User user = (User) request.getSession().getAttribute("user");
+
+        List<SubscriptionOrder> soList;
+        if (user != null) {
             soList = soService.findOrdersByUser(user.getId());
-        } catch (NullPointerException ex) {
-            System.out.println("No user was logged in when accessing home page.");
+        } else {
+            soList = new ArrayList<>();
         }
 
         List<ServicePackage> servicePackages = spService.findAllServicePackages();

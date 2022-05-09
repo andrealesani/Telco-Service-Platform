@@ -65,9 +65,7 @@ public class CreateOptionalProduct extends HttpServlet {
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 
-        try {
-            ctx.setVariable("user", request.getSession().getAttribute("user"));
-        } catch (Exception ignored) {}
+        ctx.setVariable("user", request.getSession().getAttribute("user"));
         ctx.setVariable("entity", "Optional Product");
 
         templateEngine.process(path, ctx, response.getWriter());

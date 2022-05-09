@@ -53,10 +53,7 @@ public class InvalidPayment extends HttpServlet {
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 
-        try {
-            ctx.setVariable("user", request.getSession().getAttribute("user"));
-        } catch (Exception ignored) {}
-        ctx.setVariable("result", "rejected");
+        ctx.setVariable("user", request.getSession().getAttribute("user"));
 
         templateEngine.process(path, ctx, response.getWriter());
     }

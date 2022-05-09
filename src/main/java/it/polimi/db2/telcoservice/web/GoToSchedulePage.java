@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/GoToSchedulePage")
@@ -40,12 +41,9 @@ public class GoToSchedulePage extends HttpServlet {
 
         String path = "/WEB-INF/activation-schedule.html";
 
-        User user;
-        try {
-            user = (User) request.getSession().getAttribute("user");
-        } catch (Exception ex) {
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "User must be logged-in to access this page.");
-            ex.printStackTrace();
             return;
         }
 

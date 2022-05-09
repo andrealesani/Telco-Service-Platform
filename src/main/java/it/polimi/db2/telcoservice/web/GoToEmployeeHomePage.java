@@ -42,6 +42,12 @@ public class GoToEmployeeHomePage extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String path = "/WEB-INF/employee-home.html";
 
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null || !user.isEmployee()) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "You must be an employee to access this page.");
+            return;
+        }
+
         List<Service> services  = sService.findAllServices();
 
         List<ValidityPeriod> validityPeriods = vpService.findAllValidityPeriods();
@@ -54,7 +60,7 @@ public class GoToEmployeeHomePage extends HttpServlet {
         ctx.setVariable("services", services);
         ctx.setVariable("validityPeriods", validityPeriods);
         ctx.setVariable("optionalProducts", optionalProducts);
-        ctx.setVariable("user", request.getSession().getAttribute("user"));
+        ctx.setVariable("user", user);
 
         templateEngine.process(path, ctx, response.getWriter());
 
