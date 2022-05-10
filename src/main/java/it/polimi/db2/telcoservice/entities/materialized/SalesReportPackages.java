@@ -1,8 +1,5 @@
 package it.polimi.db2.telcoservice.entities.materialized;
 
-import it.polimi.db2.telcoservice.entities.ServicePackage;
-import it.polimi.db2.telcoservice.entities.User;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 

@@ -33,7 +33,8 @@
                 <th>Amount due</th>
                 <th>Payment</th>
             </tr>
-            <tr th:each="order, iter : ${orders}" th:if="${order.isValid() == null || !order.isValid()}" th:class="${iter.odd}? 'odd' : 'even'">
+            <tr th:each="order, iter : ${orders}" th:if="${order.isValid() == null || !order.isValid()}"
+                th:class="${iter.odd}? 'odd' : 'even'">
                 <td th:text="${order.creationTs}"></td>
                 <td th:text="${order.totalvalue} + ' euros'"></td>
                 <td><a th:href="'RetryOrder?order_id=' + ${order.id}">Pay now</a></td>
@@ -44,7 +45,9 @@
     <h1>List of all service packages</h1>
 
     <table>
-        <tr th:if="${#lists.isEmpty(servicePackages)}" style="color:red">There are currently no service packages available</tr>
+        <tr th:if="${#lists.isEmpty(servicePackages)}" style="color:red">There are currently no service packages
+            available
+        </tr>
         <tr th:unless="${#lists.isEmpty(servicePackages)}">
             <th>ID</th>
             <th>Name</th>
@@ -57,7 +60,8 @@
             <td th:text="${servpckg.name}"></td>
             <td class="services">
                 <ul>
-                    <span th:if="${#sets.isEmpty(servpckg.services)}" style="color:red">This package has no services</span>
+                    <span th:if="${#sets.isEmpty(servpckg.services)}"
+                          style="color:red">This package has no services</span>
                     <li th:unless="${#sets.isEmpty(servpckg.services)}" th:each="service : ${servpckg.services}">
                         <span th:text="${service.type}"></span>
                         <br>

@@ -1,10 +1,11 @@
 package it.polimi.db2.telcoservice.services;
 
 import it.polimi.db2.telcoservice.entities.materialized.SalesReportProductSales;
-import it.polimi.db2.telcoservice.entities.materialized.SalesReportSuspendedOrders;
 
 import javax.ejb.Stateless;
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 
 @Stateless
 public class SalesReportProductSalesService {

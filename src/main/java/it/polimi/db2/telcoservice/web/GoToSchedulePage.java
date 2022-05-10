@@ -2,7 +2,6 @@ package it.polimi.db2.telcoservice.web;
 
 import it.polimi.db2.telcoservice.entities.SubscriptionOrder;
 import it.polimi.db2.telcoservice.entities.User;
-import it.polimi.db2.telcoservice.services.SubscriptionOrderService;
 import it.polimi.db2.telcoservice.services.UserService;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
@@ -34,7 +33,7 @@ public class GoToSchedulePage extends HttpServlet {
         templateResolver.setSuffix(".html");
     }
 
-    protected void doGet (HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         String path = "/WEB-INF/activation-schedule.html";
 

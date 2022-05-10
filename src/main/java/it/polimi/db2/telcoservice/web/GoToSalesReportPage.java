@@ -38,14 +38,14 @@ public class GoToSalesReportPage extends HttpServlet {
     @EJB(name = "it.polimi.db2.telcoservice.services/AuditingService")
     private AuditingService aService;
 
-    public void init(){
+    public void init() {
         ServletContext servletContext = getServletContext();
         ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
         templateResolver.setTemplateMode(TemplateMode.HTML);
         this.templateEngine = new TemplateEngine();
         this.templateEngine.setTemplateResolver(templateResolver);
         templateResolver.setSuffix(".html");
-    };
+    }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String path = "/WEB-INF/sales-report.html";
@@ -56,7 +56,7 @@ public class GoToSalesReportPage extends HttpServlet {
             return;
         }
 
-        List<SalesReportPackages> srServicePackages  = srpsService.findAllSalesReports();
+        List<SalesReportPackages> srServicePackages = srpsService.findAllSalesReports();
         List<SalesReportValidityPackages> srValidityPeriodServicePackages = srvpService.findAllSalesReports();
         List<SalesReportInsolventUsers> srInsolventUsers = sriuService.findAllInsolvent();
         List<SalesReportSuspendedOrders> srSuspendedOrders = srsoService.findAllSuspended();
@@ -81,6 +81,6 @@ public class GoToSalesReportPage extends HttpServlet {
         doGet(request, response);
     }
 
-    public void destroy(){
+    public void destroy() {
     }
 }

@@ -1,29 +1,19 @@
 package it.polimi.db2.telcoservice.web;
 
-import it.polimi.db2.telcoservice.entities.*;
+import it.polimi.db2.telcoservice.entities.User;
 import it.polimi.db2.telcoservice.services.SubscriptionOrderService;
-import it.polimi.db2.telcoservice.services.UserService;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import javax.ejb.EJB;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.servlet.ServletContext;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @WebServlet("/ValidPayment")
 public class ValidPayment extends HttpServlet {
@@ -41,7 +31,7 @@ public class ValidPayment extends HttpServlet {
         templateResolver.setSuffix(".html");
     }
 
-    protected void doGet (HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         String path = "/WEB-INF/payment-result.html";
 

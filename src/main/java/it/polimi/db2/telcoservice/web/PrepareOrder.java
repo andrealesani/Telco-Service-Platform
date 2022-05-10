@@ -1,32 +1,21 @@
 package it.polimi.db2.telcoservice.web;
 
-import it.polimi.db2.telcoservice.entities.OptionalProduct;
-import it.polimi.db2.telcoservice.entities.ServicePackage;
 import it.polimi.db2.telcoservice.entities.SubscriptionOrder;
-import it.polimi.db2.telcoservice.entities.ValidityPeriod;
-import it.polimi.db2.telcoservice.services.OptionalProductService;
 import it.polimi.db2.telcoservice.services.ServicePackageService;
 import it.polimi.db2.telcoservice.services.SubscriptionOrderService;
-import it.polimi.db2.telcoservice.services.ValidityPeriodService;
 
 import javax.ejb.EJB;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Date;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @WebServlet("/PrepareOrder")
 public class PrepareOrder extends HttpServlet {
@@ -58,7 +47,8 @@ public class PrepareOrder extends HttpServlet {
         for (int i = 0; i < numOfOptionalProducts; i++) {
             try {
                 optionalProductIDs.add(Integer.parseInt(request.getParameter("opt_prod_id" + i)));
-            } catch (NumberFormatException ignored) {}
+            } catch (NumberFormatException ignored) {
+            }
         }
 
         SubscriptionOrder order = soService.createOrder(servicePackageID, validityPeriodID, optionalProductIDs, new Timestamp(System.currentTimeMillis()), startDateTs);

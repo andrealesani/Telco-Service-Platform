@@ -1,30 +1,19 @@
 package it.polimi.db2.telcoservice.web;
 
-import it.polimi.db2.telcoservice.entities.*;
 import it.polimi.db2.telcoservice.services.OptionalProductService;
-import it.polimi.db2.telcoservice.services.SalesReportPackagesService;
-import it.polimi.db2.telcoservice.services.UserService;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import javax.ejb.EJB;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.servlet.ServletContext;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @WebServlet(name = "CreateOptionalProduct", value = "/create-optional-product")
 public class CreateOptionalProduct extends HttpServlet {
@@ -73,6 +62,6 @@ public class CreateOptionalProduct extends HttpServlet {
         doGet(request, response);
     }
 
-    public void destroy(){
+    public void destroy() {
     }
 }

@@ -28,7 +28,7 @@ public class SalesReportValidityPackages {
     private int valPeriodId;
 
     @Column(
-            nullable=false
+            nullable = false
     )
     private int purchases;
 

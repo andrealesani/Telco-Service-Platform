@@ -15,7 +15,7 @@ public class User {
 
     public User(String username, String password, String email, boolean insolvent, int rejectedPayments) {
         this.username = username;
-        this. password = password;
+        this.password = password;
         this.email = email;
         this.insolvent = insolvent;
         this.rejectedPayments = rejectedPayments;

@@ -1,28 +1,23 @@
 package it.polimi.db2.telcoservice.web;
 
-import it.polimi.db2.telcoservice.entities.*;
-import it.polimi.db2.telcoservice.services.*;
+import it.polimi.db2.telcoservice.services.OptionalProductService;
+import it.polimi.db2.telcoservice.services.ServicePackageService;
+import it.polimi.db2.telcoservice.services.ServiceService;
+import it.polimi.db2.telcoservice.services.ValidityPeriodService;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import javax.ejb.EJB;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.servlet.ServletContext;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.awt.image.AreaAveragingScaleFilter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @WebServlet("/create-service-package")
 public class CreateServicePackage extends HttpServlet {
@@ -61,7 +56,8 @@ public class CreateServicePackage extends HttpServlet {
         for (int i = 0; i < numServices; i++) {
             try {
                 serviceIDs.add(Integer.parseInt(request.getParameter("service" + i)));
-            } catch (NumberFormatException ignored) {}
+            } catch (NumberFormatException ignored) {
+            }
         }
         if (serviceIDs.isEmpty()) {
             response.sendError(400, "Service package must be associated to at least 1 service.");
@@ -73,7 +69,8 @@ public class CreateServicePackage extends HttpServlet {
         for (int i = 0; i < numValPeriods; i++) {
             try {
                 validityPeriodIDs.add(Integer.parseInt(request.getParameter("validity-period" + i)));
-            } catch (NumberFormatException ignored) {}
+            } catch (NumberFormatException ignored) {
+            }
         }
         if (validityPeriodIDs.isEmpty()) {
             response.sendError(400, "Service package must be associated to at least 1 validity period.");
@@ -85,7 +82,8 @@ public class CreateServicePackage extends HttpServlet {
         for (int i = 0; i < numOptProducts; i++) {
             try {
                 optionalProductIDs.add(Integer.parseInt(request.getParameter("optional-product" + i)));
-            } catch (NumberFormatException ignored) {}
+            } catch (NumberFormatException ignored) {
+            }
         }
 
         spService.createServicePackage(name, serviceIDs, validityPeriodIDs, optionalProductIDs);
@@ -103,6 +101,6 @@ public class CreateServicePackage extends HttpServlet {
         doGet(request, response);
     }
 
-    public void destroy(){
+    public void destroy() {
     }
 }

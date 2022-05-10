@@ -1,7 +1,5 @@
 package it.polimi.db2.telcoservice.web;
 
-import it.polimi.db2.telcoservice.entities.ServicePackage;
-import it.polimi.db2.telcoservice.services.ServicePackageService;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
@@ -13,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Servlet implementation class GoToLoginPage
@@ -54,6 +51,6 @@ public class GoToLoginPage extends HttpServlet {
         doGet(request, response);
     }
 
-    public void destroy(){
+    public void destroy() {
     }
 }
