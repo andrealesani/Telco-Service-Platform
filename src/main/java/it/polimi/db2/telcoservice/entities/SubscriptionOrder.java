@@ -8,6 +8,9 @@ import java.util.Set;
 
 @Entity
 @Table(name = "subscription_order")
+@NamedQueries({
+        @NamedQuery(name = "SubscriptionOrder.makePayment", query = "UPDATE SubscriptionOrder so SET so.valid = ?2, so.user = ?3 WHERE so.id = ?1")
+})
 public class SubscriptionOrder {
     public SubscriptionOrder() {
     }

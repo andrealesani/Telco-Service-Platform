@@ -34,12 +34,9 @@ public class SubscriptionOrderService {
 
 		User user = uService.findUserById(userId);
 
-		SubscriptionOrder order = entityManager.find(SubscriptionOrder.class, id);
-
-		order.setValid(valid);
-		order.setUser(user);
-
-		entityManager.flush();
+		entityManager.createNamedQuery("SubscriptionOrder.makePayment", SubscriptionOrder.class)
+				.setParameter(1, id).setParameter(2, valid).setParameter(3, user)
+				.executeUpdate();
 	}
 
 	public SubscriptionOrder createOrder(int servicePackageID, int validityPeriodID, List<Integer> optionalProductIDs, Timestamp creationTs, Timestamp startDateTs) {
