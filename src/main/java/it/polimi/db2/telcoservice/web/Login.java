@@ -49,7 +49,7 @@ public class Login extends HttpServlet {
 
         String path;
         if (user == null) {
-            path = getServletContext().getContextPath() + "/GoToLoginPage";
+            path = getServletContext().getContextPath() + "/GoToLoginPage?message=error";
         } else {
             request.getSession().setAttribute("user", user);
             if (request.getSession().getAttribute("order") == null) {

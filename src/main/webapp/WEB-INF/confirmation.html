@@ -27,32 +27,51 @@
     <br>
     <span th:unless="${order != null}" style="color:red">The order is empty</span>
     <div th:if="${order != null}">
-        <span th:unless="${order.servicePackage.name != null}" style="color:red">Service package name unavailable</span>
-        <span th:text="'Service package: '+ ${order.servicePackage.name}"></span><br>
 
-        <span th:if="${#sets.isEmpty(order.servicePackage.services)}" style="color:red">Services unavailable<br/></span>
-        <div th:unless="${#sets.isEmpty(order.servicePackage.services)}"
-             th:each="serv : ${order.servicePackage.services}">
-            <span th:text="'Services: '+ ${serv.type} + ' - Fees: ' + ${serv.getFeesString()}"></span>
+        <b>Package Name: </b>
+        <br>
+        <div th:unless="${order.servicePackage.name != null}" style="color:red">Service package name unavailable</div>
+        <div th:text="${order.servicePackage.name}"></div>
+
+        <b>Services: </b>
+        <br>
+        <div th:if="${#sets.isEmpty(order.servicePackage.services)}" style="color:red">Services unavailable</div>
+        <div th:unless="${#sets.isEmpty(order.servicePackage.services)}">
+            <span th:each="serv : ${order.servicePackage.services}">
+                <span th:text="'- ' + ${serv.type} + ' - Fees: ' + ${serv.getFeesString()}"></span>
+                <br>
+            </span>
         </div>
-        <span th:unless="${order.validityPeriod.months != null}" style="color:red">Validity period unavailable</span>
-        <span th:text="'Validity months: '+ ${order.validityPeriod.months}"></span><br>
-        <span th:if="${#sets.isEmpty(order.optionalProducts)}">No optional products selected</span>
+
+        <b>Validity Period: </b>
+        <br>
+        <div th:unless="${order.validityPeriod.months != null}" style="color:red">Validity period unavailable</div>
+        <div th:text="${order.validityPeriod.months} + ' months, at ' + ${order.validityPeriod.monthlyFee} + ' euro/month'"></div>
+
+        <b>Optional Products: </b>
+        <br>
+        <div th:if="${#sets.isEmpty(order.optionalProducts)}">No optional products selected</div>
         <div th:unless="${#sets.isEmpty(order.optionalProducts)}">
-            Optional products:
-            <br>
             <span th:each="opt : ${order.optionalProducts}">
                 <span th:text="'- ' + ${opt.name}"></span>
                 <br>
             </span>
         </div>
-        <div>
-            <span th:text="'Start date: ' + ${order.startDateTs.toString().split(' ')[0]}"></span>
-        </div>
+
+        <b>Start Date: </b>
         <br>
-        <span th:text="'Total value: '+ ${order.totalValue} + ' euros'"></span><br>
+        <div>
+            <span th:text="${order.startDateTs.toString().split(' ')[0]}"></span>
+        </div>
+
+        <br>
+
+        <b>Total Cost: </b>
+        <div th:text="${order.totalValue} + ' euros'"></div>
     </div>
+
     <br><br>
+
     <form th:unless="${user != null}" action="GoToLoginPage"
           method="GET">
         <label>To proceed with the payment, please log in</label>
@@ -67,10 +86,6 @@
           method="GET">
         <input type="hidden" name="order-id" th:value="${order.id}">
         <input type="submit" value="BUY (DENIED)">
-    </form>
-    <br>
-    <form action="GoToBuyServicePage" id="go-back" method="GET">
-        <input type="submit" value="Back">
     </form>
 </div>
 </body>
