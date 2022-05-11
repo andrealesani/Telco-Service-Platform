@@ -93,6 +93,7 @@ li:not(:last-child) {
 /* Style the links inside the navigation bar */
 .navbar a {
     min-width: 7%;
+    max-width: 15%;
     height: 100%;
     float: left;
     color: #f2f2f2;
@@ -120,7 +121,7 @@ li:not(:last-child) {
 
 .navbar .login-status {
     float: right;
-    padding: 15px 20px 0 15px;
+    padding: 15px 20px 0 0;
     color: white;
 }
 
@@ -159,8 +160,11 @@ td, th {
 
 td.services {
     font-size: 15px;
+    padding-left: 10px;
+    text-align: left;
 }
 
-td.validity-period, td.optional-product {
+td.validity-period, td.optional-product, td.customize {
     font-size: 12px;
+    text-align: left;
 }

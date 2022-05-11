@@ -47,7 +47,7 @@
                     </li>
                 </ul>
             </td>
-            <td>
+            <td class="customize">
                 <form th:id="buy-form+${servpckg.id}" method="GET" action="PrepareOrder">
                     <input type="hidden" name="serv_pckg_id" th:value="${servpckg.id}"
                            th:form="buy-form+${servpckg.id}">
