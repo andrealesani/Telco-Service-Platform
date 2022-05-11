@@ -62,7 +62,11 @@ public class GoToHomePage extends HttpServlet {
 
         ctx.setVariable("servicePackages", servicePackages);
         ctx.setVariable("orders", soList);
-        ctx.setVariable("user", user);
+
+        // refresh user to refresh 'valid' flag
+        if (user != null) {
+            ctx.setVariable("user", uService.findUserById(user.getId()));
+        }
 
         templateEngine.process(path, ctx, response.getWriter());
     }
