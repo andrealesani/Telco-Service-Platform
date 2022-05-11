@@ -1,6 +1,9 @@
 package it.polimi.db2.telcoservice.services;
 
 import it.polimi.db2.telcoservice.entities.*;
+import it.polimi.db2.telcoservice.exceptions.InvalidOptionalProductException;
+import it.polimi.db2.telcoservice.exceptions.InvalidValidityPeriodException;
+import it.polimi.db2.telcoservice.exceptions.PastStartDateException;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -37,16 +40,25 @@ public class SubscriptionOrderService {
 				.executeUpdate();
 	}
 
-	public SubscriptionOrder createOrder(int servicePackageID, int validityPeriodID, List<Integer> optionalProductIDs, Timestamp creationTs, Timestamp startDateTs) {
+	public SubscriptionOrder createOrder(int servicePackageID, int validityPeriodID, List<Integer> optionalProductIDs, Timestamp creationTs, Timestamp startDateTs) throws InvalidOptionalProductException, InvalidValidityPeriodException, PastStartDateException {
+
+		if (startDateTs.before(new Timestamp(System.currentTimeMillis()))) {
+			throw new PastStartDateException();
+		}
 
 		ServicePackage servicePackage = spService.findServicePackageById(servicePackageID);
+
+		if (servicePackage.getValidityPeriods().stream().noneMatch(o -> o.getId() == validityPeriodID)) {
+			throw new InvalidValidityPeriodException(validityPeriodID, servicePackageID);
+		}
 		ValidityPeriod validityPeriod = vpService.findValidityPeriodById(validityPeriodID);
 
 		Set<OptionalProduct> optionalProducts = new HashSet<>();
-		for (int i = 0; i < optionalProductIDs.size(); i++) {
-			try {
-				optionalProducts.add(opService.findOptionalProductById(optionalProductIDs.get(i)));
-			} catch (NumberFormatException ignored) {}
+		for (Integer optionalProductID : optionalProductIDs) {
+			if (servicePackage.getOptionalProducts().stream().noneMatch(o -> o.getId() == optionalProductID)) {
+				throw new InvalidOptionalProductException(optionalProductID, servicePackageID);
+			}
+			optionalProducts.add(opService.findOptionalProductById(optionalProductID));
 		}
 
 		SubscriptionOrder order = new SubscriptionOrder(servicePackage, validityPeriod, optionalProducts, creationTs, startDateTs);

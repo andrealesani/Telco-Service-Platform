@@ -51,7 +51,13 @@ public class PrepareOrder extends HttpServlet {
             }
         }
 
-        SubscriptionOrder order = soService.createOrder(servicePackageID, validityPeriodID, optionalProductIDs, new Timestamp(System.currentTimeMillis()), startDateTs);
+        SubscriptionOrder order;
+        try {
+             order = soService.createOrder(servicePackageID, validityPeriodID, optionalProductIDs, new Timestamp(System.currentTimeMillis()), startDateTs);
+        } catch (Exception ex) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, ex.getMessage());
+            return;
+        }
 
         request.getSession().setAttribute("order", order);
         System.out.println("Order has been saved in session.");
