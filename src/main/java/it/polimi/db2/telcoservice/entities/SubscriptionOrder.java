@@ -61,7 +61,7 @@ public class SubscriptionOrder {
             inverseJoinColumns = @JoinColumn(name = "opt_prod_id")
     )
     private Set<OptionalProduct> optionalProducts;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             nullable = false,
             name = "user_id"

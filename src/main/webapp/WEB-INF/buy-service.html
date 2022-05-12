@@ -73,7 +73,7 @@
                         <br>
                         <div th:each="optProd,iter : ${servpckg.optionalProducts}">
                             <span style="text-align: justify">
-                                <label th:text="${optProd.name}"></label>
+                                <label th:text="${optProd.name} + ' - ' + ${optProd.monthlyFee} + ' euros/month'"></label>
                                 <input type="checkbox" th:name="opt_prod_id+${iter.index}" th:value="${optProd.id}"
                                        th:form="buy-form+${servpckg.id}">
                             </span>

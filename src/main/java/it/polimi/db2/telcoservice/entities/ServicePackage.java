@@ -50,8 +50,7 @@ public class ServicePackage {
     private Set<OptionalProduct> optionalProducts;
     @OneToMany(
             fetch = FetchType.LAZY,
-            mappedBy = "servicePackage",
-            cascade = CascadeType.PERSIST
+            mappedBy = "servicePackage"
     )
     private Set<SubscriptionOrder> subscriptionOrders;
 

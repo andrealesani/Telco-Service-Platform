@@ -24,7 +24,7 @@
         <h1>Sales report:</h1>
 
         <h3>Service packages:</h3>
-        <span th:if="${#lists.isEmpty(srServicePackages)}">There are currently no service packages in the sales report.</span>
+        <div th:if="${#lists.isEmpty(srServicePackages)}">There are currently no service packages in the sales report.</div>
         <table th:unless="${#lists.isEmpty(srServicePackages)}">
             <tr>
                 <th>Service Package ID</th>
@@ -45,7 +45,7 @@
         <br>
 
         <h3>Service packages / validity periods:</h3>
-        <span th:if="${#lists.isEmpty(srValidityPeriodServicePackages)}">There are currently no service packages / validity period pairings in the sales report.</span>
+        <div th:if="${#lists.isEmpty(srValidityPeriodServicePackages)}">There are currently no service packages / validity period pairings in the sales report.</div>
         <table th:unless="${#lists.isEmpty(srValidityPeriodServicePackages)}">
             <tr>
                 <th>Service Package ID</th>
@@ -62,7 +62,7 @@
         <br>
 
         <h3>Insolvent users:</h3>
-        <span th:if="${#lists.isEmpty(srInsolventUsers)}">There are currently no insolvent users in the sales report.</span>
+        <div th:if="${#lists.isEmpty(srInsolventUsers)}">There are currently no insolvent users in the sales report.</div>
         <table th:unless="${#lists.isEmpty(srInsolventUsers)}">
             <tr>
                 <th>User ID</th>
@@ -75,7 +75,7 @@
         <br>
 
         <h3>Suspended orders:</h3>
-        <span th:if="${#lists.isEmpty(srSuspendedOrders)}">There are currently no suspended orders in the sales report.</span>
+        <div th:if="${#lists.isEmpty(srSuspendedOrders)}">There are currently no suspended orders in the sales report.</div>
         <table th:unless="${#lists.isEmpty(srSuspendedOrders)}">
             <tr>
                 <th>Order ID</th>
@@ -88,7 +88,7 @@
         <br>
 
         <h3>Best seller optional product:</h3>
-        <span th:if="${srBestSellerProduct == null}">There are currently no optional products in the system.</span>
+        <div th:if="${srBestSellerProduct == null}">There are currently no optional products in the system.</div>
         <table th:unless="${srBestSellerProduct == null}">
             <tr>
                 <th>Product ID</th>
@@ -103,7 +103,7 @@
         <br>
 
         <h3>Auditing:</h3>
-        <span th:if="${#lists.isEmpty(srAuditingRecords)}">There are currently no auditing records in the sales report.</span>
+        <div th:if="${#lists.isEmpty(srAuditingRecords)}">There are currently no auditing records in the sales report.</div>
         <table th:unless="${#lists.isEmpty(srAuditingRecords)}">
             <tr>
                 <th>User ID</th>

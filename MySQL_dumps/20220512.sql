@@ -4,7 +4,7 @@ USE `db2_jpa`;
 --
 -- Host: localhost    Database: db2_jpa
 -- ------------------------------------------------------
--- Server version	8.0.28-0ubuntu0.20.04.3
+-- Server version	8.0.29-0ubuntu0.20.04.3
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -37,7 +37,7 @@ CREATE TABLE `OPENJPA_SEQUENCE_TABLE` (
 
 LOCK TABLES `OPENJPA_SEQUENCE_TABLE` WRITE;
 /*!40000 ALTER TABLE `OPENJPA_SEQUENCE_TABLE` DISABLE KEYS */;
-INSERT INTO `OPENJPA_SEQUENCE_TABLE` VALUES (0,351);
+INSERT INTO `OPENJPA_SEQUENCE_TABLE` VALUES (0,3351);
 /*!40000 ALTER TABLE `OPENJPA_SEQUENCE_TABLE` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -55,7 +55,7 @@ CREATE TABLE `auditing` (
   `user_id` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `I_UDITING_USER` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -64,7 +64,7 @@ CREATE TABLE `auditing` (
 
 LOCK TABLES `auditing` WRITE;
 /*!40000 ALTER TABLE `auditing` DISABLE KEYS */;
-INSERT INTO `auditing` VALUES (1,14.00,'2022-03-19 15:50:58',1),(2,14.00,'2022-03-26 17:43:57',1),(3,6.00,'2022-03-26 17:48:38',1);
+INSERT INTO `auditing` VALUES (1,240.00,'2022-05-10 07:59:49',3051);
 /*!40000 ALTER TABLE `auditing` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -80,7 +80,7 @@ CREATE TABLE `optional_product` (
   `monthly_fee` decimal(10,2) NOT NULL,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -89,7 +89,7 @@ CREATE TABLE `optional_product` (
 
 LOCK TABLES `optional_product` WRITE;
 /*!40000 ALTER TABLE `optional_product` DISABLE KEYS */;
-INSERT INTO `optional_product` VALUES (1,4.00,'\"aha\"'),(3,5.00,'ehe');
+INSERT INTO `optional_product` VALUES (1,5.00,'SMS News Feed'),(2,10.00,'Internet TV Channel');
 /*!40000 ALTER TABLE `optional_product` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -132,7 +132,7 @@ CREATE TABLE `sales_report_insolvent_users` (
 
 LOCK TABLES `sales_report_insolvent_users` WRITE;
 /*!40000 ALTER TABLE `sales_report_insolvent_users` DISABLE KEYS */;
-INSERT INTO `sales_report_insolvent_users` VALUES (1);
+INSERT INTO `sales_report_insolvent_users` VALUES (3051),(3201);
 /*!40000 ALTER TABLE `sales_report_insolvent_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -160,7 +160,7 @@ CREATE TABLE `sales_report_packages` (
 
 LOCK TABLES `sales_report_packages` WRITE;
 /*!40000 ALTER TABLE `sales_report_packages` DISABLE KEYS */;
-INSERT INTO `sales_report_packages` VALUES (451,4,24.00,76.00,1.50),(601,3,18.00,18.00,0.00);
+INSERT INTO `sales_report_packages` VALUES (3151,1,240.00,240.00,0.00),(3152,0,0.00,0.00,0.00),(3153,0,0.00,0.00,0.00),(3154,1,540.00,1080.00,2.00),(3251,0,0.00,0.00,0.00),(3301,0,0.00,0.00,0.00);
 /*!40000 ALTER TABLE `sales_report_packages` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -185,7 +185,7 @@ CREATE TABLE `sales_report_product_sales` (
 
 LOCK TABLES `sales_report_product_sales` WRITE;
 /*!40000 ALTER TABLE `sales_report_product_sales` DISABLE KEYS */;
-INSERT INTO `sales_report_product_sales` VALUES (1,8.00),(3,10.00);
+INSERT INTO `sales_report_product_sales` VALUES (1,300.00),(2,720.00);
 /*!40000 ALTER TABLE `sales_report_product_sales` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -209,6 +209,7 @@ CREATE TABLE `sales_report_suspended_orders` (
 
 LOCK TABLES `sales_report_suspended_orders` WRITE;
 /*!40000 ALTER TABLE `sales_report_suspended_orders` DISABLE KEYS */;
+INSERT INTO `sales_report_suspended_orders` VALUES (4),(6);
 /*!40000 ALTER TABLE `sales_report_suspended_orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -236,7 +237,7 @@ CREATE TABLE `sales_report_validity_packages` (
 
 LOCK TABLES `sales_report_validity_packages` WRITE;
 /*!40000 ALTER TABLE `sales_report_validity_packages` DISABLE KEYS */;
-INSERT INTO `sales_report_validity_packages` VALUES (451,4,4),(451,5,0);
+INSERT INTO `sales_report_validity_packages` VALUES (3151,4,1),(3151,5,0),(3152,4,0),(3152,5,0),(3152,6,0),(3153,5,0),(3153,6,0),(3154,4,0),(3154,5,0),(3154,6,1),(3251,4,0),(3301,4,0);
 /*!40000 ALTER TABLE `sales_report_validity_packages` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -266,7 +267,7 @@ CREATE TABLE `service` (
 
 LOCK TABLES `service` WRITE;
 /*!40000 ALTER TABLE `service` DISABLE KEYS */;
-INSERT INTO `service` VALUES (1,0.00,1.00,1.00,0,1,1,'MOBILE_PHONE'),(2,0.00,0.00,0.00,0,0,0,'FIXED_PHONE'),(3,1.00,0.00,0.00,1,0,0,'MOBILE_INTERNET'),(4,1.00,0.00,0.00,1,0,0,'FIXED_INTERNET');
+INSERT INTO `service` VALUES (1,0.00,0.30,0.20,0,300,50,'MOBILE_PHONE'),(2,0.00,0.00,0.00,0,0,0,'FIXED_PHONE'),(3,0.10,0.00,0.00,50,0,0,'MOBILE_INTERNET'),(4,0.10,0.00,0.00,100,0,0,'FIXED_INTERNET');
 /*!40000 ALTER TABLE `service` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -281,22 +282,28 @@ DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `service_BEFORE_INSERT` BEFORE INSERT ON `service` FOR EACH ROW BEGIN
 	# SERVICE_TYPE_CONSTRAINTS
 	IF 
-		new.`type` = "MOBILE_PHONE" OR new.`type`="FIXED_PHONE"
+		(	new.`type` = "MOBILE_PHONE"	OR new.`type`="FIXED_PHONE"	)
+        AND
+        (	new.gb != 0 OR new.extra_gb_fee != 0.0	)
 	THEN
-		SET new.gb = 0;
-        SET new.extra_gb_fee = 0.0;
+		SIGNAL sqlstate '45001' set message_text = 
+        "This type of service cannot offer internet navigation!";
     END IF;
     IF 
-		new.`type` = "FIXED_PHONE" OR new.`type` = "FIXED_INTERNET" OR new.`type` = "MOBILE_INTERNET"
+		(	new.`type` = "FIXED_PHONE" OR new.`type` = "FIXED_INTERNET" OR new.`type` = "MOBILE_INTERNET"	)
+        AND
+        (	new.minutes != 0 OR new.extra_min_fee != 0.0	)
 	THEN
-		SET new.minutes = 0;
-        SET new.extra_min_fee = 0.0;
+		SIGNAL sqlstate '45001' set message_text = 
+        "This type of service cannot offer phone call time!";
 	END IF;
     IF 
-		new.`type` = "FIXED_PHONE" OR new.`type` = "FIXED_INTERNET" OR new.`type` = "MOBILE_INTERNET"
+		(	new.`type` = "FIXED_PHONE" OR new.`type` = "FIXED_INTERNET" OR new.`type` = "MOBILE_INTERNET"	)
+        AND
+        (	new.sms != 0 OR new.extra_sms_fee != 0.0)
 	THEN
-		SET new.sms = 0;
-        SET new.extra_sms_fee = 0.0;
+		SIGNAL sqlstate '45001' set message_text = 
+        "This type of service cannot offer sms messages!";
     END IF;
 END */;;
 DELIMITER ;
@@ -316,7 +323,7 @@ CREATE TABLE `service_package` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=602 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3302 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -325,7 +332,7 @@ CREATE TABLE `service_package` (
 
 LOCK TABLES `service_package` WRITE;
 /*!40000 ALTER TABLE `service_package` DISABLE KEYS */;
-INSERT INTO `service_package` VALUES (151,'Test'),(301,'AHa'),(451,'GEronimo'),(601,'REEEEEE');
+INSERT INTO `service_package` VALUES (3151,'Basic'),(3152,'Family'),(3153,'Business'),(3154,'All Inclusive'),(3251,'Test'),(3301,'Test2');
 /*!40000 ALTER TABLE `service_package` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -369,6 +376,7 @@ CREATE TABLE `service_package_optional_product` (
 
 LOCK TABLES `service_package_optional_product` WRITE;
 /*!40000 ALTER TABLE `service_package_optional_product` DISABLE KEYS */;
+INSERT INTO `service_package_optional_product` VALUES (3151,1),(3152,2),(3154,2),(3154,1),(3251,1),(3301,1);
 /*!40000 ALTER TABLE `service_package_optional_product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -393,6 +401,7 @@ CREATE TABLE `service_package_service` (
 
 LOCK TABLES `service_package_service` WRITE;
 /*!40000 ALTER TABLE `service_package_service` DISABLE KEYS */;
+INSERT INTO `service_package_service` VALUES (3151,1),(3151,3),(3152,2),(3152,4),(3153,2),(3153,4),(3153,1),(3154,1),(3154,2),(3154,4),(3154,3),(3251,2),(3301,1);
 /*!40000 ALTER TABLE `service_package_service` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -417,7 +426,7 @@ CREATE TABLE `service_package_validity_period` (
 
 LOCK TABLES `service_package_validity_period` WRITE;
 /*!40000 ALTER TABLE `service_package_validity_period` DISABLE KEYS */;
-INSERT INTO `service_package_validity_period` VALUES (151,4),(301,5),(151,5),(601,4),(451,4),(451,5);
+INSERT INTO `service_package_validity_period` VALUES (3151,4),(3151,5),(3152,6),(3152,4),(3152,5),(3153,5),(3153,6),(3154,5),(3154,4),(3154,6),(3251,4),(3301,4);
 /*!40000 ALTER TABLE `service_package_validity_period` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -450,8 +459,8 @@ DROP TABLE IF EXISTS `subscription_order`;
 CREATE TABLE `subscription_order` (
   `id` int NOT NULL AUTO_INCREMENT,
   `creation_ts` datetime NOT NULL,
-  `start_date_ts` datetime NOT NULL,
-  `total_value` decimal(10,2) NOT NULL,
+  `start_date_ts` datetime DEFAULT NULL,
+  `total_value` decimal(10,2) DEFAULT NULL,
   `valid` bit(1) DEFAULT NULL,
   `user_id` int DEFAULT NULL,
   `serv_pckg_id` int DEFAULT NULL,
@@ -460,7 +469,7 @@ CREATE TABLE `subscription_order` (
   KEY `I_SBSCRDR_SERVICEPACKAGE` (`serv_pckg_id`),
   KEY `I_SBSCRDR_USER` (`user_id`),
   KEY `I_SBSCRDR_VALIDITYPERIOD` (`val_period_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -469,7 +478,7 @@ CREATE TABLE `subscription_order` (
 
 LOCK TABLES `subscription_order` WRITE;
 /*!40000 ALTER TABLE `subscription_order` DISABLE KEYS */;
-INSERT INTO `subscription_order` VALUES (1,'1970-01-01 00:00:00','1970-01-01 00:00:00',1.00,_binary '',1,151,4),(2,'2022-03-19 09:47:18','2030-01-01 00:00:00',6.00,_binary '',1,151,4),(16,'2022-03-19 09:56:58','2022-03-19 09:56:58',14.00,_binary '',1,151,4),(17,'2022-03-19 09:59:54','2022-03-19 09:59:55',14.00,_binary '',1,151,4),(18,'2022-03-19 10:03:46','2022-03-19 10:03:46',14.00,_binary '',1,151,4),(19,'2022-03-19 11:09:47','2022-03-19 11:09:48',14.00,_binary '',1,451,4),(20,'2022-03-25 11:50:59','2022-03-25 11:51:00',24.00,_binary '',1,451,4),(21,'2022-03-25 13:31:23','2022-03-25 13:31:23',6.00,_binary '\0',1,601,4),(22,'2022-03-25 13:31:24','2022-03-25 13:31:24',6.00,_binary '',1,601,4);
+INSERT INTO `subscription_order` VALUES (1,'2022-05-09 00:34:03','2022-05-15 22:00:00',1080.00,_binary '',3051,3154,6),(2,'2022-05-09 00:49:49','2022-05-30 22:00:00',240.00,_binary '',3051,3151,4),(4,'2022-05-11 10:20:44','2022-05-11 22:00:00',900.00,_binary '\0',3051,3154,6),(5,'2022-05-11 10:38:13','2022-05-25 22:00:00',240.00,NULL,NULL,3151,4),(6,'2022-05-11 10:46:25','2022-05-12 22:00:00',552.00,_binary '\0',3201,3151,5);
 /*!40000 ALTER TABLE `subscription_order` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -482,24 +491,6 @@ UNLOCK TABLES;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `subscription_order_BEFORE_INSERT` BEFORE INSERT ON `subscription_order` FOR EACH ROW BEGIN
-    # WRONG_VALIDITY_PERIOD
-    IF
-		new.val_period_id NOT IN	(	SELECT val_period_id 
-										FROM service_package_validity_period 
-										WHERE serv_pckg_id = new.serv_pckg_id	)
-    THEN
-		SIGNAL sqlstate '45001' set message_text = 
-        "Validity period not allowed for the selected service package!";
-	END IF;
-    
-    # PAST_START_DATE
-	IF
-		new.start_date_ts < now() 
-	THEN
-		SIGNAL sqlstate '45001' set message_text = 
-        "Start date cannot be set in the past!";
-	END IF;
-    
 	# SET_CREATION_DATE
     SET new.creation_ts = now();
     
@@ -556,7 +547,9 @@ DELIMITER ;;
         
         # SALES_REPORT_SUSPENDED_ORDERS
         IF
-			new.valid != old.valid
+			old.valid IS null 
+            OR
+            old.valid = 1
 		THEN
 			INSERT INTO sales_report_suspended_orders (sub_order_id)
 			VALUES (new.id);
@@ -564,7 +557,9 @@ DELIMITER ;;
 	ELSEIF 
 			new.valid = 1
             AND
-            new.valid != old.valid
+            (	old.valid IS null 
+				OR 
+                old.valid = 0	)
     THEN
 		# SET_USER_SOLVENT
 		IF
@@ -633,7 +628,7 @@ CREATE TABLE `subscription_order_optional_product` (
 
 LOCK TABLES `subscription_order_optional_product` WRITE;
 /*!40000 ALTER TABLE `subscription_order_optional_product` DISABLE KEYS */;
-INSERT INTO `subscription_order_optional_product` VALUES (1,1),(9,1),(13,1),(15,1),(16,1),(17,1),(18,1),(19,1),(20,1),(20,3);
+INSERT INTO `subscription_order_optional_product` VALUES (1,1),(1,2),(4,2),(6,1);
 /*!40000 ALTER TABLE `subscription_order_optional_product` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -692,12 +687,13 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int NOT NULL AUTO_INCREMENT,
   `email` varchar(255) NOT NULL,
-  `insolvent` bit(1) DEFAULT NULL,
+  `insolvent` bit(1) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `rejected_payments` int DEFAULT NULL,
+  `rejected_payments` int NOT NULL,
   `username` varchar(255) NOT NULL,
+  `employee` bit(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=252 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3202 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -706,7 +702,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Gee',_binary '','Gee',0,'Gee'),(201,'Gee',_binary '\0','Gee',0,'Gee'),(251,'Gee',_binary '\0','Gee',0,'Gee');
+INSERT INTO `user` VALUES (3051,'user@mail.com',_binary '','user',1,'user',_binary '\0'),(3101,'employee@mail.com',_binary '\0','emp',0,'emp',_binary ''),(3201,'tom@email.com',_binary '','tom',1,'tom',_binary '\0');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -754,7 +750,7 @@ CREATE TABLE `validity_period` (
   `monthly_fee` decimal(10,2) NOT NULL,
   `months` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -763,9 +759,17 @@ CREATE TABLE `validity_period` (
 
 LOCK TABLES `validity_period` WRITE;
 /*!40000 ALTER TABLE `validity_period` DISABLE KEYS */;
-INSERT INTO `validity_period` VALUES (4,3.00,2),(5,1.00,1);
+INSERT INTO `validity_period` VALUES (4,20.00,12),(5,18.00,24),(6,15.00,36);
 /*!40000 ALTER TABLE `validity_period` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping events for database 'db2_jpa'
+--
+
+--
+-- Dumping routines for database 'db2_jpa'
+--
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -776,4 +780,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-03-26 19:20:10
+-- Dump completed on 2022-05-12 12:09:13

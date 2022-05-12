@@ -29,12 +29,14 @@
         <h2>Rejected orders</h2>
         <table>
             <tr>
+                <th>Service Package Name</th>
                 <th>Creation date</th>
                 <th>Amount due</th>
                 <th>Payment</th>
             </tr>
             <tr th:each="order, iter : ${orders}" th:if="${order.isValid() == null || !order.isValid()}"
                 th:class="${iter.odd}? 'odd' : 'even'">
+                <td th:text="${order.servicePackage.name}"></td>
                 <td th:text="${order.creationTs}"></td>
                 <td th:text="${order.totalvalue} + ' euros'"></td>
                 <td><a th:href="'RetryOrder?order_id=' + ${order.id}">Pay now</a></td>
@@ -82,7 +84,7 @@
                     <span th:if="${#sets.isEmpty(servpckg.optionalProducts)}">This package has no optional products</span>
                     <li th:each="optionalProduct : ${servpckg.optionalProducts}">
                         <span>Product:</span><br>
-                        <span th:text="${optionalProduct.name}"></span>
+                        <span th:text="${optionalProduct.name} + ' - ' + ${optionalProduct.monthlyFee} + ' euros/month'"></span>
                     </li>
                 </ul>
             </td>

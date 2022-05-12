@@ -46,14 +46,14 @@
         <b>Validity Period: </b>
         <br>
         <div th:unless="${order.validityPeriod.months != null}" style="color:red">Validity period unavailable</div>
-        <div th:text="${order.validityPeriod.months} + ' months, at ' + ${order.validityPeriod.monthlyFee} + ' euro/month'"></div>
+        <div th:text="${order.validityPeriod.months} + ' months, at ' + ${order.validityPeriod.monthlyFee} + ' euros/month'"></div>
 
         <b>Optional Products: </b>
         <br>
         <div th:if="${#sets.isEmpty(order.optionalProducts)}">No optional products selected</div>
         <div th:unless="${#sets.isEmpty(order.optionalProducts)}">
             <span th:each="opt : ${order.optionalProducts}">
-                <span th:text="'- ' + ${opt.name}"></span>
+                <span th:text="'- ' + ${opt.name} + ' (' + ${opt.monthlyFee} + ' euros/month)'"></span>
                 <br>
             </span>
         </div>
