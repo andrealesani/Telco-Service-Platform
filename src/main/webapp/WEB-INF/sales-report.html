@@ -28,6 +28,7 @@
         <table th:unless="${#lists.isEmpty(srServicePackages)}">
             <tr>
                 <th>Service Package ID</th>
+                <th>Service Package Name</th>
                 <th>No. of purchases</th>
                 <th>Total sales w/o products</th>
                 <th>Total sales w/ products</th>
@@ -35,6 +36,7 @@
             </tr>
             <tr th:each="srsp,iter : ${srServicePackages}" th:class="${iter.odd}? 'odd' : 'even'">
                 <td th:text="${srsp.getServPckgId()}"></td>
+                <td th:text="${srsp.getServicePackage().getName()}"></td>
                 <td th:text="${srsp.getPurchases()}"></td>
                 <td th:text="${srsp.getSalesValueNoProducts()}"></td>
                 <td th:text="${srsp.getSalesValueWithProducts()}"></td>
@@ -49,11 +51,13 @@
         <table th:unless="${#lists.isEmpty(srValidityPeriodServicePackages)}">
             <tr>
                 <th>Service Package ID</th>
+                <th>Service Package Name</th>
                 <th>Validity Period ID</th>
                 <th>No. of purchases</th>
             </tr>
             <tr th:each="srvpsp,iter : ${srValidityPeriodServicePackages}" th:class="${iter.odd}? 'odd' : 'even'">
                 <td th:text="${srvpsp.getServPckgId()}"></td>
+                <td th:text="${srvpsp.getServicePackage().getName()}"></td>
                 <td th:text="${srvpsp.getValPeriodId()}"></td>
                 <td th:text="${srvpsp.getPurchases()}"></td>
             </tr>
@@ -66,9 +70,13 @@
         <table th:unless="${#lists.isEmpty(srInsolventUsers)}">
             <tr>
                 <th>User ID</th>
+                <th>Username</th>
+                <th>Email</th>
             </tr>
             <tr th:each="sriu,iter : ${srInsolventUsers}" th:class="${iter.odd}? 'odd' : 'even'">
                 <td th:text="${sriu.getUserId()}"></td>
+                <td th:text="${sriu.getUser().getUsername()}"></td>
+                <td th:text="${sriu.getUser().getEmail()}"></td>
             </tr>
         </table>
 
@@ -79,9 +87,13 @@
         <table th:unless="${#lists.isEmpty(srSuspendedOrders)}">
             <tr>
                 <th>Order ID</th>
+                <th>Order Date</th>
+                <th>Order Amount</th>
             </tr>
             <tr th:each="srso,iter : ${srSuspendedOrders}" th:class="${iter.odd}? 'odd' : 'even'">
                 <td th:text="${srso.getSubOrderId()}"></td>
+                <td th:text="${srso.getSubscriptionOrder().getCreationTs()}"></td>
+                <td th:text="${srso.getSubscriptionOrder().getTotalValue()}"></td>
             </tr>
         </table>
 
@@ -92,10 +104,12 @@
         <table th:unless="${srBestSellerProduct == null}">
             <tr>
                 <th>Product ID</th>
+                <th>Product Name</th>
                 <th>Total sales</th>
             </tr>
             <tr>
                 <td th:text="${srBestSellerProduct.getOptProdId()}"></td>
+                <td th:text="${srBestSellerProduct.getOptionalProduct().getName()}"></td>
                 <td th:text="${srBestSellerProduct.getTotalSales()}"></td>
             </tr>
         </table>

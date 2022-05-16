@@ -1,5 +1,8 @@
 package it.polimi.db2.telcoservice.entities.materialized;
 
+import it.polimi.db2.telcoservice.entities.OptionalProduct;
+import it.polimi.db2.telcoservice.entities.User;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 
@@ -26,6 +29,16 @@ public class SalesReportProductSales {
     )
     private int optProdId;
 
+    @OneToOne(
+            fetch = FetchType.EAGER
+    )
+    @MapsId
+    @JoinColumn(
+            name = "opt_prod_id",
+            nullable = false
+    )
+    private OptionalProduct optionalProduct;
+
     @Column(
             nullable = false,
             name = "total_sales"
@@ -38,6 +51,14 @@ public class SalesReportProductSales {
 
     public void setOptProdId(int optProdId) {
         this.optProdId = optProdId;
+    }
+
+    public OptionalProduct getOptionalProduct() {
+        return optionalProduct;
+    }
+
+    public void setOptionalProduct(OptionalProduct optionalProduct) {
+        this.optionalProduct = optionalProduct;
     }
 
     public BigDecimal getTotalSales() {

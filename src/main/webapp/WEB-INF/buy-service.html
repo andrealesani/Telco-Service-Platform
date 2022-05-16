@@ -60,11 +60,12 @@
                         <select th:id="validity-period+${servpckg.id}" name="val_per_id"
                                 th:form="buy-form+${servpckg.id}">
                             <option th:each="valPer : ${servpckg.validityPeriods}" th:value="${valPer.id}"
-                                    th:text="${valPer.months} + ' months - ' + ${valPer.monthlyFee} + ' euros/month'"
+                                    th:text="'ID: ' + ${valPer.id} + ' - ' + ${valPer.months} + ' months - ' + ${valPer.monthlyFee} + ' euros/month'"
                             ></option>
                         </select>
                         <br>
                     </label>
+                    <br>
                     <div th:if="${#sets.isEmpty(servpckg.optionalProducts)}">
                         <span>No optional products available</span>
                     </div>
@@ -73,15 +74,17 @@
                         <br>
                         <div th:each="optProd,iter : ${servpckg.optionalProducts}">
                             <span style="text-align: justify">
-                                <label th:text="${optProd.name} + ' - ' + ${optProd.monthlyFee} + ' euros/month'"></label>
+                                <label th:text="'ID: ' + ${optProd.id} + ' - ' + ${optProd.name} + ' - ' + ${optProd.monthlyFee} + ' euros/month'"></label>
                                 <input type="checkbox" th:name="opt_prod_id+${iter.index}" th:value="${optProd.id}"
                                        th:form="buy-form+${servpckg.id}">
                             </span>
                         </div>
                     </div>
+                    <br>
                     <label>Start date
                         <input required type="date" name="start-date" th:form="buy-form+${servpckg.id}">
                     </label>
+                    <br>
                     <input type="submit" th:form="buy-form+${servpckg.id}" value="BUY">
                 </form>
             </td>

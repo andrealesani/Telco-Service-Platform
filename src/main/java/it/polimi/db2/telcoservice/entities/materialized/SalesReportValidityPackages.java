@@ -1,5 +1,9 @@
 package it.polimi.db2.telcoservice.entities.materialized;
 
+import it.polimi.db2.telcoservice.entities.ServicePackage;
+import it.polimi.db2.telcoservice.entities.User;
+import it.polimi.db2.telcoservice.entities.ValidityPeriod;
+
 import javax.persistence.*;
 
 @Entity
@@ -19,13 +23,22 @@ public class SalesReportValidityPackages {
             name = "serv_pckg_id"
     )
     private int servPckgId;
-
     @Id
     @Column(
             nullable = false,
             name = "val_period_id"
     )
     private int valPeriodId;
+
+    @OneToOne(
+            fetch = FetchType.EAGER
+    )
+    @MapsId
+    @JoinColumn(
+            name = "serv_pckg_id",
+            nullable = false
+    )
+    private ServicePackage servicePackage;
 
     @Column(
             nullable = false
@@ -46,6 +59,14 @@ public class SalesReportValidityPackages {
 
     public void setValPeriodId(int valPeriodId) {
         this.valPeriodId = valPeriodId;
+    }
+
+    public ServicePackage getServicePackage() {
+        return servicePackage;
+    }
+
+    public void setServicePackage(ServicePackage servicePackage) {
+        this.servicePackage = servicePackage;
     }
 
     public int getPurchases() {

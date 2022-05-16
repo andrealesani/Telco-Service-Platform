@@ -1,5 +1,8 @@
 package it.polimi.db2.telcoservice.entities.materialized;
 
+import it.polimi.db2.telcoservice.entities.ServicePackage;
+import it.polimi.db2.telcoservice.entities.User;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 
@@ -19,6 +22,16 @@ public class SalesReportPackages {
             name = "serv_pckg_id"
     )
     private int servPckgId;
+
+    @OneToOne(
+            fetch = FetchType.EAGER
+    )
+    @MapsId
+    @JoinColumn(
+            name = "serv_pckg_id",
+            nullable = false
+    )
+    private ServicePackage servicePackage;
 
     @Column(
             nullable = false
@@ -43,6 +56,14 @@ public class SalesReportPackages {
 
     public void setServPckgId(int servPckgId) {
         this.servPckgId = servPckgId;
+    }
+
+    public ServicePackage getServicePackage() {
+        return servicePackage;
+    }
+
+    public void setServicePackage(ServicePackage servicePackage) {
+        this.servicePackage = servicePackage;
     }
 
     public int getPurchases() {
